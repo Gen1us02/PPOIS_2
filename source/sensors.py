@@ -30,23 +30,23 @@ class Sensor(Device, ABC):
 
 
 class TemperatureSensor(Sensor):
-    def __init__(self, temperature: int = "27", unit: str = "C"):
+    def __init__(self, temperature: int = 27, temp_unit: str = "C"):
         super().__init__(SensorType.TEMPERATURE)
         self.temperature = temperature
-        self.unit = unit
+        self.temp_unit = temp_unit
 
     def read_data(self) -> Dict[str, Any]:
         if not self.is_available():
             raise SensorException("Sensor is not available")
 
-        return {"temperature": self.temperature, "temp_unit": self.unit}
+        return {"temperature": self.temperature, "temp_unit": self.temp_unit}
 
-    def update_data(self, temperature: int = None, unit: str = "C"):
+    def update_data(self, temperature: int = None, temp_unit: str = "C"):
         if temperature:
             self.temperature = temperature
 
-        if unit:
-            self.unit = unit
+        if temp_unit:
+            self.temp_unit = temp_unit
 
 
 class OpticalSensor(Sensor):
@@ -66,38 +66,38 @@ class OpticalSensor(Sensor):
 
 
 class DistanceSensor(Sensor):
-    def __init__(self, distance: int = 0, unit: str = "m") -> None:
+    def __init__(self, distance: int = 0, dist_unit: str = "m") -> None:
         super().__init__(SensorType.DISTANCE)
         self.distance = distance
-        self.unit = unit
+        self.dist_unit = dist_unit
 
     def read_data(self) -> Dict[str, Any]:
         if not self.is_available():
             raise SensorException("Sensor is not available")
 
-        return {"distance": self.distance, "dist_unit": self.unit}
+        return {"distance": self.distance, "dist_unit": self.dist_unit}
 
-    def update_data(self, distance: int = None, unit: str = "m"):
+    def update_data(self, distance: int = None, dist_unit: str = "m"):
         if distance:
             self.distance = distance
 
-        if unit:
-            self.unit = unit
+        if dist_unit:
+            self.dist_unit = dist_unit
 
 
 class GPSSensor(Sensor):
-    def __init__(self, lotitude: float = 53.9, longtitude: float = 27.34) -> None:
+    def __init__(self, latitude: float = 53.9, longitude: float = 27.34) -> None:
         super().__init__(SensorType.GPS)
-        self.lotitude = lotitude
-        self.longtitude = longtitude
+        self.latitude = latitude
+        self.longitude = longitude
 
     def read_data(self) -> Dict[str, Any]:
         if not self.is_available():
             raise SensorException("Sensor is not available")
 
         return {
-            "lotitude": f"{self.lotitude} deg",
-            "longtitude": f"{self.longtitude} deg",
+            "latitude": self.latitude,
+            "longitude": self.longitude,
         }
 
     def update_data(self, direction: Direction = None, distance: int = 0):

@@ -5,7 +5,10 @@ class Battery:
     def __init__(self, battery_level: int = 100) -> None:
         self.battery_level = battery_level
 
-    def charge(self, amount) -> None:
+    def charge(self, amount: int) -> None:
+        if amount <= 0:
+            raise BatteryException("Invalid amount")
+        
         if self.battery_level == 100:
             raise BatteryException("Battery is fully charged")
 
@@ -14,7 +17,10 @@ class Battery:
         else:
             self.battery_level += amount
 
-    def discharge(self, amount) -> None:
+    def discharge(self, amount: int) -> None:
+        if amount <= 0:
+            raise BatteryException("Invalid amount")
+        
         if self.battery_level == 0:
             raise BatteryException("Battery is discharged fully")
 

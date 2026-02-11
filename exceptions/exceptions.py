@@ -38,12 +38,12 @@ class RobotException(Exception):
             self.message = message + str(exception)
         else:
             self.message = message
-            
-    
+
+
 class ControlSystemException(Exception):
     def __init__(self, message: str, exception: Optional[Exception] = None) -> None:
-            super().__init__(message)
-            if exception:
-                self.message = message + str(exception)
-            else:
-                self.message = message
+        super().__init__(message)
+        if exception:
+            self.message = message + str(exception)
+        else:
+            self.message = message

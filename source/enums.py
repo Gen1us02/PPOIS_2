@@ -13,7 +13,7 @@ class RobotStatus(Enum):
     ACTIVE = "active"
     CHARGING = "charging"
     INACTIVE = "inactive"
-    MAINTANENCE = "maintanence"
+    MAINTENANCE = "maintenance"
 
 
 class Direction(Enum):
