@@ -1,5 +1,5 @@
-import datetime
-from source.utils import compare_versions, validate_version
+from datetime import datetime
+from validator import Validator
 from exceptions.exceptions import SoftwareException
 
 
@@ -10,10 +10,10 @@ class Software:
         self.last_update = datetime.now()
 
     def update(self, new_version: str) -> None:
-        if not validate_version(new_version):
+        if not Validator.validate_version(new_version):
             raise SoftwareException("Incorrect version")
 
-        if compare_versions(self.version, new_version):
+        if not Validator.compare_versions(self.version, new_version):
             raise SoftwareException("Current version is greater then new")
 
         self.version = new_version
