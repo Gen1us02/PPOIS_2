@@ -1,0 +1,24 @@
+from exceptions.exceptions import BatteryException
+
+
+class Battery:
+    def __init__(self, battery_level: int = 100) -> None:
+        self.battery_level = battery_level
+
+    def charge(self, amount) -> None:
+        if self.battery_level == 100:
+            raise BatteryException("Battery is fully charged")
+
+        if self.battery_level + amount >= 100:
+            self.battery_level = 100
+        else:
+            self.battery_level += amount
+
+    def discharge(self, amount) -> None:
+        if self.battery_level == 0:
+            raise BatteryException("Battery is discharged fully")
+
+        if self.battery_level - amount <= 0:
+            self.battery_level = 0
+        else:
+            self.battery_level -= amount
