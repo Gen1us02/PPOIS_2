@@ -5,11 +5,12 @@ from exceptions.exceptions import (
     MechanismException,
     RobotException,
     SensorException,
+    SoftwareException,
 )
 from mechanisms import ArmMechanism, LegMechanism
 from battery import Battery
 from software import Software
-from sensors import DistanceSensor, GPSSensor, OpticalSensor, Sensor, TemperatureSensor
+from sensors import DistanceSensor, GPSSensor, OpticalSensor, Sensor
 from enums import Direction, RobotStatus
 
 
@@ -24,6 +25,24 @@ class Robot:
         self.data: List[str] = []
         self.software: Optional[Software] = None
 
+    def activate(self) -> None:
+        if self.battery.battery_level <= 0:
+            raise RobotException("Cannot activate – battery is empty")
+
+        if self.is_broken:
+            raise RobotException("Robot is broken")
+
+        self.status = RobotStatus.ACTIVE
+
+    def wait(self) -> None:
+        self.status = RobotStatus.WAITING
+
+    def maintenance(self) -> None:
+        self.status = RobotStatus.MAINTENANCE
+
+    def charging(self) -> None:
+        self.status = RobotStatus.CHARGING
+
     def add_sensor(self, sensor: Sensor) -> None:
         self.sensors.append(sensor)
 
@@ -33,18 +52,30 @@ class Robot:
     def add_leg(self, leg: LegMechanism) -> None:
         self.legs.append(leg)
 
-    def add_software(self, software: Software) -> None:
-        self.software = software
+    def add_software(self, version: str, name: str) -> None:
+        self.software = Software(version, name)
+
+    def update_software(self, version: str, name: str) -> None:
+        if self.software.name != name or not self.software:
+            self.add_software(version, name)
+        else:
+            try:
+                self.software.update(version)
+            except SoftwareException as e:
+                raise RobotException("Robot exception ", exception=e)
 
     def arms_action(self, items: List[str]) -> str:
+        if not self.arms:
+            raise RobotException("Robot without arms")
+
         if self.status != RobotStatus.ACTIVE:
             raise RobotException("Robot is not in active status")
 
         try:
             res = []
             for i, item in enumerate(items):
-                res.append(self.arms[i].grab(item) + "\n")
-                self.arms[i].damage(5)
+                res.append(self.arms[i % len(self.arms)].grab(item) + "\n")
+                self.arms[i % len(self.arms)].damage(5)
 
             self.battery.discharge(10)
 
@@ -99,6 +130,18 @@ class Robot:
         except BatteryException as e:
             raise RobotException("Robot error: ", exception=e)
 
+    @property
+    def battery_level(self) -> int:
+        return self.battery.battery_level
+
+    @property
+    def is_broken(self) -> bool:
+        return (
+            any(sensor.is_broken() for sensor in self.sensors)
+            or any(arm.is_broken() for arm in self.arms)
+            or any(leg.is_broken() for leg in self.legs)
+        )
+
     def get_sensors_data(self) -> Dict[str, Any]:
         try:
             data = {}
@@ -119,48 +162,3 @@ class Robot:
 
         for i in range(len(self.sensors)):
             self.sensors[i].repair()
-
-    def convert_to_dict(self) -> None:
-        return {
-            "name": self.name,
-            "status": self.status,
-            "battery": self.battery.battery_level,
-            "sensors": [
-                {"type": s.type.name, "is_active": s.is_active, "data": s.read_data()}
-                for s in self.sensors
-            ],
-            "arms": len(self.arms),
-            "legs": len(self.legs),
-            "software": {"name": self.software.name, "version": self.software.version},
-        }
-
-    @classmethod
-    def create_from_dict(cls, data: Dict[str, Any]) -> None:
-        robot = cls(data["name"])
-        robot.status = RobotStatus[data["status"]]
-        robot.battery = Battery(data["battery_level"])
-
-        software_data = data["software"]
-        robot.add_software(Software(software_data["version"], software_data["name"]))
-
-        robot.data = data["data"]
-
-        for _ in range(data["arms"]):
-            robot.add_arm(ArmMechanism())
-
-        for _ in range(data["legs"]):
-            robot.add_leg(LegMechanism())
-
-        for sensor in data["sensors"]:
-            if sensor["type"] == "temperature":
-                sensor_obj = TemperatureSensor(**sensor["data"])
-            elif sensor["type"] == "optical":
-                sensor_obj = OpticalSensor(**sensor["data"])
-            elif sensor["type"] == "gps":
-                sensor_obj = GPSSensor(**sensor["data"])
-            else:
-                sensor_obj = DistanceSensor(**sensor["data"])
-
-            robot.add_sensor(sensor_obj)
-
-        return robot
