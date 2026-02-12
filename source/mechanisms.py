@@ -20,6 +20,7 @@ class ArmMechanism(Device):
 
         try:
             action = self.drop() + f" and grab {item}"
+            self.item = item
             return action
         except MechanismException as e:
             raise e

@@ -1,1 +1,63 @@
-{"name": "TestRobot", "status": "WAITING", "battery": 80, "sensors": [{"type": "TEMPERATURE", "is_active": true, "data": {"temperature": 27, "temp_unit": "C"}, "damage": 5}, {"type": "OPTICAL", "is_active": true, "data": {"objects_count": 0}, "damage": 5}, {"type": "GPS", "is_active": true, "data": {"latitude": 53.9, "longitude": 27.34}, "damage": 5}, {"type": "DISTANCE", "is_active": true, "data": {"distance": 0, "dist_unit": "m"}, "damage": 5}], "arms": [{"damage": 0}, {"damage": 0}], "legs": [{"damage": 0}, {"damage": 0}], "software": {"name": "Base Software", "version": "1.0.0"}, "data": ["Test Data"]}
+{
+    "name": "12",
+    "status": "WAITING",
+    "battery": 90,
+    "sensors": [
+        {
+            "type": "TEMPERATURE",
+            "is_active": true,
+            "data": {
+                "temperature": 27,
+                "temp_unit": "C"
+            },
+            "damage": 5
+        },
+        {
+            "type": "OPTICAL",
+            "is_active": true,
+            "data": {
+                "objects_count": 3
+            },
+            "damage": 5
+        },
+        {
+            "type": "GPS",
+            "is_active": true,
+            "data": {
+                "latitude": 53.9,
+                "longitude": 27.34
+            },
+            "damage": 5
+        },
+        {
+            "type": "DISTANCE",
+            "is_active": true,
+            "data": {
+                "distance": 0,
+                "dist_unit": "m"
+            },
+            "damage": 5
+        }
+    ],
+    "arms": [
+        {
+            "damage": 12
+        },
+        {
+            "damage": 5
+        }
+    ],
+    "legs": [
+        {
+            "damage": 0
+        },
+        {
+            "damage": 0
+        }
+    ],
+    "software": {
+        "name": "Base Software",
+        "version": "1.0.0"
+    },
+    "data": []
+}
