@@ -7,11 +7,11 @@ from exceptions.exceptions import (
     SensorException,
     SoftwareException,
 )
-from mechanisms import ArmMechanism, LegMechanism
-from battery import Battery
-from software import Software
-from sensors import DistanceSensor, GPSSensor, OpticalSensor, Sensor
-from enums import Direction, RobotStatus
+from .mechanisms import ArmMechanism, LegMechanism
+from .battery import Battery
+from .software import Software
+from .sensors import DistanceSensor, GPSSensor, OpticalSensor, Sensor
+from .enums import Direction, RobotStatus
 
 
 class Robot:
@@ -52,12 +52,9 @@ class Robot:
     def add_leg(self, leg: LegMechanism) -> None:
         self.legs.append(leg)
 
-    def add_software(self, version: str, name: str) -> None:
-        self.software = Software(version, name)
-
     def update_software(self, version: str, name: str) -> None:
-        if self.software.name != name or not self.software:
-            self.add_software(version, name)
+        if not self.software or self.software.name != name:
+            self.software = Software(version, name)
         else:
             try:
                 self.software.update(version)
@@ -75,7 +72,6 @@ class Robot:
             res = []
             for i, item in enumerate(items):
                 res.append(self.arms[i % len(self.arms)].grab(item) + "\n")
-                self.arms[i % len(self.arms)].damage(5)
 
             self.battery.discharge(10)
 
@@ -87,7 +83,7 @@ class Robot:
         except (MechanismException, BatteryException) as e:
             raise RobotException("Robot error: ", exception=e)
 
-    def move(self, speed: int, direction: Direction, time: int) -> str:
+    def move(self, direction: Direction, speed: int, time: int) -> str:
         if self.status != RobotStatus.ACTIVE:
             raise RobotException("Robot is not in active status")
 
@@ -95,7 +91,6 @@ class Robot:
             res = []
             for i, leg in enumerate(self.legs):
                 res.append(leg.move(direction, speed, time) + "\n")
-                self.legs[i].damage(5)
 
             self.battery.discharge(10)
 
@@ -118,6 +113,9 @@ class Robot:
         return "Robot successfuly learn new data"
 
     def speak(self) -> str:
+        if self.status != RobotStatus.ACTIVE:
+            RobotException("Robot is not in active status")
+            
         if not self.data:
             raise RobotException("Robot dont learned any data")
 
@@ -145,9 +143,8 @@ class Robot:
     def get_sensors_data(self) -> Dict[str, Any]:
         try:
             data = {}
-            for i, sensor in enumerate(self.sensors):
+            for sensor in self.sensors:
                 data.update(sensor.read_data())
-                self.sensors[i].damage(5)
 
             return data
         except SensorException as e:

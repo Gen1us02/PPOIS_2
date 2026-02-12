@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Any, Dict
-from enums import Direction, SensorType
-from device import Device
+from .enums import Direction, SensorType
+from .device import Device
 from exceptions.exceptions import SensorException
 
 
@@ -39,9 +39,14 @@ class TemperatureSensor(Sensor):
         if not self.is_available():
             raise SensorException("Sensor is not available")
 
+        self.damage(5)
+
         return {"temperature": self.temperature, "temp_unit": self.temp_unit}
 
     def update_data(self, temperature: int = None, temp_unit: str = "C"):
+        if not self.is_available():
+            raise SensorException("Sensor is not available")
+        
         if temperature:
             self.temperature = temperature
 
@@ -58,9 +63,14 @@ class OpticalSensor(Sensor):
         if not self.is_available():
             raise SensorException("Sensor is not available")
 
+        self.damage(5)
+
         return {"objects_count": self.objects_count}
 
     def update_data(self, objects_count: int = None):
+        if not self.is_available():
+            raise SensorException("Sensor is not available")
+        
         if objects_count:
             self.objects_count = objects_count
 
@@ -75,9 +85,14 @@ class DistanceSensor(Sensor):
         if not self.is_available():
             raise SensorException("Sensor is not available")
 
+        self.damage(5)
+
         return {"distance": self.distance, "dist_unit": self.dist_unit}
 
     def update_data(self, distance: int = None, dist_unit: str = "m"):
+        if not self.is_available():
+            raise SensorException("Sensor is not available")
+        
         if distance:
             self.distance = distance
 
@@ -95,12 +110,17 @@ class GPSSensor(Sensor):
         if not self.is_available():
             raise SensorException("Sensor is not available")
 
+        self.damage(5)
+
         return {
             "latitude": self.latitude,
             "longitude": self.longitude,
         }
 
     def update_data(self, direction: Direction = None, distance: int = 0):
+        if not self.is_available():
+            raise SensorException("Sensor is not available")
+        
         if direction:
             if direction == Direction.FORWARD:
                 self.latitude += distance
