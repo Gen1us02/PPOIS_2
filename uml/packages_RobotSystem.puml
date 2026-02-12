@@ -1,0 +1,56 @@
+@startuml packages_RobotSystem
+set namespaceSeparator none
+package "source" as source {
+}
+package "source.battery" as source.battery {
+}
+package "source.cli" as source.cli {
+}
+package "source.control_system" as source.control_system {
+}
+package "source.device" as source.device {
+}
+package "source.enums" as source.enums {
+}
+package "source.fabric" as source.fabric {
+}
+package "source.main" as source.main {
+}
+package "source.mechanisms" as source.mechanisms {
+}
+package "source.robot" as source.robot {
+}
+package "source.sensors" as source.sensors {
+}
+package "source.serializer" as source.serializer {
+}
+package "source.software" as source.software {
+}
+package "source.validator" as source.validator {
+}
+source.cli --> source.control_system
+source.cli --> source.enums
+source.cli --> source.fabric
+source.cli --> source.validator
+source.control_system --> source.enums
+source.control_system --> source.fabric
+source.control_system --> source.robot
+source.control_system --> source.serializer
+source.fabric --> source.mechanisms
+source.fabric --> source.sensors
+source.main --> source.cli
+source.mechanisms --> source.device
+source.mechanisms --> source.enums
+source.robot --> source.battery
+source.robot --> source.enums
+source.robot --> source.mechanisms
+source.robot --> source.sensors
+source.robot --> source.software
+source.sensors --> source.device
+source.sensors --> source.enums
+source.serializer --> source.battery
+source.serializer --> source.enums
+source.serializer --> source.fabric
+source.serializer --> source.robot
+source.software --> source.validator
+@enduml

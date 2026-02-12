@@ -1,0 +1,160 @@
+@startuml classes_RobotSystem
+set namespaceSeparator none
+class "ArmMechanism" as source.mechanisms.ArmMechanism {
+  item : NoneType
+  drop() -> str
+  grab(item: str) -> str
+}
+class "Battery" as source.battery.Battery {
+  battery_level : int
+  charge(amount: int) -> None
+  discharge(amount: int) -> None
+}
+class "ControlSystem" as source.control_system.ControlSystem {
+  fabric
+  robot : Optional[Robot]
+  arm_action(items: List[str]) -> str
+  charge_robot(amount) -> str
+  get_status() -> Dict[str, Any]
+  load_condition() -> None
+  maintanance() -> str
+  move_robot(speed: int, direction: Direction, time: int) -> str
+  program_robot(version: str, name: str) -> str
+  save_condition() -> None
+  teach_robot(data: List[str]) -> str
+}
+class "DefaultFabric" as source.fabric.DefaultFabric {
+  {abstract}create_arm()
+  {abstract}create_distance_sensor()
+  {abstract}create_gps_sensor()
+  {abstract}create_leg()
+  {abstract}create_optical_sensor()
+  {abstract}create_temperature_sensor()
+}
+class "Device" as source.device.Device {
+  curr_damage : int
+  damage(damage_val: int) -> None
+  is_broken() -> bool
+  repair() -> None
+}
+class "Direction" as source.enums.Direction {
+  name
+}
+class "DistanceSensor" as source.sensors.DistanceSensor {
+  dist_unit : str
+  distance : int
+  read_data() -> Dict[str, Any]
+  update_data(distance: int, dist_unit: str)
+}
+class "Fabric" as source.fabric.Fabric {
+  create_arm()
+  create_distance_sensor()
+  create_gps_sensor()
+  create_leg()
+  create_optical_sensor()
+  create_temperature_sensor()
+}
+class "GPSSensor" as source.sensors.GPSSensor {
+  latitude : float
+  longitude : float
+  read_data() -> Dict[str, Any]
+  update_data(direction: Direction, distance: int)
+}
+class "LegMechanism" as source.mechanisms.LegMechanism {
+  speed : int
+  move(direction: Direction, speed: int, time: int) -> str
+}
+class "OpticalSensor" as source.sensors.OpticalSensor {
+  objects_count : int
+  read_data() -> Dict[str, Any]
+  update_data(objects_count: int)
+}
+class "Robot" as source.robot.Robot {
+  arms : List[ArmMechanism]
+  battery
+  battery_level : int
+  data : List[str]
+  is_broken : bool
+  legs : List[LegMechanism]
+  name : str
+  sensors : List[Sensor]
+  software : Optional[Software]
+  status : ACTIVE, CHARGING, MAINTENANCE, WAITING
+  activate() -> None
+  add_arm(arm: ArmMechanism) -> None
+  add_leg(leg: LegMechanism) -> None
+  add_sensor(sensor: Sensor) -> None
+  arms_action(items: List[str]) -> str
+  charge(amount: int) -> str
+  charging() -> None
+  get_sensors_data() -> Dict[str, Any]
+  learn_data(new_data: List[str]) -> str
+  maintenance() -> None
+  move(direction: Direction, speed: int, time: int) -> str
+  repair() -> None
+  speak() -> str
+  update_software(version: str, name: str) -> None
+  wait() -> None
+}
+class "RobotCLI" as source.cli.RobotCLI {
+  VALID_DIRECTIONS
+  VALID_DIRECTION_NAMES : list
+  cs : Optional[ControlSystem]
+  fabric
+  run() -> None
+}
+class "RobotStatus" as source.enums.RobotStatus {
+  name
+}
+class "Sensor" as source.sensors.Sensor {
+  is_active : bool
+  sensor_type
+  activate() -> None
+  deactivate() -> None
+  is_available() -> bool
+  {abstract}read_data() -> dict
+  {abstract}update_data()
+}
+class "SensorType" as source.enums.SensorType {
+  name
+}
+class "Serializer" as source.serializer.Serializer {
+  convert_to_dict(robot: Robot) -> Dict[str, Any]
+  create_from_dict(data: Dict[str, Any], fabric: Fabric)
+}
+class "Software" as source.software.Software {
+  last_update : datetime
+  name : str
+  version : str
+  update(new_version: str) -> None
+}
+class "TemperatureSensor" as source.sensors.TemperatureSensor {
+  temp_unit : str
+  temperature : int
+  read_data() -> Dict[str, Any]
+  update_data(temperature: int, temp_unit: str)
+}
+class "Validator" as source.validator.Validator {
+  compare_versions(first_version: str, second_version: str) -> bool
+  validate_version(version: str) -> bool
+}
+source.fabric.Fabric --|> source.fabric.DefaultFabric
+source.mechanisms.ArmMechanism --|> source.device.Device
+source.mechanisms.LegMechanism --|> source.device.Device
+source.sensors.DistanceSensor --|> source.sensors.Sensor
+source.sensors.GPSSensor --|> source.sensors.Sensor
+source.sensors.OpticalSensor --|> source.sensors.Sensor
+source.sensors.Sensor --|> source.device.Device
+source.sensors.TemperatureSensor --|> source.sensors.Sensor
+source.robot.Robot --> source.enums.RobotStatus : status
+source.robot.Robot --> source.mechanisms.ArmMechanism : arms
+source.robot.Robot --> source.mechanisms.LegMechanism : legs
+source.robot.Robot --> source.sensors.Sensor : sensors
+source.battery.Battery --* source.robot.Robot : battery
+source.control_system.ControlSystem --* source.cli.RobotCLI : cs
+source.fabric.Fabric --* source.cli.RobotCLI : fabric
+source.robot.Robot --* source.control_system.ControlSystem : robot
+source.software.Software --* source.robot.Robot : software
+source.enums.SensorType --o source.sensors.Sensor : sensor_type
+source.fabric.DefaultFabric --o source.control_system.ControlSystem : fabric
+@enduml

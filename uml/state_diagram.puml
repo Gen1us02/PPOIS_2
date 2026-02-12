@@ -1,0 +1,27 @@
+@startuml
+state RobotStatus {
+  state INACTIVE : Начальное состояние
+  state WAITING : Ожидание команд
+  state ACTIVE : Активный режим
+  state CHARGING : Зарядка робота
+  state MAINTENANCE : Техническое обслуживание
+
+  [*] -> INACTIVE : создание робота
+
+  INACTIVE --> WAITING : wait()
+  WAITING --> ACTIVE : activate()\n[заряд батареи > 0 и робот не сломан]
+  ACTIVE --> WAITING : действие завершено\n(move/arms_action/learn_data)
+
+  WAITING --> CHARGING : charging()
+  CHARGING --> WAITING : зарядка завершена (charge())
+
+  WAITING --> MAINTENANCE : maintenance()
+  MAINTENANCE --> WAITING : ремонт завершён (repair())\nили ПО обновлено (update_software())
+
+  INACTIVE --> [*] : завершение программы
+  WAITING --> [*] : завершение программы
+  ACTIVE --> [*] : завершение программы
+  CHARGING --> [*] : завершение программы
+  MAINTENANCE --> [*] : завершение программы
+}
+@enduml
