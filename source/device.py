@@ -11,7 +11,7 @@ class Device:
     def damage(self, damage_val: int) -> None:
         if damage_val <= 0:
             raise DeviceException("Incorrect damage")
-        
+
         if self.curr_damage >= 100:
             raise DeviceException("Device is broken")
 

@@ -26,7 +26,7 @@ class Serializer:
             "software": {"name": robot.software.name, "version": robot.software.version}
             if robot.software
             else None,
-            "data": robot.data
+            "data": robot.data,
         }
 
     @staticmethod

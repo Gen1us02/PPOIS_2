@@ -154,7 +154,7 @@ class RobotCLI:
 
     def _teach(self) -> None:
         print("\n=== Обучение робота ===")
-        phrases = self._prompt_items_list("Введите фразы для обучения через запятую: ")
+        phrases = self._prompt_items_list("Введите фразы для обучения через пробел: ")
         try:
             result = self.cs.teach_robot(phrases)
             print(f"{result}")
@@ -203,8 +203,8 @@ class RobotCLI:
         print("   6.  Программирование ПО")
         print("   7.  Обучение")
         print("   8.  Сказать фразу")
-        print("  9.  Сохранить состояние")
-        print("  10.  Загрузить состояние")
+        print("   9.  Сохранить состояние")
+        print("   10.  Загрузить состояние")
         print("   0.  Выход")
         print("=" * 60)
 

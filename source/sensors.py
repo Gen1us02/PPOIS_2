@@ -46,7 +46,7 @@ class TemperatureSensor(Sensor):
     def update_data(self, temperature: int = None, temp_unit: str = "C"):
         if not self.is_available():
             raise SensorException("Sensor is not available")
-        
+
         if temperature:
             self.temperature = temperature
 
@@ -70,7 +70,7 @@ class OpticalSensor(Sensor):
     def update_data(self, objects_count: int = None):
         if not self.is_available():
             raise SensorException("Sensor is not available")
-        
+
         if objects_count:
             self.objects_count = objects_count
 
@@ -92,7 +92,7 @@ class DistanceSensor(Sensor):
     def update_data(self, distance: int = None, dist_unit: str = "m"):
         if not self.is_available():
             raise SensorException("Sensor is not available")
-        
+
         if distance:
             self.distance = distance
 
@@ -120,7 +120,7 @@ class GPSSensor(Sensor):
     def update_data(self, direction: Direction = None, distance: int = 0):
         if not self.is_available():
             raise SensorException("Sensor is not available")
-        
+
         if direction:
             if direction == Direction.FORWARD:
                 self.latitude += distance

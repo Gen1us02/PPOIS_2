@@ -115,7 +115,7 @@ class Robot:
     def speak(self) -> str:
         if self.status != RobotStatus.ACTIVE:
             RobotException("Robot is not in active status")
-            
+
         if not self.data:
             raise RobotException("Robot dont learned any data")
 
