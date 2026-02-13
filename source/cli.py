@@ -21,13 +21,23 @@ class RobotCLI:
     def _init_robot(self) -> None:
         print("\n=== Создание нового робота ===")
         try:
-            name = self._prompt_non_empty_string("Введите имя робота: ")
+            name = self._prompt_non_empty_and_non_digit_string("Введите имя робота: ")
             self.cs = ControlSystem(name, self.fabric)
             print(f"Робот '{name}' успешно создан!")
             input("\nНажмите Enter, чтобы продолжить...")
         except KeyboardInterrupt:
             self.cs = None
             return
+
+    @staticmethod
+    def _prompt_non_empty_and_non_digit_string(prompt: str) -> str:
+        while True:
+            value = input(prompt).strip()
+            if value and not value.isdigit():
+                return value
+            print(
+                "Ошибка: строка должна содержать хотя бы 1 букву и быть не пустой. Повторите ввод."
+            )
 
     @staticmethod
     def _prompt_non_empty_string(prompt: str) -> str:
@@ -150,7 +160,7 @@ class RobotCLI:
 
     def _program(self) -> None:
         print("\n=== Программирование робота ===")
-        name = self._prompt_non_empty_string("Название ПО: ")
+        name = self._prompt_non_empty_and_non_digit_string("Название ПО: ")
         version = self._prompt_version("Версия (например, 2.0.0): ")
         try:
             result = self.cs.program_robot(version, name)
