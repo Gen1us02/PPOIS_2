@@ -7,10 +7,10 @@ class Battery:
 
     def charge(self, amount: int) -> None:
         if amount <= 0:
-            raise BatteryException("Invalid amount")
+            raise BatteryException("Невалидный заряд (заряд должен быть больше 0)")
 
         if self.battery_level == 100:
-            raise BatteryException("Battery is fully charged")
+            raise BatteryException("Батарея полностью заряжена")
 
         if self.battery_level + amount >= 100:
             self.battery_level = 100
@@ -19,10 +19,10 @@ class Battery:
 
     def discharge(self, amount: int) -> None:
         if amount <= 0:
-            raise BatteryException("Invalid amount")
+            raise BatteryException("Невалидный заряд (заряд должен быть больше 0)")
 
         if self.battery_level == 0:
-            raise BatteryException("Battery is discharged fully")
+            raise BatteryException("Батарея полностью заряжена")
 
         if self.battery_level - amount <= 0:
             self.battery_level = 0

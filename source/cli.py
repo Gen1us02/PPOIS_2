@@ -1,4 +1,5 @@
 import json
+import os
 import sys
 from typing import List, Optional
 from .validator import Validator
@@ -19,9 +20,14 @@ class RobotCLI:
 
     def _init_robot(self) -> None:
         print("\n=== Создание нового робота ===")
-        name = self._prompt_non_empty_string("Введите имя робота: ")
-        self.cs = ControlSystem(name, self.fabric)
-        print(f"Робот '{name}' успешно создан!")
+        try:
+            name = self._prompt_non_empty_string("Введите имя робота: ")
+            self.cs = ControlSystem(name, self.fabric)
+            print(f"Робот '{name}' успешно создан!")
+            input("\nНажмите Enter, чтобы продолжить...")
+        except KeyboardInterrupt:
+            self.cs = None
+            return
 
     @staticmethod
     def _prompt_non_empty_string(prompt: str) -> str:
@@ -36,9 +42,9 @@ class RobotCLI:
         while True:
             try:
                 value = int(input(prompt))
-                if value >= 0:
+                if value > 0:
                     return value
-                print("Ошибка: число должно быть неотрицательным.")
+                print("Ошибка: число должно быть больше 0.")
             except ValueError:
                 print("Ошибка: введите целое число.")
 
@@ -162,8 +168,8 @@ class RobotCLI:
             print(f"Ошибка обучения: {e}")
 
     def _speak(self) -> None:
-        print("\n=== Робот говорит ===")
         try:
+            print("\n=== Робот говорит ===")
             speech = self.cs.robot.speak()
             print(f"{speech}")
         except RobotException as e:
@@ -192,6 +198,7 @@ class RobotCLI:
                 print(f"Ошибка загрузки: {e}")
 
     def _print_menu(self) -> None:
+        os.system("cls" if os.name == "nt" else "clear")
         print("\n" + "=" * 60)
         print("  СИСТЕМА УПРАВЛЕНИЯ РОБОТОМ  ".center(60))
         print("=" * 60)
@@ -204,7 +211,7 @@ class RobotCLI:
         print("   7.  Обучение")
         print("   8.  Сказать фразу")
         print("   9.  Сохранить состояние")
-        print("   10.  Загрузить состояние")
+        print("   10. Загрузить состояние")
         print("   0.  Выход")
         print("=" * 60)
 
@@ -219,6 +226,10 @@ class RobotCLI:
             return "0"
 
     def run(self) -> None:
+        if not self.cs:
+            print("\nЗавершение работы. До свидания!")
+            sys.exit(0)
+
         print("\nДобро пожаловать в систему управления роботом!")
         try:
             while True:

@@ -11,16 +11,16 @@ class Software:
 
     def __set_version(self, version: str) -> None:
         if not Validator.validate_version(version):
-            raise SoftwareException("Incorrect version")
+            raise SoftwareException("Невалидная версия")
 
         self.version = version
 
     def update(self, new_version: str) -> None:
         if not Validator.validate_version(new_version):
-            raise SoftwareException("Incorrect version")
+            raise SoftwareException("Невалидная версия")
 
         if Validator.compare_versions(self.version, new_version):
-            raise SoftwareException("Current version is greater then new")
+            raise SoftwareException("Текущая версия актуальнее")
 
         self.version = new_version
         self.last_update = datetime.now()

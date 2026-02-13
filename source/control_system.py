@@ -45,7 +45,7 @@ class ControlSystem:
             self.robot.wait()
             return res
         except RobotException as e:
-            raise ControlSystemException("System error\n", exception=e)
+            raise ControlSystemException("Системная ошибка\n", exception=e)
 
     def move_robot(self, speed: int, direction: Direction, time: int) -> str:
         try:
@@ -54,7 +54,7 @@ class ControlSystem:
             self.robot.wait()
             return res
         except RobotException as e:
-            raise ControlSystemException("System error\n", exception=e)
+            raise ControlSystemException("Системная ошибка\n", exception=e)
 
     def arm_action(self, items: List[str]) -> str:
         try:
@@ -63,7 +63,7 @@ class ControlSystem:
             self.robot.wait()
             return res
         except RobotException as e:
-            raise ControlSystemException("System error\n", exception=e)
+            raise ControlSystemException("Системная ошибка\n", exception=e)
 
     def get_status(self) -> Dict[str, Any]:
         try:
@@ -84,18 +84,18 @@ class ControlSystem:
             self.robot.maintenance()
             self.robot.repair()
             self.robot.wait()
-            return "Maintanance finish succesfully"
+            return "Обслуживание завершилось успешное"
         except RobotException as e:
-            raise ControlSystemException("System error\n", exception=e)
+            raise ControlSystemException("Системная ошибка\n", exception=e)
 
     def program_robot(self, version: str, name: str) -> str:
         try:
             self.robot.maintenance()
             self.robot.update_software(version, name)
             self.robot.wait()
-            return "Succesfully program robot"
+            return "Робот успешно запрограммирован"
         except RobotException as e:
-            raise ControlSystemException("System error\n", exception=e)
+            raise ControlSystemException("Системная ошибка\n", exception=e)
 
     def teach_robot(self, data: List[str]) -> str:
         self.robot.activate()

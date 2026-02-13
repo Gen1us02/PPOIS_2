@@ -10,16 +10,16 @@ class ArmMechanism(Device):
 
     def grab(self, item: str) -> str:
         if self.is_broken():
-            raise MechanismException("Robot arm is broken")
+            raise MechanismException("Рука робота сломана")
 
         self.damage(5)
 
         if not self.item:
             self.item = item
-            return f"Robot arm grab {item}"
+            return f"Рука робота взяла {item}"
 
         try:
-            action = self.drop() + f" and grab {item}"
+            action = self.drop() + f" и взял {item}"
             self.item = item
             return action
         except MechanismException as e:
@@ -27,10 +27,10 @@ class ArmMechanism(Device):
 
     def drop(self) -> str:
         if not self.item:
-            raise MechanismException("Robot arm without items")
+            raise MechanismException("Рука робота без предметов")
 
         if self.is_broken():
-            raise MechanismException("Robot arm is broken")
+            raise MechanismException("Рука робота сломана")
 
         self.damage(2)
 
@@ -44,9 +44,9 @@ class LegMechanism(Device):
 
     def move(self, direction: Direction, speed: int, time: int) -> str:
         if self.is_broken():
-            raise MechanismException("Robot leg is broken")
+            raise MechanismException("Нога робота сломана")
 
         self.damage(5)
 
         self.speed = speed
-        return f"Robot leg moved {direction.value} with speed {speed} m/s. It passed {self.speed * time} m"
+        return f"Нога робота перемещается {direction.value} со скоростью {speed} м/с. Она прошла {self.speed * time} м"

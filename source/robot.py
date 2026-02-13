@@ -27,10 +27,10 @@ class Robot:
 
     def activate(self) -> None:
         if self.battery.battery_level <= 0:
-            raise RobotException("Cannot activate – battery is empty")
+            raise RobotException("Невозможно активировать – батарея разряжена")
 
         if self.is_broken:
-            raise RobotException("Robot is broken")
+            raise RobotException("Робот сломан")
 
         self.status = RobotStatus.ACTIVE
 
@@ -59,14 +59,14 @@ class Robot:
             try:
                 self.software.update(version)
             except SoftwareException as e:
-                raise RobotException("Robot exception ", exception=e)
+                raise RobotException("Ошибка робота ", exception=e)
 
     def arms_action(self, items: List[str]) -> str:
         if not self.arms:
-            raise RobotException("Robot without arms")
+            raise RobotException("У робота нет рук")
 
         if self.status != RobotStatus.ACTIVE:
-            raise RobotException("Robot is not in active status")
+            raise RobotException("Робот неактивен")
 
         try:
             res = []
@@ -81,11 +81,11 @@ class Robot:
 
             return "".join(res)
         except (MechanismException, BatteryException) as e:
-            raise RobotException("Robot error: ", exception=e)
+            raise RobotException("Ошибка робота: ", exception=e)
 
     def move(self, direction: Direction, speed: int, time: int) -> str:
         if self.status != RobotStatus.ACTIVE:
-            raise RobotException("Robot is not in active status")
+            raise RobotException("Робот неактивен")
 
         try:
             res = []
@@ -103,30 +103,30 @@ class Robot:
 
             return "".join(res)
         except (MechanismException, BatteryException) as e:
-            raise RobotException("Robot error: ", exception=e)
+            raise RobotException("Ошибка робота: ", exception=e)
 
     def learn_data(self, new_data: List[str]) -> str:
         if self.status != RobotStatus.ACTIVE:
-            raise RobotException("Robot is not in active status")
+            raise RobotException("Робот неактивен")
 
         self.data.extend(new_data)
-        return "Robot successfuly learn new data"
+        return "Робот успешно выучил новые данные"
 
     def speak(self) -> str:
         if self.status != RobotStatus.ACTIVE:
-            RobotException("Robot is not in active status")
+            RobotException("Робот неактивен")
 
         if not self.data:
-            raise RobotException("Robot dont learned any data")
+            raise RobotException("Робот не знает никаких фраз")
 
-        return f"Hello, I'm robot {self.name} and i learned some phrases. For example: {random.choice(self.data)}"
+        return f"Привет, я робот {self.name} и я выучил несколько фраз. Например: {random.choice(self.data)}"
 
     def charge(self, amount: int) -> str:
         try:
             self.battery.charge(amount)
-            return f"Battery is charged for {self.battery.battery_level}"
+            return f"Батарея заряжена на {self.battery.battery_level}%"
         except BatteryException as e:
-            raise RobotException("Robot error: ", exception=e)
+            raise RobotException("Ошибка робота: ", exception=e)
 
     @property
     def battery_level(self) -> int:
@@ -148,7 +148,7 @@ class Robot:
 
             return data
         except SensorException as e:
-            raise RobotException("Robot error: ", exception=e)
+            raise RobotException("Ошибка робота: ", exception=e)
 
     def repair(self) -> None:
         for i in range(len(self.arms)):
