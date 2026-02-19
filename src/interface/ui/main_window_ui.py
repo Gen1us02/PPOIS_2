@@ -24,7 +24,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1093, 600)
+        MainWindow.resize(1350, 800)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout = QHBoxLayout(self.centralwidget)
@@ -45,7 +45,7 @@ class Ui_MainWindow(object):
         self.data_load_label = QLabel(self.data_load_frame)
         self.data_load_label.setObjectName(u"data_load_label")
         self.data_load_label.setMinimumSize(QSize(0, 0))
-        self.data_load_label.setMaximumSize(QSize(16777215, 60))
+        self.data_load_label.setMaximumSize(QSize(16777215, 70))
         font = QFont()
         font.setFamilies([u"Arial"])
         font.setPointSize(12)
@@ -247,7 +247,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.work_tab_widget.setCurrentIndex(1)
+        self.work_tab_widget.setCurrentIndex(0)
         self.table_tab_widget.setCurrentIndex(2)
 
 
@@ -286,5 +286,3 @@ class Ui_MainWindow(object):
         self.table_tab_widget.setTabText(self.table_tab_widget.indexOf(self.student_table_tab), QCoreApplication.translate("MainWindow", u"\u0422\u0430\u0431\u043b\u0438\u0446\u0430", None))
     # retranslateUi
 
-        self.work_tab_widget.tabBar().hide()
-        self.table_tab_widget.tabBar().hide()
