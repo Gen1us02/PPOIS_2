@@ -8,7 +8,7 @@ from .settings import engine
 class DBManager:
     def __init__(self):
         self.session = sessionmaker(bind=engine)
-    
+
     def get_all_records(self) -> List[Student]:
         with self.session() as session:
             statement = select(Student).options(
@@ -54,3 +54,45 @@ class DBManager:
             exams = session.scalars(statement).all()
 
             return exams
+
+    def __get_group_id(self, group_number: str) -> int:
+        with self.session() as session:
+            statement = select(Group.id).where(Group.number == group_number)
+            group_id = session.scalars(statement).one()
+
+            return group_id
+
+    def __get_exam_id(self, exam: str, group_id: int) -> int:
+        with self.session() as session:
+            statement = (
+                select(Exam.id)
+                .join(Subject, Exam.subject_id == Subject.id)
+                .where(Subject.name == exam, Exam.group_id == group_id)
+            )
+            exam_id = session.scalars(statement).one()
+
+            return exam_id
+
+    def add_student(self, **kwargs) -> None:
+        with self.session() as session:
+            first_name = kwargs["first_name"]
+            last_name = kwargs["last_name"]
+            middle_name = kwargs["middle_name"]
+            group_id = self.__get_group_id(kwargs["group_name"])
+            new_student = Student(
+                first_name=first_name,
+                last_name=last_name,
+                middle_name=middle_name,
+                group_id=group_id,
+            )
+            session.add(new_student)
+            session.flush()
+            for exam, score in kwargs["scores"].items():
+                exam_id = self.__get_exam_id(exam, group_id)
+                student_id = new_student.id
+                student_score = Score(
+                    exam_id=exam_id, student_id=student_id, grade=score
+                )
+                session.add(student_score)
+
+            session.commit()

@@ -15,22 +15,20 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QComboBox, QFrame, QHBoxLayout,
-    QLabel, QLineEdit, QMainWindow, QPushButton,
+from PySide6.QtWidgets import (QApplication, QComboBox, QDialog, QFrame,
+    QHBoxLayout, QLabel, QLineEdit, QPushButton,
     QSizePolicy, QVBoxLayout, QWidget)
 
-class Ui_AddWindow(object):
-    def setupUi(self, AddWindow):
-        if not AddWindow.objectName():
-            AddWindow.setObjectName(u"AddWindow")
-        AddWindow.resize(400, 550)
-        AddWindow.setMinimumSize(QSize(400, 550))
-        AddWindow.setMaximumSize(QSize(400, 550))
-        self.centralwidget = QWidget(AddWindow)
-        self.centralwidget.setObjectName(u"centralwidget")
-        self.verticalLayout_2 = QVBoxLayout(self.centralwidget)
+class Ui_AddForm(object):
+    def setupUi(self, AddForm):
+        if not AddForm.objectName():
+            AddForm.setObjectName(u"AddForm")
+        AddForm.resize(400, 550)
+        AddForm.setMinimumSize(QSize(400, 550))
+        AddForm.setMaximumSize(QSize(400, 550))
+        self.verticalLayout_2 = QVBoxLayout(AddForm)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.frame = QFrame(self.centralwidget)
+        self.frame = QFrame(AddForm)
         self.frame.setObjectName(u"frame")
         self.frame.setMinimumSize(QSize(300, 300))
         self.frame.setMaximumSize(QSize(16777215, 1677215))
@@ -79,7 +77,7 @@ class Ui_AddWindow(object):
 
         self.verticalLayout_2.addWidget(self.frame)
 
-        self.button_frame = QFrame(self.centralwidget)
+        self.button_frame = QFrame(AddForm)
         self.button_frame.setObjectName(u"button_frame")
         self.button_frame.setMaximumSize(QSize(16777215, 70))
         self.button_frame.setFrameShape(QFrame.Shape.StyledPanel)
@@ -96,23 +94,22 @@ class Ui_AddWindow(object):
 
         self.verticalLayout_2.addWidget(self.button_frame)
 
-        AddWindow.setCentralWidget(self.centralwidget)
 
-        self.retranslateUi(AddWindow)
+        self.retranslateUi(AddForm)
 
-        QMetaObject.connectSlotsByName(AddWindow)
+        QMetaObject.connectSlotsByName(AddForm)
     # setupUi
 
-    def retranslateUi(self, AddWindow):
-        AddWindow.setWindowTitle(QCoreApplication.translate("AddWindow", u"MainWindow", None))
-        self.student_add_lable.setText(QCoreApplication.translate("AddWindow", u"\u0414\u043e\u0431\u0430\u0432\u043b\u0435\u043d\u0438\u0435 \u0441\u0442\u0443\u0434\u0435\u043d\u0442\u0430", None))
+    def retranslateUi(self, AddForm):
+        AddForm.setWindowTitle(QCoreApplication.translate("AddForm", u"Dialog", None))
+        self.student_add_lable.setText(QCoreApplication.translate("AddForm", u"\u0414\u043e\u0431\u0430\u0432\u043b\u0435\u043d\u0438\u0435 \u0441\u0442\u0443\u0434\u0435\u043d\u0442\u0430", None))
         self.last_name.setText("")
-        self.last_name.setPlaceholderText(QCoreApplication.translate("AddWindow", u"\u0424\u0430\u043c\u0438\u043b\u0438\u044f", None))
+        self.last_name.setPlaceholderText(QCoreApplication.translate("AddForm", u"\u0424\u0430\u043c\u0438\u043b\u0438\u044f", None))
         self.first_name.setText("")
-        self.first_name.setPlaceholderText(QCoreApplication.translate("AddWindow", u"\u0418\u043c\u044f", None))
+        self.first_name.setPlaceholderText(QCoreApplication.translate("AddForm", u"\u0418\u043c\u044f", None))
         self.middle_name.setText("")
-        self.middle_name.setPlaceholderText(QCoreApplication.translate("AddWindow", u"\u041e\u0442\u0447\u0435\u0441\u0442\u0432\u043e", None))
-        self.groups.setPlaceholderText(QCoreApplication.translate("AddWindow", u"\u041d\u043e\u043c\u0435\u0440 \u0433\u0440\u0443\u043f\u043f\u044b", None))
-        self.add_button.setText(QCoreApplication.translate("AddWindow", u"\u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c \u0441\u0442\u0443\u0434\u0435\u043d\u0442\u0430", None))
+        self.middle_name.setPlaceholderText(QCoreApplication.translate("AddForm", u"\u041e\u0442\u0447\u0435\u0441\u0442\u0432\u043e", None))
+        self.groups.setPlaceholderText(QCoreApplication.translate("AddForm", u"\u041d\u043e\u043c\u0435\u0440 \u0433\u0440\u0443\u043f\u043f\u044b", None))
+        self.add_button.setText(QCoreApplication.translate("AddForm", u"\u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c \u0441\u0442\u0443\u0434\u0435\u043d\u0442\u0430", None))
     # retranslateUi
 
