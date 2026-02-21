@@ -100,7 +100,12 @@ class DBManager:
             rating_min = kwargs.get("rating_min")
             rating_max = kwargs.get("rating_max")
 
-            statement = select(Student).distinct()
+            statement = select(Student).options(
+                selectinload(Student.group),
+                selectinload(Student.scores)
+                .selectinload(Score.exam)
+                .selectinload(Exam.subject),
+            ).distinct()
 
             if group:
                 statement = statement.join(Student.group).where(Group.number == group)
