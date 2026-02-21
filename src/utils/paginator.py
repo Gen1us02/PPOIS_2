@@ -46,6 +46,15 @@ class Paginator:
 
     def update_page_label(self) -> None:
         self.__ui.current_page.setText(str(self.__current_page))
+        
+    def __update_buttons_state(self) -> None:
+        is_first = (self.__current_page == self.__min_page)
+        is_last = (self.__current_page == self.__max_page)
+
+        self.__ui.first_page_button.setEnabled(not is_first)
+        self.__ui.prev_page_button.setEnabled(not is_first)
+        self.__ui.next_page_button.setEnabled(not is_last)
+        self.__ui.last_page_button.setEnabled(not is_last)
 
     def update_max_page(self, students: List[Student]) -> None:
         pages_count = len(students) // self.__items_count
@@ -108,3 +117,5 @@ class Paginator:
                     dash_grade = QTableWidgetItem("-")
                     dash_grade.setTextAlignment(Qt.AlignCenter)
                     table.setItem(row + 3, col + 1, dash_grade)
+                    
+        self.__update_buttons_state()

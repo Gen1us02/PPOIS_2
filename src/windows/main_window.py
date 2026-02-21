@@ -31,18 +31,18 @@ class MainWindow(QMainWindow):
         self.__tabs_selection()
         self.ui.hide_tree_button.hide()
 
-        self.ui.first_page_button_main.clicked.connect(
+        self.ui.first_page_button.clicked.connect(
             lambda: self.paginator.return_to_first_page(self.students)
         )
-        self.ui.last_page_button_main.clicked.connect(
+        self.ui.last_page_button.clicked.connect(
             lambda: self.paginator.return_to_last_page(self.students)
         )
         self.ui.load_database_button.clicked.connect(self.__load_db)
         self.ui.load_file_button.clicked.connect(self.__load_file)
-        self.ui.next_page_button_main.clicked.connect(
+        self.ui.next_page_button.clicked.connect(
             lambda: self.paginator.next_page(self.students)
         )
-        self.ui.prev_page_button_main.clicked.connect(
+        self.ui.prev_page_button.clicked.connect(
             lambda: self.paginator.prev_page(self.students)
         )
         self.ui.items_count.currentTextChanged.connect(

@@ -214,17 +214,17 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_3.addWidget(self.items_count)
 
-        self.prev_page_button_main = QPushButton(self.pagination_frame_main)
-        self.prev_page_button_main.setObjectName(u"prev_page_button_main")
-        self.prev_page_button_main.setMaximumSize(QSize(40, 16777215))
+        self.prev_page_button = QPushButton(self.pagination_frame_main)
+        self.prev_page_button.setObjectName(u"prev_page_button")
+        self.prev_page_button.setMaximumSize(QSize(40, 16777215))
 
-        self.horizontalLayout_3.addWidget(self.prev_page_button_main)
+        self.horizontalLayout_3.addWidget(self.prev_page_button)
 
-        self.first_page_button_main = QPushButton(self.pagination_frame_main)
-        self.first_page_button_main.setObjectName(u"first_page_button_main")
-        self.first_page_button_main.setMaximumSize(QSize(150, 16777215))
+        self.first_page_button = QPushButton(self.pagination_frame_main)
+        self.first_page_button.setObjectName(u"first_page_button")
+        self.first_page_button.setMaximumSize(QSize(150, 16777215))
 
-        self.horizontalLayout_3.addWidget(self.first_page_button_main)
+        self.horizontalLayout_3.addWidget(self.first_page_button)
 
         self.current_page = QLabel(self.pagination_frame_main)
         self.current_page.setObjectName(u"current_page")
@@ -238,17 +238,17 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_3.addWidget(self.current_page)
 
-        self.last_page_button_main = QPushButton(self.pagination_frame_main)
-        self.last_page_button_main.setObjectName(u"last_page_button_main")
-        self.last_page_button_main.setMaximumSize(QSize(150, 16777215))
+        self.last_page_button = QPushButton(self.pagination_frame_main)
+        self.last_page_button.setObjectName(u"last_page_button")
+        self.last_page_button.setMaximumSize(QSize(150, 16777215))
 
-        self.horizontalLayout_3.addWidget(self.last_page_button_main)
+        self.horizontalLayout_3.addWidget(self.last_page_button)
 
-        self.next_page_button_main = QPushButton(self.pagination_frame_main)
-        self.next_page_button_main.setObjectName(u"next_page_button_main")
-        self.next_page_button_main.setMaximumSize(QSize(40, 16777215))
+        self.next_page_button = QPushButton(self.pagination_frame_main)
+        self.next_page_button.setObjectName(u"next_page_button")
+        self.next_page_button.setMaximumSize(QSize(40, 16777215))
 
-        self.horizontalLayout_3.addWidget(self.next_page_button_main)
+        self.horizontalLayout_3.addWidget(self.next_page_button)
 
 
         self.verticalLayout_3.addWidget(self.pagination_frame_main)
@@ -265,7 +265,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
 
         self.work_tab_widget.setCurrentIndex(1)
-        self.table_tab_widget.setCurrentIndex(1)
+        self.table_tab_widget.setCurrentIndex(2)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -298,11 +298,11 @@ class Ui_MainWindow(object):
         self.items_count.setItemText(2, QCoreApplication.translate("MainWindow", u"15", None))
 
         self.items_count.setPlaceholderText(QCoreApplication.translate("MainWindow", u"\u041a\u043e\u043b\u0438\u0447\u0435\u0441\u0442\u0432\u043e \u0437\u0430\u043f\u0438\u0441\u0435\u0439 \u043d\u0430 \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0435", None))
-        self.prev_page_button_main.setText(QCoreApplication.translate("MainWindow", u"<", None))
-        self.first_page_button_main.setText(QCoreApplication.translate("MainWindow", u"\u041f\u0435\u0440\u0432\u0430\u044f \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0430", None))
+        self.prev_page_button.setText(QCoreApplication.translate("MainWindow", u"<", None))
+        self.first_page_button.setText(QCoreApplication.translate("MainWindow", u"\u041f\u0435\u0440\u0432\u0430\u044f \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0430", None))
         self.current_page.setText(QCoreApplication.translate("MainWindow", u"1", None))
-        self.last_page_button_main.setText(QCoreApplication.translate("MainWindow", u"\u041f\u043e\u0441\u043b\u0435\u0434\u043d\u044f\u044f \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0430", None))
-        self.next_page_button_main.setText(QCoreApplication.translate("MainWindow", u">", None))
+        self.last_page_button.setText(QCoreApplication.translate("MainWindow", u"\u041f\u043e\u0441\u043b\u0435\u0434\u043d\u044f\u044f \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0430", None))
+        self.next_page_button.setText(QCoreApplication.translate("MainWindow", u">", None))
         self.table_tab_widget.setTabText(self.table_tab_widget.indexOf(self.student_table_tab), QCoreApplication.translate("MainWindow", u"\u0422\u0430\u0431\u043b\u0438\u0446\u0430", None))
     # retranslateUi
 
