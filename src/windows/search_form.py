@@ -97,7 +97,11 @@ class SearchForm(QDialog):
 
     def __no_data_setup(self) -> None:
         label = self.ui.no_data_label
-        label.setPixmap(QPixmap("images/no-data.png"))
+        pixmap = QPixmap("images/no-data.png")
+        scaled_pixmap = pixmap.scaled(
+            400, 400, Qt.KeepAspectRatio, Qt.SmoothTransformation
+        )
+        label.setPixmap(scaled_pixmap)
         label.setScaledContents(False)
         self.ui.tabWidget.setCurrentWidget(self.ui.no_data_search_tab)
 
