@@ -4,7 +4,7 @@ class Validator:
         if Validator.is_empty(fio_part):
             return False
         
-        if Validator.is_empty(fio_part):
+        if Validator.contains_number(fio_part):
             return False
         
         return True
