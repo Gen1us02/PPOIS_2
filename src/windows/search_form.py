@@ -157,7 +157,24 @@ class SearchForm(QDialog):
                 group,
             )
         ):
-            errors.append("Введите данные для поиска")
+            searched_students = self.db.get_all_records()
+            self.searched_students = searched_students
+
+            QMessageBox.information(
+                self,
+                "Найденные записи",
+                f"Количество найденных записей: {len(searched_students)}"
+                if len(searched_students) > 0
+                else "Записей не найдено",
+            )
+
+            self.ui.tabWidget.setCurrentWidget(
+                self.ui.students_search_table_tab
+            ) if len(searched_students) > 0 else self.__no_data_setup()
+            self.paginator.update_max_page(self.searched_students)
+            self.paginator.display_current_page(self.searched_students)
+
+            return
 
         if errors:
             QMessageBox.critical(self, "Ошибка ввода", "\n".join(errors))
