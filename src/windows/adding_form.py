@@ -10,6 +10,7 @@ class AddForm(QDialog):
         self.db = db_manager
         self.ui = Ui_AddForm()
         self.ui.setupUi(self)
+        self.setWindowTitle("Добавление")
 
         self.__setup_groups()
 

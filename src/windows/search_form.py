@@ -13,6 +13,7 @@ class SearchForm(QDialog):
         self.db = db_manager
         self.ui = Ui_SearchForm()
         self.ui.setupUi(self)
+        self.setWindowTitle("Поиск")
 
         self.paginator = Paginator(db_manager, self.ui)
 

@@ -9,6 +9,7 @@ class DeleteForm(QDialog):
         self.db = db_manager
         self.ui = Ui_DeleteForm()
         self.ui.setupUi(self)
+        self.setWindowTitle("Удаление")
 
         self.__setup_groups()
         self.__setup_subjects()

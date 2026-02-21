@@ -24,6 +24,7 @@ class MainWindow(QMainWindow):
         self.db = db_manager
         self.students = []
         self.paginator = Paginator(db_manager, self.ui)
+        self.setWindowTitle("Главное окно")
 
         self.__no_data_setup()
         self.__setup_table()
