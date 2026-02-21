@@ -101,6 +101,12 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addWidget(self.search_students_button)
 
+        self.tree_button = QPushButton(self.control_frame)
+        self.tree_button.setObjectName(u"tree_button")
+        self.tree_button.setMinimumSize(QSize(0, 40))
+
+        self.verticalLayout.addWidget(self.tree_button)
+
         self.delete_students_button = QPushButton(self.control_frame)
         self.delete_students_button.setObjectName(u"delete_students_button")
         self.delete_students_button.setMinimumSize(QSize(0, 40))
@@ -248,7 +254,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
 
         self.work_tab_widget.setCurrentIndex(0)
-        self.table_tab_widget.setCurrentIndex(2)
+        self.table_tab_widget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -262,6 +268,7 @@ class Ui_MainWindow(object):
         self.work_tab_widget.setTabText(self.work_tab_widget.indexOf(self.data_load_tab), QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0430 \u0434\u0430\u043d\u043d\u044b\u0445", None))
         self.db_work_label.setText(QCoreApplication.translate("MainWindow", u"\u0420\u0430\u0431\u043e\u0442\u0430 \u0441 \u0437\u0430\u043f\u0438\u0441\u044f\u043c\u0438", None))
         self.search_students_button.setText(QCoreApplication.translate("MainWindow", u"\u041f\u043e\u0438\u0441\u043a \u0441\u0442\u0443\u0434\u0435\u043d\u0442\u043e\u0432", None))
+        self.tree_button.setText(QCoreApplication.translate("MainWindow", u"\u041f\u043e\u043a\u0430\u0437\u0430\u0442\u044c \u0434\u0435\u0440\u0435\u0432\u043e \u0441\u0442\u0443\u0434\u0435\u043d\u0442\u043e\u0432", None))
         self.delete_students_button.setText(QCoreApplication.translate("MainWindow", u"\u0423\u0434\u0430\u043b\u0435\u043d\u0438\u0435 \u0441\u0442\u0443\u0434\u0435\u043d\u0442\u043e\u0432", None))
         self.add_students_button.setText(QCoreApplication.translate("MainWindow", u"\u0414\u043e\u0431\u0430\u0432\u043b\u0435\u043d\u0438\u0435 \u0441\u0442\u0443\u0434\u0435\u043d\u0442\u043e\u0432", None))
         self.work_tab_widget.setTabText(self.work_tab_widget.indexOf(self.data_work_tab), QCoreApplication.translate("MainWindow", u"\u0420\u0430\u0431\u043e\u0442\u0430 \u0441 \u0437\u0430\u043f\u0438\u0441\u044f\u043c\u0438", None))

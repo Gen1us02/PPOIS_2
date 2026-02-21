@@ -35,13 +35,17 @@ class Student(Base):
     group_id: Mapped[int] = mapped_column(ForeignKey("groups.id", ondelete="CASCADE"))
     group: Mapped["Group"] = relationship(back_populates="students")
     scores: Mapped[List["Score"]] = relationship(back_populates="student")
-    
+
     @property
     def full_name(self) -> str:
         parts = [self.last_name, self.first_name]
         if self.middle_name:
             parts.append(self.middle_name)
         return " ".join(parts)
+
+    @property
+    def avg_grade(self) -> float:
+        return round(sum(self.scores) / len(self.scores), 2)
 
 
 class Exam(Base):

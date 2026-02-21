@@ -15,28 +15,21 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QAbstractSpinBox, QApplication, QComboBox, QDoubleSpinBox,
-    QFrame, QGridLayout, QHBoxLayout, QLabel,
-    QMainWindow, QPushButton, QSizePolicy, QSpinBox,
+from PySide6.QtWidgets import (QAbstractSpinBox, QApplication, QComboBox, QDialog,
+    QDoubleSpinBox, QFrame, QGridLayout, QHBoxLayout,
+    QLabel, QPushButton, QSizePolicy, QSpinBox,
     QVBoxLayout, QWidget)
 
-class Ui_DeleteWindow(object):
-    def setupUi(self, DeleteWindow):
-        if not DeleteWindow.objectName():
-            DeleteWindow.setObjectName(u"DeleteWindow")
-        DeleteWindow.resize(400, 400)
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(DeleteWindow.sizePolicy().hasHeightForWidth())
-        DeleteWindow.setSizePolicy(sizePolicy)
-        DeleteWindow.setMinimumSize(QSize(400, 400))
-        DeleteWindow.setMaximumSize(QSize(400, 400))
-        self.centralwidget = QWidget(DeleteWindow)
-        self.centralwidget.setObjectName(u"centralwidget")
-        self.verticalLayout = QVBoxLayout(self.centralwidget)
+class Ui_DeleteForm(object):
+    def setupUi(self, DeleteForm):
+        if not DeleteForm.objectName():
+            DeleteForm.setObjectName(u"DeleteForm")
+        DeleteForm.resize(400, 400)
+        DeleteForm.setMinimumSize(QSize(400, 400))
+        DeleteForm.setMaximumSize(QSize(400, 400))
+        self.verticalLayout = QVBoxLayout(DeleteForm)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.form_frame = QFrame(self.centralwidget)
+        self.form_frame = QFrame(DeleteForm)
         self.form_frame.setObjectName(u"form_frame")
         self.form_frame.setMinimumSize(QSize(300, 300))
         self.form_frame.setMaximumSize(QSize(16777215, 16777215))
@@ -150,7 +143,7 @@ class Ui_DeleteWindow(object):
 
         self.verticalLayout.addWidget(self.form_frame)
 
-        self.delete_button_frame = QFrame(self.centralwidget)
+        self.delete_button_frame = QFrame(DeleteForm)
         self.delete_button_frame.setObjectName(u"delete_button_frame")
         self.delete_button_frame.setMaximumSize(QSize(16777215, 60))
         self.delete_button_frame.setFrameShape(QFrame.Shape.StyledPanel)
@@ -166,24 +159,23 @@ class Ui_DeleteWindow(object):
 
         self.verticalLayout.addWidget(self.delete_button_frame)
 
-        DeleteWindow.setCentralWidget(self.centralwidget)
 
-        self.retranslateUi(DeleteWindow)
+        self.retranslateUi(DeleteForm)
 
-        QMetaObject.connectSlotsByName(DeleteWindow)
+        QMetaObject.connectSlotsByName(DeleteForm)
     # setupUi
 
-    def retranslateUi(self, DeleteWindow):
-        DeleteWindow.setWindowTitle(QCoreApplication.translate("DeleteWindow", u"MainWindow", None))
-        self.deleting_label.setText(QCoreApplication.translate("DeleteWindow", u"\u0423\u0434\u0430\u043b\u0435\u043d\u0438\u0435 \u0441\u0442\u0443\u0434\u0435\u043d\u0442\u043e\u0432", None))
-        self.avg_rating_label.setText(QCoreApplication.translate("DeleteWindow", u"\u0421\u0440\u0435\u0434\u043d\u0438\u0439 \u0431\u0430\u043b\u043b \u043f\u043e \u043f\u0440\u0435\u0434\u043c\u0435\u0442\u0443", None))
-        self.avg_min_label.setText(QCoreApplication.translate("DeleteWindow", u"\u041d\u0438\u0436\u043d\u0438\u0439 \u043f\u0440\u0435\u0434\u0435\u043b", None))
-        self.avg_max_label.setText(QCoreApplication.translate("DeleteWindow", u"\u0412\u0435\u0440\u0445\u043d\u0438\u0439 \u043f\u0440\u0435\u0434\u0435\u043b", None))
-        self.rating_label.setText(QCoreApplication.translate("DeleteWindow", u"\u0411\u0430\u043b\u043b \u043f\u043e \u043f\u0440\u0435\u0434\u043c\u0435\u0442\u0443", None))
-        self.rating_max_label.setText(QCoreApplication.translate("DeleteWindow", u"\u0412\u0435\u0440\u0445\u043d\u0438\u0439 \u043f\u0440\u0435\u0434\u0435\u043b", None))
-        self.rating_min_label.setText(QCoreApplication.translate("DeleteWindow", u"\u041d\u0438\u0436\u043d\u0438\u0439 \u043f\u0440\u0435\u0434\u0435\u043b", None))
-        self.groups_list.setPlaceholderText(QCoreApplication.translate("DeleteWindow", u"\u0421\u043f\u0438\u0441\u043e\u043a \u0433\u0440\u0443\u043f\u043f", None))
-        self.subject_list.setPlaceholderText(QCoreApplication.translate("DeleteWindow", u"\u0421\u043f\u0438\u0441\u043e\u043a \u043f\u0440\u0435\u0434\u043c\u0435\u0442\u043e\u0432", None))
-        self.delete_button.setText(QCoreApplication.translate("DeleteWindow", u"\u0423\u0434\u0430\u043b\u0438\u0442\u044c \u0441\u0442\u0443\u0434\u0435\u043d\u0442\u043e\u0432", None))
+    def retranslateUi(self, DeleteForm):
+        DeleteForm.setWindowTitle(QCoreApplication.translate("DeleteForm", u"Dialog", None))
+        self.deleting_label.setText(QCoreApplication.translate("DeleteForm", u"\u0423\u0434\u0430\u043b\u0435\u043d\u0438\u0435 \u0441\u0442\u0443\u0434\u0435\u043d\u0442\u043e\u0432", None))
+        self.avg_rating_label.setText(QCoreApplication.translate("DeleteForm", u"\u0421\u0440\u0435\u0434\u043d\u0438\u0439 \u0431\u0430\u043b\u043b \u0441\u0442\u0443\u0434\u0435\u043d\u0442\u0430", None))
+        self.avg_min_label.setText(QCoreApplication.translate("DeleteForm", u"\u041d\u0438\u0436\u043d\u0438\u0439 \u043f\u0440\u0435\u0434\u0435\u043b", None))
+        self.avg_max_label.setText(QCoreApplication.translate("DeleteForm", u"\u0412\u0435\u0440\u0445\u043d\u0438\u0439 \u043f\u0440\u0435\u0434\u0435\u043b", None))
+        self.rating_label.setText(QCoreApplication.translate("DeleteForm", u"\u0411\u0430\u043b\u043b \u043f\u043e \u043f\u0440\u0435\u0434\u043c\u0435\u0442\u0443", None))
+        self.rating_max_label.setText(QCoreApplication.translate("DeleteForm", u"\u0412\u0435\u0440\u0445\u043d\u0438\u0439 \u043f\u0440\u0435\u0434\u0435\u043b", None))
+        self.rating_min_label.setText(QCoreApplication.translate("DeleteForm", u"\u041d\u0438\u0436\u043d\u0438\u0439 \u043f\u0440\u0435\u0434\u0435\u043b", None))
+        self.groups_list.setPlaceholderText(QCoreApplication.translate("DeleteForm", u"\u0421\u043f\u0438\u0441\u043e\u043a \u0433\u0440\u0443\u043f\u043f", None))
+        self.subject_list.setPlaceholderText(QCoreApplication.translate("DeleteForm", u"\u0421\u043f\u0438\u0441\u043e\u043a \u043f\u0440\u0435\u0434\u043c\u0435\u0442\u043e\u0432", None))
+        self.delete_button.setText(QCoreApplication.translate("DeleteForm", u"\u0423\u0434\u0430\u043b\u0438\u0442\u044c \u0441\u0442\u0443\u0434\u0435\u043d\u0442\u043e\u0432", None))
     # retranslateUi
 
