@@ -50,22 +50,20 @@ class DBManager:
             return exams
 
     def __get_group_id(self, group_number: str, session: Session) -> int:
-        with session:
-            statement = select(Group.id).where(Group.number == group_number)
-            group_id = session.scalars(statement).one()
+        statement = select(Group.id).where(Group.number == group_number)
+        group_id = session.scalars(statement).one()
 
-            return group_id
+        return group_id
 
     def __get_exam_id(self, exam: str, group_id: int, session: Session) -> int:
-        with session:
-            statement = (
-                select(Exam.id)
-                .join(Subject, Exam.subject_id == Subject.id)
-                .where(Subject.name == exam, Exam.group_id == group_id)
-            )
-            exam_id = session.scalars(statement).one()
+        statement = (
+            select(Exam.id)
+            .join(Subject, Exam.subject_id == Subject.id)
+            .where(Subject.name == exam, Exam.group_id == group_id)
+        )
+        exam_id = session.scalars(statement).one()
 
-            return exam_id
+        return exam_id
 
     def add_student(self, **kwargs) -> None:
         with self.session() as session:
@@ -100,12 +98,16 @@ class DBManager:
             rating_min = kwargs.get("rating_min")
             rating_max = kwargs.get("rating_max")
 
-            statement = select(Student).options(
-                selectinload(Student.group),
-                selectinload(Student.scores)
-                .selectinload(Score.exam)
-                .selectinload(Exam.subject),
-            ).distinct()
+            statement = (
+                select(Student)
+                .options(
+                    selectinload(Student.group),
+                    selectinload(Student.scores)
+                    .selectinload(Score.exam)
+                    .selectinload(Exam.subject),
+                )
+                .distinct()
+            )
 
             if group:
                 statement = statement.join(Student.group).where(Group.number == group)

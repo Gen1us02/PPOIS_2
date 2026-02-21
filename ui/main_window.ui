@@ -24,7 +24,7 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="data_load_tab">
        <attribute name="title">
@@ -167,7 +167,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="tree_button">
+            <widget class="QPushButton" name="show_tree_button">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -176,6 +176,19 @@
              </property>
              <property name="text">
               <string>Показать дерево студентов</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="hide_tree_button">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Скрыть дерево студентов</string>
              </property>
             </widget>
            </item>
@@ -215,7 +228,7 @@
     <item>
      <widget class="QTabWidget" name="table_tab_widget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="no_data_tab">
        <attribute name="title">
@@ -240,13 +253,7 @@
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayout_5">
         <item>
-         <widget class="QTreeWidget" name="students_tree">
-          <column>
-           <property name="text">
-            <string notr="true">1</string>
-           </property>
-          </column>
-         </widget>
+         <widget class="QTreeWidget" name="students_tree"/>
         </item>
        </layout>
       </widget>

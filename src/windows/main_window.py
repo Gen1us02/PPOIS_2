@@ -1,4 +1,10 @@
-from PySide6.QtWidgets import QMainWindow, QTableWidgetItem, QTableWidget
+from PySide6.QtWidgets import (
+    QMainWindow,
+    QTableWidgetItem,
+    QTableWidget,
+    QTreeWidgetItem,
+    QHeaderView,
+)
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QPixmap
 from src.interface.ui.main_window_ui import Ui_MainWindow
@@ -7,6 +13,7 @@ from src.utils.paginator import Paginator
 from .adding_form import AddForm
 from .deleting_form import DeleteForm
 from .search_form import SearchForm
+from collections import defaultdict
 
 
 class MainWindow(QMainWindow):
@@ -21,6 +28,7 @@ class MainWindow(QMainWindow):
         self.__no_data_setup()
         self.__setup_table()
         self.__tabs_selection()
+        self.ui.hide_tree_button.hide()
 
         self.ui.first_page_button_main.clicked.connect(
             lambda: self.paginator.return_to_first_page(self.students)
@@ -42,6 +50,8 @@ class MainWindow(QMainWindow):
         self.ui.add_students_button.clicked.connect(self.__adding_student)
         self.ui.delete_students_button.clicked.connect(self.__deleting_student)
         self.ui.search_students_button.clicked.connect(self.__search_students)
+        self.ui.show_tree_button.clicked.connect(self.__create_tree)
+        self.ui.hide_tree_button.clicked.connect(self.__hide_tree)
 
     def __setup_table(self) -> None:
         table = self.ui.student_table
@@ -113,6 +123,7 @@ class MainWindow(QMainWindow):
     def __load_db(self) -> None:
         self.ui.table_tab_widget.setCurrentWidget(self.ui.student_table_tab)
         self.ui.work_tab_widget.setCurrentWidget(self.ui.data_work_tab)
+        self.ui.hide_tree_button.hide()
 
         students = self.db.get_all_records()
         self.students = students
@@ -132,3 +143,38 @@ class MainWindow(QMainWindow):
     def __search_students(self) -> None:
         search_form = SearchForm(self.db)
         search_form.exec()
+
+    def __create_tree(self) -> None:
+        tree = self.ui.students_tree
+        tree.setHeaderLabel("Дерево студентов")
+        tree.header().setDefaultAlignment(Qt.AlignCenter)
+        font = tree.header().font()
+        font.setPointSize(12)
+        font.setBold(True)
+        tree.header().setFont(font)
+        tree.clear()
+
+        students_in_groups = defaultdict(list)
+        for student in self.students:
+            group_num = student.group.number
+            students_in_groups[group_num].append(student)
+
+        for group, students in students_in_groups.items():
+            group_item = QTreeWidgetItem(tree)
+            group_item.setText(0, group)
+
+            for student in students:
+                student_item = QTreeWidgetItem(group_item)
+                student_item.setText(0, student.full_name)
+
+        tree.header().setSectionResizeMode(QHeaderView.ResizeToContents)
+        tree.header().setStretchLastSection(False)
+        tree.expandAll()
+        self.ui.table_tab_widget.setCurrentWidget(self.ui.student_tree_tab)
+        self.ui.show_tree_button.hide()
+        self.ui.hide_tree_button.show()
+        
+    def __hide_tree(self) -> None:
+        self.ui.show_tree_button.show()
+        self.ui.hide_tree_button.hide()
+        self.ui.table_tab_widget.setCurrentWidget(self.ui.student_table_tab)
