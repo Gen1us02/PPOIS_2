@@ -140,6 +140,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
         self.no_data_label_main = QLabel(self.no_data_tab)
         self.no_data_label_main.setObjectName(u"no_data_label_main")
+        self.no_data_label_main.setMinimumSize(QSize(400, 400))
         self.no_data_label_main.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.verticalLayout_5.addWidget(self.no_data_label_main)
@@ -265,7 +266,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
 
         self.work_tab_widget.setCurrentIndex(1)
-        self.table_tab_widget.setCurrentIndex(2)
+        self.table_tab_widget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
