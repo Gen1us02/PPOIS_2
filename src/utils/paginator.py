@@ -1,12 +1,13 @@
 from typing import List
 from PySide6.QtWidgets import QTableWidgetItem
+from PySide6.QtCore import Qt
 from src.db.db_manager import DBManager
 from src.db.models import Student
 
 
 class Paginator:
     MAX_PAGE_NUM = 1000000000000000000000
-    
+
     def __init__(self, db: DBManager, ui: object) -> None:
         self.__ui = ui
         self.__db = db
@@ -14,7 +15,7 @@ class Paginator:
         self.__items_count = int(self.__ui.items_count.currentText())
         self.__min_page = 1
         self.__max_page = self.MAX_PAGE_NUM
-        
+
     def return_to_first_page(self, students: List[Student]) -> None:
         self.__current_page = self.__min_page
         self.update_page_label()
@@ -50,9 +51,7 @@ class Paginator:
         pages_count = len(students) // self.__items_count
 
         self.__max_page = (
-            pages_count
-            if len(students) % self.__items_count == 0
-            else pages_count + 1
+            pages_count if len(students) % self.__items_count == 0 else pages_count + 1
         )
 
         if self.__current_page > self.__max_page:
@@ -72,8 +71,13 @@ class Paginator:
         for row, student in enumerate(target_students):
             table.insertRow(row + 3)
 
-            table.setItem(row + 3, 0, QTableWidgetItem(student.full_name))
-            table.setItem(row + 3, 1, QTableWidgetItem(student.group.number))
+            fio_item = QTableWidgetItem(student.full_name)
+            fio_item.setTextAlignment(Qt.AlignCenter)
+            table.setItem(row + 3, 0, fio_item)
+
+            group_item = QTableWidgetItem(student.group.number)
+            group_item.setTextAlignment(Qt.AlignCenter)
+            table.setItem(row + 3, 1, group_item)
 
             grades_by_subject = {}
             for score in student.scores:
@@ -85,8 +89,22 @@ class Paginator:
             for i, subject_name in enumerate(group_exams):
                 col = 2 + i * 2
                 if col + 1 < table.columnCount():
-                    table.setItem(row + 3, col, QTableWidgetItem(subject_name))
+                    subj_item = QTableWidgetItem(subject_name)
+                    subj_item.setTextAlignment(Qt.AlignCenter)
+                    table.setItem(row + 3, col, subj_item)
+
                     grade = grades_by_subject.get(subject_name, "")
-                    table.setItem(
-                        row + 3, col + 1, QTableWidgetItem(str(grade) if grade else "")
-                    )
+                    grade_item = QTableWidgetItem(str(grade) if grade else "")
+                    grade_item.setTextAlignment(Qt.AlignCenter)
+                    table.setItem(row + 3, col + 1, grade_item)
+
+            for i in range(len(group_exams), 5):
+                col = 2 + i * 2
+                if col + 1 < table.columnCount():
+                    dash_subj = QTableWidgetItem("-")
+                    dash_subj.setTextAlignment(Qt.AlignCenter)
+                    table.setItem(row + 3, col, dash_subj)
+
+                    dash_grade = QTableWidgetItem("-")
+                    dash_grade.setTextAlignment(Qt.AlignCenter)
+                    table.setItem(row + 3, col + 1, dash_grade)
