@@ -90,3 +90,7 @@ class AddForm(QDialog):
         }
 
         self.db.add_student(**student_data)
+
+        QMessageBox.information(
+            self, "Добавление студента", "Студент был успешно добавлен"
+        )
