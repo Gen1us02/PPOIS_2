@@ -11,4 +11,3 @@ database = os.getenv("DB_NAME")
 engine = create_engine(
     url=f"postgresql+psycopg2://{user}:{password}@localhost/{database}"
 )
-    

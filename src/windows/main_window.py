@@ -173,7 +173,7 @@ class MainWindow(QMainWindow):
         self.ui.table_tab_widget.setCurrentWidget(self.ui.student_tree_tab)
         self.ui.show_tree_button.hide()
         self.ui.hide_tree_button.show()
-        
+
     def __hide_tree(self) -> None:
         self.ui.show_tree_button.show()
         self.ui.hide_tree_button.hide()
