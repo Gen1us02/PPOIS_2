@@ -129,7 +129,7 @@ class DBManager:
                     rating_cond = and_(*conditions)
                     statement = statement.where(
                         exists().where(
-                            rating_sbq.c.student_id == Student.id & rating_cond
+                            (rating_sbq.c.student_id == Student.id) & rating_cond
                         )
                     )
 

@@ -15,23 +15,20 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QAbstractSpinBox, QApplication, QComboBox, QDoubleSpinBox,
-    QFrame, QGridLayout, QHBoxLayout, QHeaderView,
-    QLabel, QMainWindow, QPushButton, QSizePolicy,
+from PySide6.QtWidgets import (QAbstractSpinBox, QApplication, QComboBox, QDialog,
+    QDoubleSpinBox, QFrame, QGridLayout, QHBoxLayout,
+    QHeaderView, QLabel, QPushButton, QSizePolicy,
     QSpinBox, QTabWidget, QTableWidget, QTableWidgetItem,
     QVBoxLayout, QWidget)
 
-class Ui_SearchWindow(object):
-    def setupUi(self, SearchWindow):
-        if not SearchWindow.objectName():
-            SearchWindow.setObjectName(u"SearchWindow")
-        SearchWindow.resize(1070, 600)
-        SearchWindow.setMinimumSize(QSize(0, 0))
-        self.centralwidget = QWidget(SearchWindow)
-        self.centralwidget.setObjectName(u"centralwidget")
-        self.horizontalLayout_3 = QHBoxLayout(self.centralwidget)
+class Ui_SearchForm(object):
+    def setupUi(self, SearchForm):
+        if not SearchForm.objectName():
+            SearchForm.setObjectName(u"SearchForm")
+        SearchForm.resize(1070, 600)
+        self.horizontalLayout_3 = QHBoxLayout(SearchForm)
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.filters_frame = QFrame(self.centralwidget)
+        self.filters_frame = QFrame(SearchForm)
         self.filters_frame.setObjectName(u"filters_frame")
         self.filters_frame.setMinimumSize(QSize(0, 300))
         self.filters_frame.setFrameShape(QFrame.Shape.StyledPanel)
@@ -60,37 +57,37 @@ class Ui_SearchWindow(object):
         self.gridLayout_6 = QGridLayout(self.avg_rating_widget)
         self.gridLayout_6.setObjectName(u"gridLayout_6")
         self.gridLayout_6.setVerticalSpacing(0)
-        self.avg_min_label_3 = QLabel(self.avg_rating_widget)
-        self.avg_min_label_3.setObjectName(u"avg_min_label_3")
-        self.avg_min_label_3.setMinimumSize(QSize(10, 10))
-        self.avg_min_label_3.setMaximumSize(QSize(16777215, 20))
+        self.avg_min_label = QLabel(self.avg_rating_widget)
+        self.avg_min_label.setObjectName(u"avg_min_label")
+        self.avg_min_label.setMinimumSize(QSize(10, 10))
+        self.avg_min_label.setMaximumSize(QSize(16777215, 20))
 
-        self.gridLayout_6.addWidget(self.avg_min_label_3, 0, 0, 1, 1)
+        self.gridLayout_6.addWidget(self.avg_min_label, 0, 0, 1, 1)
 
-        self.avg_max_label_3 = QLabel(self.avg_rating_widget)
-        self.avg_max_label_3.setObjectName(u"avg_max_label_3")
-        self.avg_max_label_3.setMaximumSize(QSize(16777215, 20))
+        self.avg_max_label = QLabel(self.avg_rating_widget)
+        self.avg_max_label.setObjectName(u"avg_max_label")
+        self.avg_max_label.setMaximumSize(QSize(16777215, 20))
 
-        self.gridLayout_6.addWidget(self.avg_max_label_3, 0, 1, 1, 1)
+        self.gridLayout_6.addWidget(self.avg_max_label, 0, 1, 1, 1)
 
-        self.avg_rating_max_3 = QDoubleSpinBox(self.avg_rating_widget)
-        self.avg_rating_max_3.setObjectName(u"avg_rating_max_3")
-        self.avg_rating_max_3.setMinimumSize(QSize(0, 30))
-        self.avg_rating_max_3.setDecimals(1)
-        self.avg_rating_max_3.setMaximum(10.000000000000000)
-        self.avg_rating_max_3.setSingleStep(0.100000000000000)
-        self.avg_rating_max_3.setStepType(QAbstractSpinBox.StepType.AdaptiveDecimalStepType)
+        self.avg_rating_max = QDoubleSpinBox(self.avg_rating_widget)
+        self.avg_rating_max.setObjectName(u"avg_rating_max")
+        self.avg_rating_max.setMinimumSize(QSize(0, 30))
+        self.avg_rating_max.setDecimals(1)
+        self.avg_rating_max.setMaximum(10.000000000000000)
+        self.avg_rating_max.setSingleStep(0.100000000000000)
+        self.avg_rating_max.setStepType(QAbstractSpinBox.StepType.AdaptiveDecimalStepType)
 
-        self.gridLayout_6.addWidget(self.avg_rating_max_3, 1, 1, 1, 1)
+        self.gridLayout_6.addWidget(self.avg_rating_max, 1, 1, 1, 1)
 
-        self.avg_rating_min_3 = QDoubleSpinBox(self.avg_rating_widget)
-        self.avg_rating_min_3.setObjectName(u"avg_rating_min_3")
-        self.avg_rating_min_3.setMinimumSize(QSize(0, 30))
-        self.avg_rating_min_3.setDecimals(1)
-        self.avg_rating_min_3.setMaximum(10.000000000000000)
-        self.avg_rating_min_3.setSingleStep(0.100000000000000)
+        self.avg_rating_min = QDoubleSpinBox(self.avg_rating_widget)
+        self.avg_rating_min.setObjectName(u"avg_rating_min")
+        self.avg_rating_min.setMinimumSize(QSize(0, 30))
+        self.avg_rating_min.setDecimals(1)
+        self.avg_rating_min.setMaximum(10.000000000000000)
+        self.avg_rating_min.setSingleStep(0.100000000000000)
 
-        self.gridLayout_6.addWidget(self.avg_rating_min_3, 1, 0, 1, 1)
+        self.gridLayout_6.addWidget(self.avg_rating_min, 1, 0, 1, 1)
 
 
         self.verticalLayout.addWidget(self.avg_rating_widget)
@@ -108,31 +105,31 @@ class Ui_SearchWindow(object):
         self.gridLayout_5 = QGridLayout(self.rating_widget)
         self.gridLayout_5.setObjectName(u"gridLayout_5")
         self.gridLayout_5.setVerticalSpacing(0)
-        self.rating_min_label_3 = QLabel(self.rating_widget)
-        self.rating_min_label_3.setObjectName(u"rating_min_label_3")
-        self.rating_min_label_3.setMaximumSize(QSize(16777215, 20))
+        self.rating_min_label = QLabel(self.rating_widget)
+        self.rating_min_label.setObjectName(u"rating_min_label")
+        self.rating_min_label.setMaximumSize(QSize(16777215, 20))
 
-        self.gridLayout_5.addWidget(self.rating_min_label_3, 1, 0, 1, 1)
+        self.gridLayout_5.addWidget(self.rating_min_label, 1, 0, 1, 1)
 
-        self.rating_max_label_3 = QLabel(self.rating_widget)
-        self.rating_max_label_3.setObjectName(u"rating_max_label_3")
-        self.rating_max_label_3.setMaximumSize(QSize(16777215, 20))
+        self.rating_max_label = QLabel(self.rating_widget)
+        self.rating_max_label.setObjectName(u"rating_max_label")
+        self.rating_max_label.setMaximumSize(QSize(16777215, 20))
 
-        self.gridLayout_5.addWidget(self.rating_max_label_3, 1, 1, 1, 1)
+        self.gridLayout_5.addWidget(self.rating_max_label, 1, 1, 1, 1)
 
-        self.rating_min_3 = QSpinBox(self.rating_widget)
-        self.rating_min_3.setObjectName(u"rating_min_3")
-        self.rating_min_3.setMinimumSize(QSize(0, 30))
-        self.rating_min_3.setMaximum(10)
+        self.rating_min = QSpinBox(self.rating_widget)
+        self.rating_min.setObjectName(u"rating_min")
+        self.rating_min.setMinimumSize(QSize(0, 30))
+        self.rating_min.setMaximum(10)
 
-        self.gridLayout_5.addWidget(self.rating_min_3, 2, 0, 1, 1)
+        self.gridLayout_5.addWidget(self.rating_min, 2, 0, 1, 1)
 
-        self.rating_max_3 = QSpinBox(self.rating_widget)
-        self.rating_max_3.setObjectName(u"rating_max_3")
-        self.rating_max_3.setMinimumSize(QSize(0, 30))
-        self.rating_max_3.setMaximum(10)
+        self.rating_max = QSpinBox(self.rating_widget)
+        self.rating_max.setObjectName(u"rating_max")
+        self.rating_max.setMinimumSize(QSize(0, 30))
+        self.rating_max.setMaximum(10)
 
-        self.gridLayout_5.addWidget(self.rating_max_3, 2, 1, 1, 1)
+        self.gridLayout_5.addWidget(self.rating_max, 2, 1, 1, 1)
 
 
         self.verticalLayout.addWidget(self.rating_widget)
@@ -167,7 +164,7 @@ class Ui_SearchWindow(object):
 
         self.horizontalLayout_3.addWidget(self.filters_frame)
 
-        self.tabWidget = QTabWidget(self.centralwidget)
+        self.tabWidget = QTabWidget(SearchForm)
         self.tabWidget.setObjectName(u"tabWidget")
         self.no_data_search_tab = QWidget()
         self.no_data_search_tab.setObjectName(u"no_data_search_tab")
@@ -277,45 +274,44 @@ class Ui_SearchWindow(object):
 
         self.horizontalLayout_3.addWidget(self.tabWidget)
 
-        SearchWindow.setCentralWidget(self.centralwidget)
 
-        self.retranslateUi(SearchWindow)
+        self.retranslateUi(SearchForm)
 
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(0)
 
 
-        QMetaObject.connectSlotsByName(SearchWindow)
+        QMetaObject.connectSlotsByName(SearchForm)
     # setupUi
 
-    def retranslateUi(self, SearchWindow):
-        SearchWindow.setWindowTitle(QCoreApplication.translate("SearchWindow", u"MainWindow", None))
-        self.search_label.setText(QCoreApplication.translate("SearchWindow", u"\u041f\u043e\u0438\u0441\u043a \u0441\u0442\u0443\u0434\u0435\u043d\u0442\u043e\u0432", None))
-        self.avg_rating_label.setText(QCoreApplication.translate("SearchWindow", u"\u0421\u0440\u0435\u0434\u043d\u0438\u0439 \u0431\u0430\u043b\u043b \u043f\u043e \u043f\u0440\u0435\u0434\u043c\u0435\u0442\u0443", None))
-        self.avg_min_label_3.setText(QCoreApplication.translate("SearchWindow", u"\u041d\u0438\u0436\u043d\u0438\u0439 \u043f\u0440\u0435\u0434\u0435\u043b", None))
-        self.avg_max_label_3.setText(QCoreApplication.translate("SearchWindow", u"\u0412\u0435\u0440\u0445\u043d\u0438\u0439 \u043f\u0440\u0435\u0434\u0435\u043b", None))
-        self.rating_label.setText(QCoreApplication.translate("SearchWindow", u"\u0411\u0430\u043b\u043b \u043f\u043e \u043f\u0440\u0435\u0434\u043c\u0435\u0442\u0443", None))
-        self.rating_min_label_3.setText(QCoreApplication.translate("SearchWindow", u"\u041d\u0438\u0436\u043d\u0438\u0439 \u043f\u0440\u0435\u0434\u0435\u043b", None))
-        self.rating_max_label_3.setText(QCoreApplication.translate("SearchWindow", u"\u0412\u0435\u0440\u0445\u043d\u0438\u0439 \u043f\u0440\u0435\u0434\u0435\u043b", None))
-        self.groups_list.setPlaceholderText(QCoreApplication.translate("SearchWindow", u"\u0421\u043f\u0438\u0441\u043e\u043a \u0433\u0440\u0443\u043f\u043f", None))
-        self.subject_list.setPlaceholderText(QCoreApplication.translate("SearchWindow", u"\u0421\u043f\u0438\u0441\u043e\u043a \u043f\u0440\u0435\u0434\u043c\u0435\u0442\u043e\u0432", None))
-        self.search_students.setText(QCoreApplication.translate("SearchWindow", u"\u041f\u043e\u0438\u0441\u043a \u0441\u0442\u0443\u0434\u0435\u043d\u0442\u043e\u0432", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.no_data_search_tab), QCoreApplication.translate("SearchWindow", u"\u041d\u0435\u0442 \u0434\u0430\u043d\u043d\u044b\u0445", None))
+    def retranslateUi(self, SearchForm):
+        SearchForm.setWindowTitle(QCoreApplication.translate("SearchForm", u"Dialog", None))
+        self.search_label.setText(QCoreApplication.translate("SearchForm", u"\u041f\u043e\u0438\u0441\u043a \u0441\u0442\u0443\u0434\u0435\u043d\u0442\u043e\u0432", None))
+        self.avg_rating_label.setText(QCoreApplication.translate("SearchForm", u"\u0421\u0440\u0435\u0434\u043d\u0438\u0439 \u0431\u0430\u043b\u043b \u0441\u0442\u0443\u0434\u0435\u043d\u0442\u0430", None))
+        self.avg_min_label.setText(QCoreApplication.translate("SearchForm", u"\u041d\u0438\u0436\u043d\u0438\u0439 \u043f\u0440\u0435\u0434\u0435\u043b", None))
+        self.avg_max_label.setText(QCoreApplication.translate("SearchForm", u"\u0412\u0435\u0440\u0445\u043d\u0438\u0439 \u043f\u0440\u0435\u0434\u0435\u043b", None))
+        self.rating_label.setText(QCoreApplication.translate("SearchForm", u"\u0411\u0430\u043b\u043b \u043f\u043e \u043f\u0440\u0435\u0434\u043c\u0435\u0442\u0443", None))
+        self.rating_min_label.setText(QCoreApplication.translate("SearchForm", u"\u041d\u0438\u0436\u043d\u0438\u0439 \u043f\u0440\u0435\u0434\u0435\u043b", None))
+        self.rating_max_label.setText(QCoreApplication.translate("SearchForm", u"\u0412\u0435\u0440\u0445\u043d\u0438\u0439 \u043f\u0440\u0435\u0434\u0435\u043b", None))
+        self.groups_list.setPlaceholderText(QCoreApplication.translate("SearchForm", u"\u0421\u043f\u0438\u0441\u043e\u043a \u0433\u0440\u0443\u043f\u043f", None))
+        self.subject_list.setPlaceholderText(QCoreApplication.translate("SearchForm", u"\u0421\u043f\u0438\u0441\u043e\u043a \u043f\u0440\u0435\u0434\u043c\u0435\u0442\u043e\u0432", None))
+        self.search_students.setText(QCoreApplication.translate("SearchForm", u"\u041f\u043e\u0438\u0441\u043a \u0441\u0442\u0443\u0434\u0435\u043d\u0442\u043e\u0432", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.no_data_search_tab), QCoreApplication.translate("SearchForm", u"\u041d\u0435\u0442 \u0434\u0430\u043d\u043d\u044b\u0445", None))
         ___qtablewidgetitem = self.table_widget.horizontalHeaderItem(0)
-        ___qtablewidgetitem.setText(QCoreApplication.translate("SearchWindow", u"\u0424\u0418\u041e", None));
+        ___qtablewidgetitem.setText(QCoreApplication.translate("SearchForm", u"\u0424\u0418\u041e", None));
         ___qtablewidgetitem1 = self.table_widget.horizontalHeaderItem(1)
-        ___qtablewidgetitem1.setText(QCoreApplication.translate("SearchWindow", u"\u0413\u0440\u0443\u043f\u043f\u0430", None));
+        ___qtablewidgetitem1.setText(QCoreApplication.translate("SearchForm", u"\u0413\u0440\u0443\u043f\u043f\u0430", None));
         ___qtablewidgetitem2 = self.table_widget.horizontalHeaderItem(2)
-        ___qtablewidgetitem2.setText(QCoreApplication.translate("SearchWindow", u"\u042d\u043a\u0437\u0430\u043c\u0435\u043d\u044b", None));
-        self.items_count.setItemText(0, QCoreApplication.translate("SearchWindow", u"5", None))
-        self.items_count.setItemText(1, QCoreApplication.translate("SearchWindow", u"10", None))
-        self.items_count.setItemText(2, QCoreApplication.translate("SearchWindow", u"15", None))
+        ___qtablewidgetitem2.setText(QCoreApplication.translate("SearchForm", u"\u042d\u043a\u0437\u0430\u043c\u0435\u043d\u044b", None));
+        self.items_count.setItemText(0, QCoreApplication.translate("SearchForm", u"5", None))
+        self.items_count.setItemText(1, QCoreApplication.translate("SearchForm", u"10", None))
+        self.items_count.setItemText(2, QCoreApplication.translate("SearchForm", u"15", None))
 
-        self.items_count.setPlaceholderText(QCoreApplication.translate("SearchWindow", u"\u041a\u043e\u043b\u0438\u0447\u0435\u0441\u0442\u0432\u043e \u0437\u0430\u043f\u0438\u0441\u0435\u0439 \u043d\u0430 \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0435", None))
-        self.prev_page_button.setText(QCoreApplication.translate("SearchWindow", u"<", None))
-        self.first_page_button.setText(QCoreApplication.translate("SearchWindow", u"\u041f\u0435\u0440\u0432\u0430\u044f \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0430", None))
-        self.current_page.setText(QCoreApplication.translate("SearchWindow", u"1", None))
-        self.last_page_button.setText(QCoreApplication.translate("SearchWindow", u"\u041f\u043e\u0441\u043b\u0435\u0434\u043d\u044f\u044f \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0430", None))
-        self.next_page_button.setText(QCoreApplication.translate("SearchWindow", u">", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.students_search_table_tab), QCoreApplication.translate("SearchWindow", u"\u0422\u0430\u0431\u043b\u0438\u0446\u0430 \u043d\u0430\u0439\u0434\u0435\u043d\u043d\u044b\u0445 \u0437\u0430\u043f\u0438\u0441\u0435\u0439", None))
+        self.items_count.setPlaceholderText(QCoreApplication.translate("SearchForm", u"\u041a\u043e\u043b\u0438\u0447\u0435\u0441\u0442\u0432\u043e \u0437\u0430\u043f\u0438\u0441\u0435\u0439 \u043d\u0430 \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0435", None))
+        self.prev_page_button.setText(QCoreApplication.translate("SearchForm", u"<", None))
+        self.first_page_button.setText(QCoreApplication.translate("SearchForm", u"\u041f\u0435\u0440\u0432\u0430\u044f \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0430", None))
+        self.current_page.setText(QCoreApplication.translate("SearchForm", u"1", None))
+        self.last_page_button.setText(QCoreApplication.translate("SearchForm", u"\u041f\u043e\u0441\u043b\u0435\u0434\u043d\u044f\u044f \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0430", None))
+        self.next_page_button.setText(QCoreApplication.translate("SearchForm", u">", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.students_search_table_tab), QCoreApplication.translate("SearchForm", u"\u0422\u0430\u0431\u043b\u0438\u0446\u0430 \u043d\u0430\u0439\u0434\u0435\u043d\u043d\u044b\u0445 \u0437\u0430\u043f\u0438\u0441\u0435\u0439", None))
     # retranslateUi
 

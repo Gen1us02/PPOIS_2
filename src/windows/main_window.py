@@ -4,6 +4,7 @@ from src.interface.ui.main_window_ui import Ui_MainWindow
 from src.db.db_manager import DBManager
 from .adding_form import AddForm
 from .deleting_form import DeleteForm
+from .search_form import SearchForm
 
 
 class MainWindow(QMainWindow):
@@ -33,6 +34,7 @@ class MainWindow(QMainWindow):
         self.ui.items_count_main.currentTextChanged.connect(self.__update_items_count)
         self.ui.add_students_button.clicked.connect(self.__adding_student)
         self.ui.delete_students_button.clicked.connect(self.__deleting_student)
+        self.ui.search_students_button.clicked.connect(self.__search_students)
 
     def __setup_table(self) -> None:
         table = self.ui.table_widget_main
@@ -189,3 +191,7 @@ class MainWindow(QMainWindow):
         delete_form = DeleteForm(self.db)
         delete_form.exec()
         self.__load_db()
+
+    def __search_students(self) -> None:
+        search_form = SearchForm(self.db)
+        search_form.exec()
