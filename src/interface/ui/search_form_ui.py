@@ -168,6 +168,14 @@ class Ui_SearchForm(object):
         self.tabWidget.setObjectName(u"tabWidget")
         self.no_data_search_tab = QWidget()
         self.no_data_search_tab.setObjectName(u"no_data_search_tab")
+        self.verticalLayout_3 = QVBoxLayout(self.no_data_search_tab)
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.no_data_label = QLabel(self.no_data_search_tab)
+        self.no_data_label.setObjectName(u"no_data_label")
+        self.no_data_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.verticalLayout_3.addWidget(self.no_data_label)
+
         self.tabWidget.addTab(self.no_data_search_tab, "")
         self.students_search_table_tab = QWidget()
         self.students_search_table_tab.setObjectName(u"students_search_table_tab")
@@ -295,6 +303,7 @@ class Ui_SearchForm(object):
         self.groups_list.setPlaceholderText(QCoreApplication.translate("SearchForm", u"\u0421\u043f\u0438\u0441\u043e\u043a \u0433\u0440\u0443\u043f\u043f", None))
         self.subject_list.setPlaceholderText(QCoreApplication.translate("SearchForm", u"\u0421\u043f\u0438\u0441\u043e\u043a \u043f\u0440\u0435\u0434\u043c\u0435\u0442\u043e\u0432", None))
         self.search_students.setText(QCoreApplication.translate("SearchForm", u"\u041f\u043e\u0438\u0441\u043a \u0441\u0442\u0443\u0434\u0435\u043d\u0442\u043e\u0432", None))
+        self.no_data_label.setText("")
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.no_data_search_tab), QCoreApplication.translate("SearchForm", u"\u041d\u0435\u0442 \u0434\u0430\u043d\u043d\u044b\u0445", None))
         ___qtablewidgetitem = self.table_widget.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("SearchForm", u"\u0424\u0418\u041e", None));

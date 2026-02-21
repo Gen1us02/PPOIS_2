@@ -1,5 +1,6 @@
 from PySide6.QtWidgets import QMainWindow, QTableWidgetItem, QTableWidget
 from PySide6.QtCore import Qt
+from PySide6.QtGui import QPixmap
 from src.interface.ui.main_window_ui import Ui_MainWindow
 from src.db.db_manager import DBManager
 from .adding_form import AddForm
@@ -21,8 +22,8 @@ class MainWindow(QMainWindow):
         self.__min_page = 1
         self.__max_page = self.MAX_PAGE_NUM
 
+        self.__no_data_setup()
         self.__setup_table()
-
         self.__tabs_selection()
 
         self.ui.first_page_button_main.clicked.connect(self.__return_to_first_page)
@@ -84,6 +85,12 @@ class MainWindow(QMainWindow):
         table.setSelectionMode(QTableWidget.NoSelection)
 
         table.resizeRowsToContents()
+        
+    def __no_data_setup(self) -> None:
+        label = self.ui.no_data_label_main
+        label.setPixmap(QPixmap("images/no-data.png"))
+        label.setScaledContents(False)
+        self.ui.table_tab_widget.setCurrentWidget(self.ui.no_data_tab)
 
     def __tabs_selection(self) -> None:
         self.ui.work_tab_widget.tabBar().hide()
@@ -110,6 +117,10 @@ class MainWindow(QMainWindow):
         self.ui.current_page_main.setText(str(self.current_page))
 
     def __display_current_page(self) -> None:
+        if len(self.students)  == 0:
+            self.__no_data_setup()
+            return 
+        
         table = self.ui.table_widget_main
 
         while table.rowCount() > 3:

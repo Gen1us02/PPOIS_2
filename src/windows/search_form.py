@@ -1,5 +1,6 @@
 from PySide6.QtWidgets import QDialog, QMessageBox, QTableWidget, QTableWidgetItem
 from PySide6.QtCore import Qt
+from PySide6.QtGui import QPixmap
 from src.interface.ui.search_form_ui import Ui_SearchForm
 from src.db.db_manager import DBManager
 
@@ -19,6 +20,7 @@ class SearchForm(QDialog):
         self.__max_page = self.MAX_PAGE_NUM
 
         self.ui.tabWidget.tabBar().hide()
+        self.__no_data_setup()
         self.__setup_table()
         self.__setup_groups()
         self.__setup_subjects()
@@ -84,6 +86,12 @@ class SearchForm(QDialog):
         self.ui.groups_list.clear()
         self.ui.groups_list.addItem("Не выбрана")
         self.ui.groups_list.addItems(groups)
+        
+    def __no_data_setup(self) -> None:
+        label = self.ui.no_data_label
+        label.setPixmap(QPixmap("images/no-data.png"))
+        label.setScaledContents(False)
+        self.ui.tabWidget.setCurrentWidget(self.ui.no_data_search_tab)
 
     def __setup_subjects(self) -> None:
         subjects = self.db.get_all_subjects()
@@ -123,11 +131,11 @@ class SearchForm(QDialog):
         self.ui.current_page.setText(str(self.current_page))
 
     def __update_max_page(self) -> None:
-        pages_count = len(self.students) // self.items_count
+        pages_count = len(self.searched_students) // self.items_count
 
         self.__max_page = (
             pages_count
-            if len(self.students) % self.items_count == 0
+            if len(self.searched_students) % self.items_count == 0
             else pages_count + 1
         )
 
@@ -245,5 +253,5 @@ class SearchForm(QDialog):
 
         self.ui.tabWidget.setCurrentWidget(self.ui.students_search_table_tab) if len(
             searched_students
-        ) > 0 else self.ui.tabWidget.setCurrentWidget(self.ui.no_data_search_tab)
+        ) > 0 else self.__no_data_setup()
         self.__display_current_page()

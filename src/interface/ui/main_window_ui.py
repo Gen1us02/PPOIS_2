@@ -130,6 +130,14 @@ class Ui_MainWindow(object):
         self.table_tab_widget.setObjectName(u"table_tab_widget")
         self.no_data_tab = QWidget()
         self.no_data_tab.setObjectName(u"no_data_tab")
+        self.verticalLayout_5 = QVBoxLayout(self.no_data_tab)
+        self.verticalLayout_5.setObjectName(u"verticalLayout_5")
+        self.no_data_label_main = QLabel(self.no_data_tab)
+        self.no_data_label_main.setObjectName(u"no_data_label_main")
+        self.no_data_label_main.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.verticalLayout_5.addWidget(self.no_data_label_main)
+
         self.table_tab_widget.addTab(self.no_data_tab, "")
         self.student_tree_tab = QWidget()
         self.student_tree_tab.setObjectName(u"student_tree_tab")
@@ -272,6 +280,7 @@ class Ui_MainWindow(object):
         self.delete_students_button.setText(QCoreApplication.translate("MainWindow", u"\u0423\u0434\u0430\u043b\u0435\u043d\u0438\u0435 \u0441\u0442\u0443\u0434\u0435\u043d\u0442\u043e\u0432", None))
         self.add_students_button.setText(QCoreApplication.translate("MainWindow", u"\u0414\u043e\u0431\u0430\u0432\u043b\u0435\u043d\u0438\u0435 \u0441\u0442\u0443\u0434\u0435\u043d\u0442\u043e\u0432", None))
         self.work_tab_widget.setTabText(self.work_tab_widget.indexOf(self.data_work_tab), QCoreApplication.translate("MainWindow", u"\u0420\u0430\u0431\u043e\u0442\u0430 \u0441 \u0437\u0430\u043f\u0438\u0441\u044f\u043c\u0438", None))
+        self.no_data_label_main.setText("")
         self.table_tab_widget.setTabText(self.table_tab_widget.indexOf(self.no_data_tab), QCoreApplication.translate("MainWindow", u"\u041d\u0435\u0442 \u0434\u0430\u043d\u043d\u044b\u0445", None))
         self.table_tab_widget.setTabText(self.table_tab_widget.indexOf(self.student_tree_tab), QCoreApplication.translate("MainWindow", u"\u0414\u0435\u0440\u0435\u0432\u043e \u0437\u0430\u043f\u0438\u0441\u0435\u0439", None))
         ___qtablewidgetitem = self.table_widget_main.horizontalHeaderItem(0)
