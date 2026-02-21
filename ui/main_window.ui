@@ -215,7 +215,7 @@
     <item>
      <widget class="QTabWidget" name="table_tab_widget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="no_data_tab">
        <attribute name="title">
@@ -277,7 +277,7 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>
-            <widget class="QTableWidget" name="table_widget_main">
+            <widget class="QTableWidget" name="student_table">
              <property name="enabled">
               <bool>true</bool>
              </property>
@@ -358,7 +358,7 @@
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_3">
               <item>
-               <widget class="QComboBox" name="items_count_main">
+               <widget class="QComboBox" name="items_count">
                 <property name="minimumSize">
                  <size>
                   <width>200</width>
@@ -418,7 +418,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="current_page_main">
+               <widget class="QLabel" name="current_page">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>

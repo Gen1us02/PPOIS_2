@@ -3,42 +3,48 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QPixmap
 from src.interface.ui.main_window_ui import Ui_MainWindow
 from src.db.db_manager import DBManager
+from src.utils.paginator import Paginator
 from .adding_form import AddForm
 from .deleting_form import DeleteForm
 from .search_form import SearchForm
 
 
 class MainWindow(QMainWindow):
-    MAX_PAGE_NUM = 1000000000000000000000
-
     def __init__(self, db_manager: DBManager) -> None:
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.db = db_manager
         self.students = []
-        self.current_page = int(self.ui.current_page_main.text())
-        self.items_count = int(self.ui.items_count_main.currentText())
-        self.__min_page = 1
-        self.__max_page = self.MAX_PAGE_NUM
+        self.paginator = Paginator(db_manager, self.ui)
 
         self.__no_data_setup()
         self.__setup_table()
         self.__tabs_selection()
 
-        self.ui.first_page_button_main.clicked.connect(self.__return_to_first_page)
-        self.ui.last_page_button_main.clicked.connect(self.__return_to_last_page)
+        self.ui.first_page_button_main.clicked.connect(
+            lambda: self.paginator.return_to_first_page(self.students)
+        )
+        self.ui.last_page_button_main.clicked.connect(
+            lambda: self.paginator.return_to_last_page(self.students)
+        )
         self.ui.load_database_button.clicked.connect(self.__load_db)
         self.ui.load_file_button.clicked.connect(self.__load_file)
-        self.ui.next_page_button_main.clicked.connect(self.__next_page)
-        self.ui.prev_page_button_main.clicked.connect(self.__prev_page)
-        self.ui.items_count_main.currentTextChanged.connect(self.__update_items_count)
+        self.ui.next_page_button_main.clicked.connect(
+            lambda: self.paginator.next_page(self.students)
+        )
+        self.ui.prev_page_button_main.clicked.connect(
+            lambda: self.paginator.prev_page(self.students)
+        )
+        self.ui.items_count.currentTextChanged.connect(
+            lambda text: self.paginator.update_items_count(text, self.students)
+        )
         self.ui.add_students_button.clicked.connect(self.__adding_student)
         self.ui.delete_students_button.clicked.connect(self.__deleting_student)
         self.ui.search_students_button.clicked.connect(self.__search_students)
 
     def __setup_table(self) -> None:
-        table = self.ui.table_widget_main
+        table = self.ui.student_table
 
         table.setRowCount(3)
         table.setColumnCount(12)
@@ -85,7 +91,7 @@ class MainWindow(QMainWindow):
         table.setSelectionMode(QTableWidget.NoSelection)
 
         table.resizeRowsToContents()
-        
+
     def __no_data_setup(self) -> None:
         label = self.ui.no_data_label_main
         label.setPixmap(QPixmap("images/no-data.png"))
@@ -110,88 +116,8 @@ class MainWindow(QMainWindow):
 
         students = self.db.get_all_records()
         self.students = students
-        self.__update_max_page()
-        self.__display_current_page()
-
-    def __update_page_label(self) -> None:
-        self.ui.current_page_main.setText(str(self.current_page))
-
-    def __display_current_page(self) -> None:
-        if len(self.students)  == 0:
-            self.__no_data_setup()
-            return 
-        
-        table = self.ui.table_widget_main
-
-        while table.rowCount() > 3:
-            table.removeRow(3)
-
-        start = (self.current_page - 1) * self.items_count
-        end = min(start + self.items_count, len(self.students))
-
-        target_students = self.students[start:end]
-
-        for row, student in enumerate(target_students):
-            table.insertRow(row + 3)
-
-            table.setItem(row + 3, 0, QTableWidgetItem(student.full_name))
-            table.setItem(row + 3, 1, QTableWidgetItem(student.group.number))
-
-            grades_by_subject = {}
-            for score in student.scores:
-                subject_name = score.exam.subject.name
-                grades_by_subject[subject_name] = score.grade
-
-            group_exams = self.db.get_all_exams_in_group(student.group.number)
-
-            for i, subject_name in enumerate(group_exams):
-                col = 2 + i * 2
-                if col + 1 < table.columnCount():
-                    table.setItem(row + 3, col, QTableWidgetItem(subject_name))
-                    grade = grades_by_subject.get(subject_name, "")
-                    table.setItem(
-                        row + 3, col + 1, QTableWidgetItem(str(grade) if grade else "")
-                    )
-
-    def __return_to_first_page(self) -> None:
-        self.current_page = self.__min_page
-        self.__update_page_label()
-        self.__display_current_page()
-
-    def __return_to_last_page(self) -> None:
-        self.current_page = self.__max_page
-        self.__update_page_label()
-        self.__display_current_page()
-
-    def __next_page(self) -> None:
-        if self.current_page != self.__max_page:
-            self.current_page += 1
-            self.__update_page_label()
-            self.__display_current_page()
-
-    def __prev_page(self) -> None:
-        if self.current_page != self.__min_page:
-            self.current_page -= 1
-            self.__update_page_label()
-            self.__display_current_page()
-
-    def __update_items_count(self, text) -> None:
-        self.items_count = int(text)
-        self.__update_max_page()
-        self.__update_page_label()
-        self.__display_current_page()
-
-    def __update_max_page(self) -> None:
-        pages_count = len(self.students) // self.items_count
-
-        self.__max_page = (
-            pages_count
-            if len(self.students) % self.items_count == 0
-            else pages_count + 1
-        )
-
-        if self.current_page > self.__max_page:
-            self.current_page = self.__max_page
+        self.paginator.update_max_page(self.students)
+        self.paginator.display_current_page(self.students)
 
     def __adding_student(self) -> None:
         add_form = AddForm(self.db)

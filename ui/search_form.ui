@@ -313,7 +313,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="no_data_search_tab">
       <attribute name="title">
@@ -359,7 +359,7 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
-           <widget class="QTableWidget" name="table_widget">
+           <widget class="QTableWidget" name="student_table">
             <property name="enabled">
              <bool>true</bool>
             </property>

@@ -189,35 +189,35 @@ class Ui_SearchForm(object):
         self.table_frame.setFrameShadow(QFrame.Shadow.Raised)
         self.verticalLayout_2 = QVBoxLayout(self.table_frame)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.table_widget = QTableWidget(self.table_frame)
-        if (self.table_widget.columnCount() < 3):
-            self.table_widget.setColumnCount(3)
+        self.student_table = QTableWidget(self.table_frame)
+        if (self.student_table.columnCount() < 3):
+            self.student_table.setColumnCount(3)
         __qtablewidgetitem = QTableWidgetItem()
-        self.table_widget.setHorizontalHeaderItem(0, __qtablewidgetitem)
+        self.student_table.setHorizontalHeaderItem(0, __qtablewidgetitem)
         __qtablewidgetitem1 = QTableWidgetItem()
-        self.table_widget.setHorizontalHeaderItem(1, __qtablewidgetitem1)
+        self.student_table.setHorizontalHeaderItem(1, __qtablewidgetitem1)
         __qtablewidgetitem2 = QTableWidgetItem()
-        self.table_widget.setHorizontalHeaderItem(2, __qtablewidgetitem2)
-        if (self.table_widget.rowCount() < 1):
-            self.table_widget.setRowCount(1)
+        self.student_table.setHorizontalHeaderItem(2, __qtablewidgetitem2)
+        if (self.student_table.rowCount() < 1):
+            self.student_table.setRowCount(1)
         __qtablewidgetitem3 = QTableWidgetItem()
-        self.table_widget.setVerticalHeaderItem(0, __qtablewidgetitem3)
-        self.table_widget.setObjectName(u"table_widget")
-        self.table_widget.setEnabled(True)
-        self.table_widget.setMinimumSize(QSize(0, 100))
-        self.table_widget.horizontalHeader().setCascadingSectionResizes(True)
-        self.table_widget.horizontalHeader().setMinimumSectionSize(30)
-        self.table_widget.horizontalHeader().setDefaultSectionSize(170)
-        self.table_widget.horizontalHeader().setHighlightSections(True)
-        self.table_widget.horizontalHeader().setProperty(u"showSortIndicator", True)
-        self.table_widget.horizontalHeader().setStretchLastSection(True)
-        self.table_widget.verticalHeader().setCascadingSectionResizes(True)
-        self.table_widget.verticalHeader().setMinimumSectionSize(24)
-        self.table_widget.verticalHeader().setDefaultSectionSize(30)
-        self.table_widget.verticalHeader().setProperty(u"showSortIndicator", True)
-        self.table_widget.verticalHeader().setStretchLastSection(False)
+        self.student_table.setVerticalHeaderItem(0, __qtablewidgetitem3)
+        self.student_table.setObjectName(u"student_table")
+        self.student_table.setEnabled(True)
+        self.student_table.setMinimumSize(QSize(0, 100))
+        self.student_table.horizontalHeader().setCascadingSectionResizes(True)
+        self.student_table.horizontalHeader().setMinimumSectionSize(30)
+        self.student_table.horizontalHeader().setDefaultSectionSize(170)
+        self.student_table.horizontalHeader().setHighlightSections(True)
+        self.student_table.horizontalHeader().setProperty(u"showSortIndicator", True)
+        self.student_table.horizontalHeader().setStretchLastSection(True)
+        self.student_table.verticalHeader().setCascadingSectionResizes(True)
+        self.student_table.verticalHeader().setMinimumSectionSize(24)
+        self.student_table.verticalHeader().setDefaultSectionSize(30)
+        self.student_table.verticalHeader().setProperty(u"showSortIndicator", True)
+        self.student_table.verticalHeader().setStretchLastSection(False)
 
-        self.verticalLayout_2.addWidget(self.table_widget)
+        self.verticalLayout_2.addWidget(self.student_table)
 
         self.pagination_frame = QFrame(self.table_frame)
         self.pagination_frame.setObjectName(u"pagination_frame")
@@ -285,7 +285,7 @@ class Ui_SearchForm(object):
 
         self.retranslateUi(SearchForm)
 
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(SearchForm)
@@ -305,11 +305,11 @@ class Ui_SearchForm(object):
         self.search_students.setText(QCoreApplication.translate("SearchForm", u"\u041f\u043e\u0438\u0441\u043a \u0441\u0442\u0443\u0434\u0435\u043d\u0442\u043e\u0432", None))
         self.no_data_label.setText("")
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.no_data_search_tab), QCoreApplication.translate("SearchForm", u"\u041d\u0435\u0442 \u0434\u0430\u043d\u043d\u044b\u0445", None))
-        ___qtablewidgetitem = self.table_widget.horizontalHeaderItem(0)
+        ___qtablewidgetitem = self.student_table.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("SearchForm", u"\u0424\u0418\u041e", None));
-        ___qtablewidgetitem1 = self.table_widget.horizontalHeaderItem(1)
+        ___qtablewidgetitem1 = self.student_table.horizontalHeaderItem(1)
         ___qtablewidgetitem1.setText(QCoreApplication.translate("SearchForm", u"\u0413\u0440\u0443\u043f\u043f\u0430", None));
-        ___qtablewidgetitem2 = self.table_widget.horizontalHeaderItem(2)
+        ___qtablewidgetitem2 = self.student_table.horizontalHeaderItem(2)
         ___qtablewidgetitem2.setText(QCoreApplication.translate("SearchForm", u"\u042d\u043a\u0437\u0430\u043c\u0435\u043d\u044b", None));
         self.items_count.setItemText(0, QCoreApplication.translate("SearchForm", u"5", None))
         self.items_count.setItemText(1, QCoreApplication.translate("SearchForm", u"10", None))
