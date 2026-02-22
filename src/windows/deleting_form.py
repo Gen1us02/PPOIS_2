@@ -1,12 +1,14 @@
 from PySide6.QtWidgets import QDialog, QMessageBox
 from src.interface.ui.deleting_form_ui import Ui_DeleteForm
 from src.db.db_manager import DBManager
+from src.parsers.xmlwriter import XMLWriter
 
 
 class DeleteForm(QDialog):
     def __init__(self, db_manager: DBManager) -> None:
         super().__init__()
         self.db = db_manager
+        self.is_deleted = False
         self.ui = Ui_DeleteForm()
         self.ui.setupUi(self)
         self.setWindowTitle("Удаление")
@@ -26,6 +28,23 @@ class DeleteForm(QDialog):
         self.ui.subject_list.clear()
         self.ui.subject_list.addItem("Не выбран")
         self.ui.subject_list.addItems(subjects)
+
+    def closeEvent(self, event):
+        if self.is_deleted:
+            reply = QMessageBox.question(
+                self,
+                "Сохранение",
+                "Сохранить изменения в файл?",
+                QMessageBox.Yes | QMessageBox.No,
+                QMessageBox.No,
+            )
+            if reply == QMessageBox.Yes:
+                XMLWriter.save_to_file(self.db.get_all_records(), "xml/write_file.xml")
+                event.accept()
+            elif reply == QMessageBox.No:
+                event.accept()
+            else:
+                event.ignore()
 
     def __delete_students(self) -> None:
         errors = []
@@ -94,6 +113,7 @@ class DeleteForm(QDialog):
         }
 
         delete_students_count = self.db.delete_students(**delete_data)
+        self.is_deleted = True
         QMessageBox.information(
             self,
             "Удаленные записи",

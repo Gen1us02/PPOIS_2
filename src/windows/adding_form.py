@@ -2,12 +2,14 @@ from PySide6.QtWidgets import QDialog, QLabel, QLineEdit, QVBoxLayout, QMessageB
 from src.interface.ui.adding_form_ui import Ui_AddForm
 from src.db.db_manager import DBManager
 from src.utils.validator import Validator
+from src.parsers.xmlwriter import XMLWriter
 
 
 class AddForm(QDialog):
     def __init__(self, db_manager: DBManager) -> None:
         super().__init__()
         self.db = db_manager
+        self.is_added = False
         self.ui = Ui_AddForm()
         self.ui.setupUi(self)
         self.setWindowTitle("Добавление")
@@ -42,6 +44,23 @@ class AddForm(QDialog):
             score.setObjectName(f"{i}_score")
             score.setPlaceholderText("Введите оценку за экзамен")
             layout.addWidget(score)
+
+    def closeEvent(self, event):
+        if self.is_added:
+            reply = QMessageBox.question(
+                self,
+                "Сохранение",
+                "Сохранить изменения в файл?",
+                QMessageBox.Yes | QMessageBox.No,
+                QMessageBox.No,
+            )
+            if reply == QMessageBox.Yes:
+                XMLWriter.save_to_file(self.db.get_all_records(), "xml/write_file.xml")
+                event.accept()
+            elif reply == QMessageBox.No:
+                event.accept()
+            else:
+                event.ignore()
 
     def __add_student(self) -> None:
         errors = []
@@ -91,7 +110,7 @@ class AddForm(QDialog):
         }
 
         self.db.add_student(**student_data)
-
+        self.is_added = True
         QMessageBox.information(
             self, "Добавление студента", "Студент был успешно добавлен"
         )
