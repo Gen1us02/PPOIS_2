@@ -1,4 +1,11 @@
-from PySide6.QtWidgets import QDialog, QLabel, QLineEdit, QVBoxLayout, QMessageBox
+from PySide6.QtWidgets import (
+    QDialog,
+    QFileDialog,
+    QLabel,
+    QLineEdit,
+    QVBoxLayout,
+    QMessageBox,
+)
 from src.interface.ui.adding_form_ui import Ui_AddForm
 from src.db.db_manager import DBManager
 from src.utils.validator import Validator
@@ -55,7 +62,24 @@ class AddForm(QDialog):
                 QMessageBox.No,
             )
             if reply == QMessageBox.Yes:
-                XMLWriter.save_to_file(self.db.get_all_records(), "xml/write_file.xml")
+                file, _ = QFileDialog.getOpenFileName(
+                    self,
+                    "Открыть файл",
+                    r"D:\2_course\PPOIS\sem2\lab2\xml",
+                    "Files (*.xml)",
+                )
+
+                if not file:
+                    QMessageBox.critical(
+                        self,
+                        "Ошибка выбора файла",
+                        f"Файл {file} должен иметь расширение .xml",
+                    )
+                    
+                XMLWriter.save_to_file(
+                    self.db.get_all_records(),
+                    file
+                )
                 event.accept()
             elif reply == QMessageBox.No:
                 event.accept()

@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QDialog, QMessageBox
+from PySide6.QtWidgets import QDialog, QFileDialog, QMessageBox
 from src.interface.ui.deleting_form_ui import Ui_DeleteForm
 from src.db.db_manager import DBManager
 from src.parsers.xmlwriter import XMLWriter
@@ -39,7 +39,20 @@ class DeleteForm(QDialog):
                 QMessageBox.No,
             )
             if reply == QMessageBox.Yes:
-                XMLWriter.save_to_file(self.db.get_all_records(), "xml/write_file.xml")
+                file, _ = QFileDialog.getOpenFileName(
+                    self,
+                    "Открыть файл",
+                    r"D:\2_course\PPOIS\sem2\lab2\xml",
+                    "Files (*.xml)",
+                )
+
+                if not file:
+                    QMessageBox.critical(
+                        self,
+                        "Ошибка выбора файла",
+                        f"Файл {file} должен иметь расширение .xml",
+                    )
+                XMLWriter.save_to_file(self.db.get_all_records(), file)
                 event.accept()
             elif reply == QMessageBox.No:
                 event.accept()
