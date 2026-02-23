@@ -4,6 +4,8 @@ from PySide6.QtWidgets import (
     QTableWidget,
     QTreeWidgetItem,
     QHeaderView,
+    QFileDialog,
+    QMessageBox,
 )
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QPixmap
@@ -14,6 +16,7 @@ from .adding_form import AddForm
 from .deleting_form import DeleteForm
 from .search_form import SearchForm
 from collections import defaultdict
+from src.parsers.xmlreader import XMLReader
 
 
 class MainWindow(QMainWindow):
@@ -121,9 +124,19 @@ class MainWindow(QMainWindow):
         self.ui.table_tab_widget.setCurrentWidget(self.ui.no_data_tab)
 
     def __load_file(self) -> None:
-        self.ui.table_tab_widget.setCurrentWidget(self.ui.student_table_tab)
-        self.ui.work_tab_widget.setCurrentWidget(self.ui.data_work_tab)
-        # Дальнейшая логика
+        file, _ = QFileDialog.getOpenFileName(
+            self, "Открыть файл", r"D:\2_course\PPOIS\sem2\lab2\xml", "Files (*.xml)"
+        )
+
+        if not file:
+            QMessageBox.critical(
+                self, "Ошибка выбора файла", f"Файл {file} должен иметь расширение .xml"
+            )
+            return
+
+        self.db.clear_tables()
+        XMLReader.add_students_from_xml(file, self.db)
+        self.__load_db()
 
     def __load_db(self) -> None:
         self.ui.table_tab_widget.setCurrentWidget(self.ui.student_table_tab)

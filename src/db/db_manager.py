@@ -154,6 +154,12 @@ class DBManager:
                     ).where(*conditions)
 
             return session.scalars(statement).all()
+        
+    def clear_tables(self) -> None:
+        with self.session() as session:
+            session.execute(delete(Student))
+            session.execute(delete(Score))
+            session.commit()
 
     def delete_students(self, **kwargs) -> int:
         with self.session() as session:
