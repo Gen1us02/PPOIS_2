@@ -65,6 +65,7 @@ class Paginator:
 
         if self.__current_page > self.__max_page:
             self.__current_page = self.__max_page
+        self.update_page_label()
 
     def display_current_page(self, students: List[Student]) -> None:
         table = self.__ui.student_table
