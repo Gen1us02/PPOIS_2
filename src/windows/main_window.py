@@ -145,6 +145,7 @@ class MainWindow(QMainWindow):
 
         students = self.db.get_all_records()
         self.students = students
+        self.ui.records_count_label.setText(f"Количество записей: {len(self.students)}")
         self.paginator.update_max_page(self.students)
         self.paginator.display_current_page(self.students)
 

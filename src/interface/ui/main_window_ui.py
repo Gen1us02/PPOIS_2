@@ -151,6 +151,9 @@ class Ui_MainWindow(object):
         self.horizontalLayout_5 = QHBoxLayout(self.student_tree_tab)
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
         self.students_tree = QTreeWidget(self.student_tree_tab)
+        __qtreewidgetitem = QTreeWidgetItem()
+        __qtreewidgetitem.setText(0, u"1");
+        self.students_tree.setHeaderItem(__qtreewidgetitem)
         self.students_tree.setObjectName(u"students_tree")
 
         self.horizontalLayout_5.addWidget(self.students_tree)
@@ -168,6 +171,16 @@ class Ui_MainWindow(object):
         self.table_frame_main.setFrameShadow(QFrame.Shadow.Raised)
         self.verticalLayout_3 = QVBoxLayout(self.table_frame_main)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.records_count_label = QLabel(self.table_frame_main)
+        self.records_count_label.setObjectName(u"records_count_label")
+        self.records_count_label.setMinimumSize(QSize(0, 20))
+        font1 = QFont()
+        font1.setPointSize(12)
+        self.records_count_label.setFont(font1)
+        self.records_count_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.verticalLayout_3.addWidget(self.records_count_label)
+
         self.student_table = QTableWidget(self.table_frame_main)
         if (self.student_table.columnCount() < 3):
             self.student_table.setColumnCount(3)
@@ -231,10 +244,10 @@ class Ui_MainWindow(object):
         self.current_page.setObjectName(u"current_page")
         self.current_page.setMinimumSize(QSize(0, 0))
         self.current_page.setMaximumSize(QSize(50, 16777215))
-        font1 = QFont()
-        font1.setFamilies([u"Arial"])
-        font1.setPointSize(11)
-        self.current_page.setFont(font1)
+        font2 = QFont()
+        font2.setFamilies([u"Arial"])
+        font2.setPointSize(11)
+        self.current_page.setFont(font2)
         self.current_page.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.horizontalLayout_3.addWidget(self.current_page)
@@ -288,6 +301,7 @@ class Ui_MainWindow(object):
         self.no_data_label_main.setText("")
         self.table_tab_widget.setTabText(self.table_tab_widget.indexOf(self.no_data_tab), QCoreApplication.translate("MainWindow", u"\u041d\u0435\u0442 \u0434\u0430\u043d\u043d\u044b\u0445", None))
         self.table_tab_widget.setTabText(self.table_tab_widget.indexOf(self.student_tree_tab), QCoreApplication.translate("MainWindow", u"\u0414\u0435\u0440\u0435\u0432\u043e \u0437\u0430\u043f\u0438\u0441\u0435\u0439", None))
+        self.records_count_label.setText(QCoreApplication.translate("MainWindow", u"\u041a\u043e\u043b\u0438\u0447\u0435\u0441\u0442\u0432\u043e \u0437\u0430\u043f\u0438\u0441\u0435\u0439:", None))
         ___qtablewidgetitem = self.student_table.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("MainWindow", u"\u0424\u0418\u041e", None));
         ___qtablewidgetitem1 = self.student_table.horizontalHeaderItem(1)
