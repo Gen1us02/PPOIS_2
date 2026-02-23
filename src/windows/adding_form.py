@@ -6,6 +6,7 @@ from PySide6.QtWidgets import (
     QVBoxLayout,
     QMessageBox,
 )
+from PySide6.QtGui import QPixmap
 from src.interface.ui.adding_form_ui import Ui_AddForm
 from src.db.db_manager import DBManager
 from src.utils.validator import Validator
@@ -20,6 +21,7 @@ class AddForm(QDialog):
         self.ui = Ui_AddForm()
         self.ui.setupUi(self)
         self.setWindowTitle("Добавление")
+        self.setWindowIcon(QPixmap("images/favicon.png"))
 
         self.__setup_groups()
 

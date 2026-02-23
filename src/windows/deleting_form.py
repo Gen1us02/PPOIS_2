@@ -1,4 +1,5 @@
 from PySide6.QtWidgets import QDialog, QFileDialog, QMessageBox
+from PySide6.QtGui import QPixmap
 from src.interface.ui.deleting_form_ui import Ui_DeleteForm
 from src.db.db_manager import DBManager
 from src.parsers.xmlwriter import XMLWriter
@@ -12,6 +13,7 @@ class DeleteForm(QDialog):
         self.ui = Ui_DeleteForm()
         self.ui.setupUi(self)
         self.setWindowTitle("Удаление")
+        self.setWindowIcon(QPixmap("images/favicon.png"))
 
         self.__setup_groups()
         self.__setup_subjects()

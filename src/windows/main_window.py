@@ -28,6 +28,7 @@ class MainWindow(QMainWindow):
         self.students = []
         self.paginator = Paginator(db_manager, self.ui)
         self.setWindowTitle("Главное окно")
+        self.setWindowIcon(QPixmap("images/favicon.png"))
 
         self.__no_data_setup()
         self.__setup_table()

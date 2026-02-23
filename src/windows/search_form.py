@@ -14,6 +14,7 @@ class SearchForm(QDialog):
         self.ui = Ui_SearchForm()
         self.ui.setupUi(self)
         self.setWindowTitle("Поиск")
+        self.setWindowIcon(QPixmap("images/favicon.png"))
 
         self.paginator = Paginator(db_manager, self.ui)
 
