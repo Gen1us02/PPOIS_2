@@ -56,37 +56,46 @@ class AddForm(QDialog):
 
     def closeEvent(self, event):
         if self.is_added:
-            reply = QMessageBox.question(
-                self,
-                "Сохранение",
-                "Сохранить изменения в файл?",
-                QMessageBox.Yes | QMessageBox.No,
-                QMessageBox.No,
-            )
-            if reply == QMessageBox.Yes:
-                file, _ = QFileDialog.getOpenFileName(
+            while True:
+                reply = QMessageBox.question(
                     self,
-                    "Открыть файл",
-                    r"D:\2_course\PPOIS\sem2\lab2\xml",
-                    "Files (*.xml)",
+                    "Сохранение",
+                    "Сохранить изменения в файл?",
+                    QMessageBox.Yes | QMessageBox.No,
+                    QMessageBox.No,
                 )
-
-                if not file:
-                    QMessageBox.critical(
+                if reply == QMessageBox.Yes:
+                    file, _ = QFileDialog.getOpenFileName(
                         self,
-                        "Ошибка выбора файла",
-                        f"Файл {file} должен иметь расширение .xml",
+                        "Открыть файл",
+                        r"D:\2_course\PPOIS\sem2\lab2\xml",
+                        "Files (*.xml)",
                     )
-                    
-                XMLWriter.save_to_file(
-                    self.db.get_all_records(),
-                    file
-                )
-                event.accept()
-            elif reply == QMessageBox.No:
-                event.accept()
-            else:
-                event.ignore()
+                    if not file:
+                        QMessageBox.critical(
+                            self,
+                            "Ошибка выбора файла",
+                            "Файл не выбран. Попробуйте снова или нажмите 'Нет' для выхода без сохранения.",
+                        )
+                        continue
+                    if not file.endswith(".xml"):
+                        QMessageBox.critical(
+                            self,
+                            "Ошибка выбора файла",
+                            f"Файл {file} должен иметь расширение .xml",
+                        )
+                        continue
+                    XMLWriter.save_to_file(self.db.get_all_records(), file)
+                    event.accept()
+                    break
+                elif reply == QMessageBox.No:
+                    event.accept()
+                    break
+                else:
+                    event.ignore()
+                    return
+        else:
+            event.accept()
 
     def __add_student(self) -> None:
         errors = []
