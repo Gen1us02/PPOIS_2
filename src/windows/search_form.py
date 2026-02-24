@@ -208,5 +208,6 @@ class SearchForm(QDialog):
         self.ui.tabWidget.setCurrentWidget(self.ui.students_search_table_tab) if len(
             searched_students
         ) > 0 else self.__no_data_setup()
-        self.paginator.update_max_page(self.searched_students)
-        self.paginator.display_current_page(self.searched_students)
+        if len(self.searched_students) == 0: 
+            self.paginator.update_max_page(self.searched_students)
+            self.paginator.display_current_page(self.searched_students)
