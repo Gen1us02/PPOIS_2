@@ -140,12 +140,17 @@ class MainWindow(QMainWindow):
         self.__load_db()
 
     def __load_db(self) -> None:
+        students = self.db.get_all_records()
+        if len(students) == 0:
+            self.ui.table_tab_widget.setCurrentWidget(self.ui.no_data_tab)
+            self.ui.work_tab_widget.setCurrentWidget(self.ui.data_load_tab)
+            return
+
+        self.students = students
         self.ui.table_tab_widget.setCurrentWidget(self.ui.student_table_tab)
         self.ui.work_tab_widget.setCurrentWidget(self.ui.data_work_tab)
         self.ui.hide_tree_button.hide()
 
-        students = self.db.get_all_records()
-        self.students = students
         self.ui.records_count_label.setText(f"Количество записей: {len(self.students)}")
         self.paginator.update_max_page(self.students)
         self.paginator.display_current_page(self.students)

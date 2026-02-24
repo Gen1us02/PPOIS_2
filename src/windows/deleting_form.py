@@ -112,7 +112,17 @@ class DeleteForm(QDialog):
                 group,
             )
         ):
-            errors.append("Введите данные для удаления")
+            delete_students_count = len(self.db.get_all_records())
+            self.is_deleted = True
+            QMessageBox.information(
+                self,
+                "Удаленные записи",
+                f"Количество удаленных записей: {delete_students_count}"
+                if delete_students_count > 0
+                else "Записей не найдено",
+            )
+            self.db.clear_tables()
+            return
 
         if errors:
             QMessageBox.critical(self, "Ошибка ввода", "\n".join(errors))
