@@ -135,9 +135,13 @@ class MainWindow(QMainWindow):
             )
             return
 
-        self.db.clear_tables()
-        XMLReader.add_students_from_xml(file, self.db)
-        self.__load_db()
+        try:
+            self.db.clear_tables()
+            XMLReader.add_students_from_xml(file, self.db)
+            self.__load_db()
+        except Exception:
+            QMessageBox.critical(self, "Ошибка чтения файла", "Файл содержит невалидные данные")
+            return
 
     def __load_db(self) -> None:
         students = self.db.get_all_records()
