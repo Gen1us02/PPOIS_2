@@ -19,4 +19,4 @@ class Validator:
 
     @staticmethod
     def score_validation(number: int) -> bool:
-        return 0 < number <= 10
+        return 4 <= number <= 10
