@@ -2,7 +2,7 @@ from PySide6.QtWidgets import (
     QDialog,
     QFileDialog,
     QLabel,
-    QLineEdit,
+    QSpinBox,
     QVBoxLayout,
     QMessageBox,
 )
@@ -49,9 +49,9 @@ class AddForm(QDialog):
             label.setObjectName(f"{i}_label")
             layout.addWidget(label)
 
-            score = QLineEdit(parent=self.ui.exam_container)
+            score = QSpinBox(parent=self.ui.exam_container)
             score.setObjectName(f"{i}_score")
-            score.setPlaceholderText("Введите оценку за экзамен")
+            score.setMaximum(10)
             layout.addWidget(score)
 
     def closeEvent(self, event):
@@ -118,19 +118,14 @@ class AddForm(QDialog):
         group_exams = self.db.get_all_exams_in_group(group_name) if group_name else []
         scores = {}
         for i, exam in enumerate(group_exams):
-            score_edit = self.ui.exam_container.findChild(QLineEdit, f"{i}_score")
-            score_text = score_edit.text().strip()
-            if Validator.is_empty(score_text):
-                errors.append(f"Оценка по предмету {exam} не введена")
+            score_spin = self.ui.exam_container.findChild(QSpinBox, f"{i}_score")
+            score_value = score_spin.value()
+            if not Validator.score_validation(score_value):
+                errors.append(
+                    f"Оценка по предмету \"{exam}\" должна быть в диапазоне от 4 до 10"
+                )
                 continue
-            try:
-                score = int(score_text)
-                if not Validator.score_validation(score):
-                    errors.append(f"Оценка по предмету {exam} должна быть от 1 до 10")
-                else:
-                    scores[exam] = score
-            except ValueError:
-                errors.append(f"Оценка по предмету {exam} должна быть целым числом")
+            scores[exam] = score_value
 
         if errors:
             QMessageBox.critical(self, "Ошибка ввода", "\n".join(errors))
