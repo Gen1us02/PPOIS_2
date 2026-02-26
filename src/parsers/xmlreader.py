@@ -2,7 +2,6 @@ from typing import Any, Dict, List
 import xml.sax
 from xml.sax.handler import ContentHandler
 from src.db.db_manager import DBManager
-from src.utils.validator import Validator
 
 
 class StudentsHandler(ContentHandler):
@@ -39,7 +38,7 @@ class StudentsHandler(ContentHandler):
 
 class XMLReader:
     @staticmethod
-    def __parse_file(filename: str) -> List[Dict[str, Any]]:
+    def parse_file(filename: str) -> List[Dict[str, Any]]:
         handler = StudentsHandler()
         parser = xml.sax.make_parser()
         parser.setContentHandler(handler)
@@ -51,20 +50,16 @@ class XMLReader:
         return handler.students
 
     @staticmethod
-    def add_students_from_xml(filename: str, db: DBManager) -> None:
-        students_data = XMLReader.__parse_file(filename)
-        groups = db.get_all_groups()
-        exams = db.get_all_subjects()
-
+    def add_students_from_xml(
+        students_data: List[Dict[str, Any]], db: DBManager
+    ) -> None:
         for data in students_data:
-            students_data = {
+            target_data = {
                 "first_name": data["first_name"],
                 "last_name": data["last_name"],
                 "middle_name": data["middle_name"],
                 "group_name": data["group"],
                 "scores": data["scores"],
             }
-            if not Validator.validate_xml(students_data, groups, exams):
-                raise ValueError("Невалидные данные в файле")
 
-            db.add_student(**students_data)
+            db.add_student(**target_data)

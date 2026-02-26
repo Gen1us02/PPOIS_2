@@ -17,6 +17,7 @@ from .deleting_form import DeleteForm
 from .search_form import SearchForm
 from collections import defaultdict
 from src.parsers.xmlreader import XMLReader
+from src.utils.validator import Validator
 
 
 class MainWindow(QMainWindow):
@@ -125,22 +126,37 @@ class MainWindow(QMainWindow):
         self.ui.table_tab_widget.setCurrentWidget(self.ui.no_data_tab)
 
     def __load_file(self) -> None:
+        groups = self.db.get_all_groups()
+        exams = self.db.get_all_subjects()
+
         file, _ = QFileDialog.getOpenFileName(
             self, "Открыть файл", r"D:\2_course\PPOIS\sem2\lab2\xml", "Files (*.xml)"
         )
 
         if not file:
+            QMessageBox.critical(self, "Ошибка выбора файла", "Файл был выбран")
+            return
+
+        if not file.endswith(".xml"):
             QMessageBox.critical(
-                self, "Ошибка выбора файла", f"Файл {file} должен иметь расширение .xml"
+                self, "Ошибка выбора файла", "Файл должен иметь расширение .xml"
             )
             return
 
         try:
-            self.db.clear_tables()
-            XMLReader.add_students_from_xml(file, self.db)
-            self.__load_db()
+            students_data = XMLReader.parse_file(file)
         except Exception:
-            QMessageBox.critical(self, "Ошибка чтения файла", "Файл содержит невалидные данные")
+            QMessageBox.critical(self, "Ошибка парсинга файла", "Некорректная структура файла")
+            return
+
+        if Validator.validate_xml(students_data, groups, exams):
+            self.db.clear_tables()
+            XMLReader.add_students_from_xml(students_data, self.db)
+            self.__load_db()
+        else:
+            QMessageBox.critical(
+                self, "Ошибка чтения файла", "Файл содержит невалидные данные"
+            )
             return
 
     def __load_db(self) -> None:

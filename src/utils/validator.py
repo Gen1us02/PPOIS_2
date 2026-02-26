@@ -25,30 +25,33 @@ class Validator:
         return 4 <= number <= 10
 
     @staticmethod
-    def validate_xml(data: Dict[str, Any], groups: List[str], exams: List[str]) -> bool:
-        first_name = data.get("first_name", None)
-        last_name = data.get("last_name", None)
-        middle_name = data.get("middle_name", "")
-        group = data.get("group_name", "")
-        scores = data.get("scores", None)
+    def validate_xml(
+        students_data: List[Dict[str, Any]], groups: List[str], exams: List[str]
+    ) -> bool:
+        for data in students_data:
+            first_name = data.get("first_name", None)
+            last_name = data.get("last_name", None)
+            middle_name = data.get("middle_name", "")
+            group = data.get("group", None)
+            scores = data.get("scores", None)
 
-        if not first_name or not Validator.validate_fio_part(first_name):
-            return False
-
-        if not last_name or not Validator.validate_fio_part(last_name):
-            return False
-
-        if Validator.contains_number(middle_name):
-            return False
-
-        if group not in groups:
-            return False
-
-        for exam, grade in scores.items():
-            if not exam or exam not in exams:
+            if not first_name or not Validator.validate_fio_part(first_name):
                 return False
 
-            if not Validator.score_validation(grade):
+            if not last_name or not Validator.validate_fio_part(last_name):
                 return False
+
+            if Validator.contains_number(middle_name):
+                return False
+
+            if group not in groups:
+                return False
+
+            for exam, grade in scores.items():
+                if not exam or exam not in exams:
+                    return False
+
+                if not Validator.score_validation(grade):
+                    return False
 
         return True
