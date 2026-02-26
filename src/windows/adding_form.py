@@ -27,6 +27,7 @@ class AddForm(QDialog):
 
         self.ui.groups.currentTextChanged.connect(self.__group_selection)
         self.ui.add_button.clicked.connect(self.__add_student)
+        self.ui.cancel_button.clicked.connect(lambda: self.close())
 
     def __setup_groups(self) -> None:
         groups = self.db.get_all_groups()
@@ -122,7 +123,7 @@ class AddForm(QDialog):
             score_value = score_spin.value()
             if not Validator.score_validation(score_value):
                 errors.append(
-                    f"Оценка по предмету \"{exam}\" должна быть в диапазоне от 4 до 10"
+                    f'Оценка по предмету "{exam}" должна быть в диапазоне от 4 до 10'
                 )
                 continue
             scores[exam] = score_value

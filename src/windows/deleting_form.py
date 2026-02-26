@@ -18,6 +18,7 @@ class DeleteForm(QDialog):
         self.__setup_groups()
         self.__setup_subjects()
         self.ui.delete_button.clicked.connect(self.__delete_students)
+        self.ui.cancel_button.clicked.connect(lambda: self.close())
 
     def __setup_groups(self) -> None:
         groups = self.db.get_all_groups()

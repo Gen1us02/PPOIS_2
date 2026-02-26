@@ -58,6 +58,8 @@ class MainWindow(QMainWindow):
         self.ui.search_students_button.clicked.connect(self.__search_students)
         self.ui.show_tree_button.clicked.connect(self.__create_tree)
         self.ui.hide_tree_button.clicked.connect(self.__hide_tree)
+        self.ui.exit_button_work.clicked.connect(lambda: self.close())
+        self.ui.exit_button_load.clicked.connect(lambda: self.close())
 
     def __setup_table(self) -> None:
         table = self.ui.student_table
@@ -146,7 +148,9 @@ class MainWindow(QMainWindow):
         try:
             students_data = XMLReader.parse_file(file)
         except Exception:
-            QMessageBox.critical(self, "Ошибка парсинга файла", "Некорректная структура файла")
+            QMessageBox.critical(
+                self, "Ошибка парсинга файла", "Некорректная структура файла"
+            )
             return
 
         if Validator.validate_xml(students_data, groups, exams):

@@ -66,6 +66,12 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_4.addWidget(self.load_database_button)
 
+        self.exit_button_load = QPushButton(self.data_load_frame)
+        self.exit_button_load.setObjectName(u"exit_button_load")
+        self.exit_button_load.setMinimumSize(QSize(0, 40))
+
+        self.verticalLayout_4.addWidget(self.exit_button_load)
+
 
         self.verticalLayout_2.addWidget(self.data_load_frame)
 
@@ -124,6 +130,12 @@ class Ui_MainWindow(object):
         self.add_students_button.setMinimumSize(QSize(0, 40))
 
         self.verticalLayout.addWidget(self.add_students_button)
+
+        self.exit_button_work = QPushButton(self.control_frame)
+        self.exit_button_work.setObjectName(u"exit_button_work")
+        self.exit_button_work.setMinimumSize(QSize(0, 40))
+
+        self.verticalLayout.addWidget(self.exit_button_work)
 
 
         self.horizontalLayout_2.addWidget(self.control_frame)
@@ -290,6 +302,7 @@ class Ui_MainWindow(object):
         self.data_load_label.setText(QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0430 \u0434\u0430\u043d\u043d\u044b\u0445", None))
         self.load_file_button.setText(QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044c \u0438\u0437 \u0444\u0430\u0439\u043b\u0430", None))
         self.load_database_button.setText(QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044c \u0438\u0437 \u0431\u0430\u0437\u044b \u0434\u0430\u043d\u043d\u044b\u0445", None))
+        self.exit_button_load.setText(QCoreApplication.translate("MainWindow", u"\u0412\u044b\u0439\u0442\u0438", None))
         self.work_tab_widget.setTabText(self.work_tab_widget.indexOf(self.data_load_tab), QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0430 \u0434\u0430\u043d\u043d\u044b\u0445", None))
         self.db_work_label.setText(QCoreApplication.translate("MainWindow", u"\u0420\u0430\u0431\u043e\u0442\u0430 \u0441 \u0437\u0430\u043f\u0438\u0441\u044f\u043c\u0438", None))
         self.search_students_button.setText(QCoreApplication.translate("MainWindow", u"\u041f\u043e\u0438\u0441\u043a \u0441\u0442\u0443\u0434\u0435\u043d\u0442\u043e\u0432", None))
@@ -297,6 +310,7 @@ class Ui_MainWindow(object):
         self.hide_tree_button.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043a\u0440\u044b\u0442\u044c \u0434\u0435\u0440\u0435\u0432\u043e \u0441\u0442\u0443\u0434\u0435\u043d\u0442\u043e\u0432", None))
         self.delete_students_button.setText(QCoreApplication.translate("MainWindow", u"\u0423\u0434\u0430\u043b\u0435\u043d\u0438\u0435 \u0441\u0442\u0443\u0434\u0435\u043d\u0442\u043e\u0432", None))
         self.add_students_button.setText(QCoreApplication.translate("MainWindow", u"\u0414\u043e\u0431\u0430\u0432\u043b\u0435\u043d\u0438\u0435 \u0441\u0442\u0443\u0434\u0435\u043d\u0442\u043e\u0432", None))
+        self.exit_button_work.setText(QCoreApplication.translate("MainWindow", u"\u0412\u044b\u0439\u0442\u0438", None))
         self.work_tab_widget.setTabText(self.work_tab_widget.indexOf(self.data_work_tab), QCoreApplication.translate("MainWindow", u"\u0420\u0430\u0431\u043e\u0442\u0430 \u0441 \u0437\u0430\u043f\u0438\u0441\u044f\u043c\u0438", None))
         self.no_data_label_main.setText("")
         self.table_tab_widget.setTabText(self.table_tab_widget.indexOf(self.no_data_tab), QCoreApplication.translate("MainWindow", u"\u041d\u0435\u0442 \u0434\u0430\u043d\u043d\u044b\u0445", None))

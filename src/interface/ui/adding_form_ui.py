@@ -84,6 +84,13 @@ class Ui_AddForm(object):
         self.button_frame.setFrameShadow(QFrame.Shadow.Raised)
         self.horizontalLayout = QHBoxLayout(self.button_frame)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.cancel_button = QPushButton(self.button_frame)
+        self.cancel_button.setObjectName(u"cancel_button")
+        self.cancel_button.setMinimumSize(QSize(40, 40))
+        self.cancel_button.setMaximumSize(QSize(360, 50))
+
+        self.horizontalLayout.addWidget(self.cancel_button)
+
         self.add_button = QPushButton(self.button_frame)
         self.add_button.setObjectName(u"add_button")
         self.add_button.setMinimumSize(QSize(40, 40))
@@ -110,6 +117,7 @@ class Ui_AddForm(object):
         self.middle_name.setText("")
         self.middle_name.setPlaceholderText(QCoreApplication.translate("AddForm", u"\u041e\u0442\u0447\u0435\u0441\u0442\u0432\u043e", None))
         self.groups.setPlaceholderText(QCoreApplication.translate("AddForm", u"\u041d\u043e\u043c\u0435\u0440 \u0433\u0440\u0443\u043f\u043f\u044b", None))
+        self.cancel_button.setText(QCoreApplication.translate("AddForm", u"\u041e\u0442\u043c\u0435\u043d\u0430", None))
         self.add_button.setText(QCoreApplication.translate("AddForm", u"\u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c \u0441\u0442\u0443\u0434\u0435\u043d\u0442\u0430", None))
     # retranslateUi
 

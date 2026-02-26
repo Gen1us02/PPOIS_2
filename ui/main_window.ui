@@ -94,6 +94,19 @@
              </property>
             </widget>
            </item>
+           <item>
+            <widget class="QPushButton" name="exit_button_load">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Выйти</string>
+             </property>
+            </widget>
+           </item>
           </layout>
          </widget>
         </item>
@@ -215,6 +228,19 @@
              </property>
              <property name="text">
               <string>Добавление студентов</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="exit_button_work">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Выйти</string>
              </property>
             </widget>
            </item>

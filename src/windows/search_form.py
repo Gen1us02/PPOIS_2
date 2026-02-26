@@ -40,6 +40,7 @@ class SearchForm(QDialog):
         self.ui.items_count.currentTextChanged.connect(
             lambda text: self.paginator.update_items_count(text, self.searched_students)
         )
+        self.ui.cancel_button.clicked.connect(lambda: self.close())
 
     def __setup_table(self) -> None:
         table = self.ui.student_table

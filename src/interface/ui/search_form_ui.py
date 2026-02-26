@@ -161,6 +161,12 @@ class Ui_SearchForm(object):
 
         self.verticalLayout.addWidget(self.search_students)
 
+        self.cancel_button = QPushButton(self.filters_frame)
+        self.cancel_button.setObjectName(u"cancel_button")
+        self.cancel_button.setMinimumSize(QSize(0, 40))
+
+        self.verticalLayout.addWidget(self.cancel_button)
+
 
         self.horizontalLayout_3.addWidget(self.filters_frame)
 
@@ -303,6 +309,7 @@ class Ui_SearchForm(object):
         self.groups_list.setPlaceholderText(QCoreApplication.translate("SearchForm", u"\u0421\u043f\u0438\u0441\u043e\u043a \u0433\u0440\u0443\u043f\u043f", None))
         self.subject_list.setPlaceholderText(QCoreApplication.translate("SearchForm", u"\u0421\u043f\u0438\u0441\u043e\u043a \u043f\u0440\u0435\u0434\u043c\u0435\u0442\u043e\u0432", None))
         self.search_students.setText(QCoreApplication.translate("SearchForm", u"\u041f\u043e\u0438\u0441\u043a \u0441\u0442\u0443\u0434\u0435\u043d\u0442\u043e\u0432", None))
+        self.cancel_button.setText(QCoreApplication.translate("SearchForm", u"\u041e\u0442\u043c\u0435\u043d\u0430", None))
         self.no_data_label.setText("")
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.no_data_search_tab), QCoreApplication.translate("SearchForm", u"\u041d\u0435\u0442 \u0434\u0430\u043d\u043d\u044b\u0445", None))
         ___qtablewidgetitem = self.student_table.horizontalHeaderItem(0)
