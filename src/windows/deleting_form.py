@@ -125,7 +125,8 @@ class DeleteForm(QDialog):
             )
         ):
             delete_students_count = len(self.db.get_all_records())
-            self.is_deleted = True
+            if delete_students_count > 0:
+                self.is_deleted = True
             QMessageBox.information(
                 self,
                 "Удаленные записи",
@@ -150,7 +151,8 @@ class DeleteForm(QDialog):
         }
 
         delete_students_count = self.db.delete_students(**delete_data)
-        self.is_deleted = True
+        if delete_students_count > 0:
+            self.is_deleted = True
         QMessageBox.information(
             self,
             "Удаленные записи",

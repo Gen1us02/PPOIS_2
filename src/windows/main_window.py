@@ -174,6 +174,7 @@ class MainWindow(QMainWindow):
         self.ui.table_tab_widget.setCurrentWidget(self.ui.student_table_tab)
         self.ui.work_tab_widget.setCurrentWidget(self.ui.data_work_tab)
         self.ui.hide_tree_button.hide()
+        self.ui.show_tree_button.show()
 
         self.ui.records_count_label.setText(f"Количество записей: {len(self.students)}")
         self.paginator.update_max_page(self.students)
