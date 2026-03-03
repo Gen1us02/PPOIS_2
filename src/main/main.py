@@ -18,8 +18,11 @@ pygame.display.set_icon(icon)
 menu = Menu(screen)
 leaders_table = LeadersTable(screen)
 rules = Rules(screen)
-
+pygame.mixer.music.load("assets/audio/menu_song.mp3")
 state = States.MENU
+
+pygame.mixer.music.play(-1)
+pygame.mixer.music.set_volume(0.5)
 
 running = True
 while running:
