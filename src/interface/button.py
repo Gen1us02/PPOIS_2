@@ -1,10 +1,13 @@
 from typing import Optional, Tuple
 from src.states import States
+from src.config import config
 from pygame import Surface
 import pygame
 
 
 class Button:
+    FONT_SIZE = int(config["DEFAULT"]["FONT_SIZE"])
+
     def __init__(
         self,
         x: int,
@@ -21,7 +24,7 @@ class Button:
         self.__color = color
         self.__hover_color = hover_color
         self.__action = action
-        self.__font = pygame.font.Font("assets/fonts/Sjz.otf", 30)
+        self.__font = pygame.font.Font("assets/fonts/Sjz.otf", self.FONT_SIZE)
 
     def draw(self, screen: Surface) -> None:
         mouse_pos = pygame.mouse.get_pos()

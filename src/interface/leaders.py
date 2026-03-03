@@ -7,29 +7,30 @@ from src.utils.utils import Utils
 from src.states import States
 import pygame
 
-BUTTON_WIDTH = int(config["DEFAULT"]["BUTTON_WIDTH"])
-BUTTON_HEIGHT = int(config["DEFAULT"]["BUTTON_HEIGHT"])
-BUTTON_PADDING = int(config["DEFAULT"]["BUTTON_PADDING"])
-
 
 class LeadersTable:
+    BUTTON_WIDTH = int(config["DEFAULT"]["BUTTON_WIDTH"])
+    BUTTON_HEIGHT = int(config["DEFAULT"]["BUTTON_HEIGHT"])
+    BUTTON_PADDING = int(config["DEFAULT"]["BUTTON_PADDING"])
+    FONT_SIZE = int(config["DEFAULT"]["FONT_SIZE"])
+
     def __init__(self, screen: Surface) -> None:
         self.screen = screen
-        self.players = Utils.load_file("leaders.json")
+        self.players = Utils.load_players("leaders.json")
         self.bg = pygame.image.load("assets/images/menu_background.png").convert_alpha()
         self.bg = pygame.transform.scale(
             self.bg, (self.screen.get_width(), self.screen.get_height())
         )
 
         self.table_name = "Таблица рекордов"
-        button_x = (self.screen.get_width() - BUTTON_WIDTH) // 2
+        button_x = (self.screen.get_width() - self.BUTTON_WIDTH) // 2
         self.headers = ["Номер в таблице", "Имя", "Очки"]
         self.font = pygame.font.Font("assets/fonts/Sjz.otf", 30)
         self.button = Button(
             button_x,
-            self.screen.get_height() - BUTTON_HEIGHT - BUTTON_PADDING,
-            BUTTON_WIDTH,
-            BUTTON_HEIGHT,
+            self.screen.get_height() - self.BUTTON_HEIGHT - self.BUTTON_PADDING,
+            self.BUTTON_WIDTH,
+            self.BUTTON_HEIGHT,
             "Назад",
             (186, 2, 2),
             (230, 57, 57),
@@ -49,16 +50,21 @@ class LeadersTable:
         for i, header in enumerate(self.headers):
             text = self.font.render(header, True, (255, 255, 255))
             self.screen.blit(text, (self.col_x[i], self.y_headers))
-        
-         
+
         for i, (name, score) in enumerate(self.players, 1):
-            number_text =  self.font.render(str(i), True, (255, 255, 255))
+            number_text = self.font.render(str(i), True, (255, 255, 255))
             name_text = self.font.render(name, True, (255, 255, 255))
             score_text = self.font.render(str(score), True, (255, 255, 255))
-            
-            self.screen.blit(number_text, (self.col_x[0], self.y_headers + self.row_height * i))
-            self.screen.blit(name_text, (self.col_x[1], self.y_headers + self.row_height * i))
-            self.screen.blit(score_text, (self.col_x[2], self.y_headers + self.row_height * i))
+
+            self.screen.blit(
+                number_text, (self.col_x[0], self.y_headers + self.row_height * i)
+            )
+            self.screen.blit(
+                name_text, (self.col_x[1], self.y_headers + self.row_height * i)
+            )
+            self.screen.blit(
+                score_text, (self.col_x[2], self.y_headers + self.row_height * i)
+            )
 
         self.button.draw(self.screen)
 

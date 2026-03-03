@@ -6,7 +6,7 @@ import pygame
 
 class Utils:
     @staticmethod
-    def load_file(filename: str) -> List[Tuple[str, int]]:
+    def load_players(filename: str) -> List[Tuple[str, int]]:
         with open(filename, "r", encoding="utf-8") as file:
             data = json.load(file)
 
@@ -16,6 +16,13 @@ class Utils:
 
         players = sorted(players, key=lambda x: -x[1])
         return players
+
+    @staticmethod
+    def load_rules(filename: str) -> List[str]:
+        with open(filename, "r", encoding="utf-8") as file:
+            rules = file.readlines()
+
+        return [string.strip("\n") for string in rules]
 
     @staticmethod
     def scale_image(image: Surface, target_width: int):

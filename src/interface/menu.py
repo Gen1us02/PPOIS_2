@@ -7,22 +7,21 @@ from src.config import config
 import pygame
 
 
-BUTTON_WIDTH = int(config["DEFAULT"]["BUTTON_WIDTH"])
-BUTTON_HEIGHT = int(config["DEFAULT"]["BUTTON_HEIGHT"])
-BUTTON_Y = int(config["DEFAULT"]["BUTTON_Y"])
-BUTTON_PADDING = int(config["DEFAULT"]["BUTTON_PADDING"])
-
-
 class Menu:
+    BUTTON_WIDTH = int(config["DEFAULT"]["BUTTON_WIDTH"])
+    BUTTON_HEIGHT = int(config["DEFAULT"]["BUTTON_HEIGHT"])
+    BUTTON_Y = int(config["DEFAULT"]["BUTTON_Y"])
+    BUTTON_PADDING = int(config["DEFAULT"]["BUTTON_PADDING"])
+
     def __init__(self, screen: Surface) -> None:
         self.screen = screen
-        button_x = (self.screen.get_width() - BUTTON_WIDTH) // 2
+        button_x = (self.screen.get_width() - self.BUTTON_WIDTH) // 2
         self.buttons = [
             Button(
                 button_x,
-                BUTTON_Y,
-                BUTTON_WIDTH,
-                BUTTON_HEIGHT,
+                self.BUTTON_Y,
+                self.BUTTON_WIDTH,
+                self.BUTTON_HEIGHT,
                 "Начать",
                 (186, 2, 2),
                 (230, 57, 57),
@@ -30,9 +29,9 @@ class Menu:
             ),
             Button(
                 button_x,
-                BUTTON_Y + BUTTON_PADDING,
-                BUTTON_WIDTH,
-                BUTTON_HEIGHT,
+                self.BUTTON_Y + self.BUTTON_PADDING,
+                self.BUTTON_WIDTH,
+                self.BUTTON_HEIGHT,
                 "Таблица лидеров",
                 (186, 2, 2),
                 (230, 57, 57),
@@ -40,9 +39,9 @@ class Menu:
             ),
             Button(
                 button_x,
-                BUTTON_Y + BUTTON_PADDING * 2,
-                BUTTON_WIDTH,
-                BUTTON_HEIGHT,
+                self.BUTTON_Y + self.BUTTON_PADDING * 2,
+                self.BUTTON_WIDTH,
+                self.BUTTON_HEIGHT,
                 "Справка",
                 (186, 2, 2),
                 (230, 57, 57),
@@ -50,9 +49,9 @@ class Menu:
             ),
             Button(
                 button_x,
-                BUTTON_Y + BUTTON_PADDING * 3,
-                BUTTON_WIDTH,
-                BUTTON_HEIGHT,
+                self.BUTTON_Y + self.BUTTON_PADDING * 3,
+                self.BUTTON_WIDTH,
+                self.BUTTON_HEIGHT,
                 "Выход",
                 (186, 2, 2),
                 (230, 57, 57),
