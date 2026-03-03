@@ -1,0 +1,25 @@
+import json
+from typing import List, Tuple
+from pygame import Surface
+import pygame
+
+
+class Utils:
+    @staticmethod
+    def load_file(filename: str) -> List[Tuple[str, int]]:
+        with open(filename, "r", encoding="utf-8") as file:
+            data = json.load(file)
+
+        players = []
+        for player in data:
+            players.append((player["name"], player["score"]))
+
+        players = sorted(players, key=lambda x: -x[1])
+        return players
+
+    @staticmethod
+    def scale_image(image: Surface, target_width: int):
+        original_width, original_height = image.get_size()
+        scale_factor = target_width / original_width
+        new_height = int(original_height * scale_factor)
+        return pygame.transform.smoothscale(image, (target_width, new_height))
