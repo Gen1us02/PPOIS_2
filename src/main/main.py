@@ -2,6 +2,7 @@ import pygame
 from src.interface.menu import Menu
 from src.states import States
 from src.config import config
+from src.interface.leaders import LeadersTable
 
 pygame.init()
 
@@ -14,6 +15,7 @@ pygame.display.set_caption("Crimsonland")
 pygame.display.set_icon(icon)
 
 menu = Menu(screen)
+leaders_table = LeadersTable(screen)
 
 state = States.MENU
 
@@ -26,7 +28,6 @@ while running:
         action = menu.handle_events()
         if action == States.START:
             state = States.GAME
-            pass
 
         if action == States.EXIT:
             running = False
@@ -36,5 +37,15 @@ while running:
 
     if state == States.GAME:
         pass
+    
+    if state == States.LEADERS:
+        leaders_table.draw()
+        action = leaders_table.handle_events()
+        if action == States.EXIT:
+            running = False
+            
+        if action == States.MENU:
+            state = States.MENU
+        
 
 pygame.quit()

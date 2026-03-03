@@ -2,6 +2,7 @@ from typing import Optional
 from pygame import Surface
 from src.states import States
 from src.interface.button import Button
+from src.utils.utils import Utils
 from src.config import config
 import pygame
 
@@ -63,7 +64,7 @@ class Menu:
             self.bg, (self.screen.get_width(), self.screen.get_height())
         )
         self.game_name = pygame.image.load("assets/images/name.png").convert_alpha()
-        self.game_name = self._scale_image(self.game_name, target_width=400)
+        self.game_name = Utils.scale_image(self.game_name, target_width=400)
 
         self.name_rect = self.game_name.get_rect()
         self.name_rect.centerx = self.screen.get_width() // 2
@@ -81,12 +82,6 @@ class Menu:
                         return action
 
         return None
-
-    def _scale_image(self, image: Surface, target_width: int):
-        original_width, original_height = image.get_size()
-        scale_factor = target_width / original_width
-        new_height = int(original_height * scale_factor)
-        return pygame.transform.smoothscale(image, (target_width, new_height))
 
     def draw(self) -> None:
         self.screen.blit(self.bg, (0, 0))

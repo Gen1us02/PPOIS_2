@@ -37,5 +37,5 @@ class Button:
     def check_event(self, event) -> Optional[States]:
         if self.__rect.collidepoint(event.pos):
             return self.__action
-        
+
         return None
