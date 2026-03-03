@@ -1,10 +1,14 @@
 import pygame
-from src.menu.menu import Menu
+from src.interface.menu import Menu
 from src.states import States
+from src.config import config
 
 pygame.init()
 
-screen = pygame.display.set_mode((800, 600))
+SCREEN_WIDTH = int(config["DEFAULT"]["SCREEN_WIDTH"])
+SCREEN_HEIGHT = int(config["DEFAULT"]["SCREEN_HEIGHT"])
+
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 icon = pygame.image.load("assets/images/icon.png").convert_alpha()
 pygame.display.set_caption("Crimsonland")
 pygame.display.set_icon(icon)
@@ -26,7 +30,11 @@ while running:
 
         if action == States.EXIT:
             running = False
-            pygame.quit()
 
-    if state == "game":
+        if action == States.LEADERS:
+            state = States.LEADERS
+
+    if state == States.GAME:
         pass
+
+pygame.quit()
