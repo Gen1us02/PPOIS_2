@@ -1,50 +1,29 @@
-from typing import Optional
-
-from src.interface.button import Button
-from src.config import config
 from pygame import Surface
 from src.utils.utils import Utils
-from src.states import States
-import pygame
+from src.common.menu_options import MenuOptionMixin
 
 
-class LeadersTable:
-    BUTTON_WIDTH = int(config["DEFAULT"]["BUTTON_WIDTH"])
-    BUTTON_HEIGHT = int(config["DEFAULT"]["BUTTON_HEIGHT"])
-    BUTTON_PADDING = int(config["DEFAULT"]["BUTTON_PADDING"])
-    FONT_SIZE = int(config["DEFAULT"]["FONT_SIZE"])
-
+class LeadersTable(MenuOptionMixin):
     def __init__(self, screen: Surface) -> None:
-        self.screen = screen
+        super().__init__(screen)
         self.players = Utils.load_players("leaders.json")
-        self.bg = pygame.image.load("assets/images/menu_background.png").convert_alpha()
-        self.bg = pygame.transform.scale(
-            self.bg, (self.screen.get_width(), self.screen.get_height())
-        )
-
         self.table_name = "Таблица рекордов"
-        button_x = (self.screen.get_width() - self.BUTTON_WIDTH) // 2
-        self.headers = ["Номер в таблице", "Имя", "Очки"]
-        self.font = pygame.font.Font("assets/fonts/Sjz.otf", 30)
-        self.button = Button(
-            button_x,
-            self.screen.get_height() - self.BUTTON_HEIGHT - self.BUTTON_PADDING,
-            self.BUTTON_WIDTH,
-            self.BUTTON_HEIGHT,
-            "Назад",
-            (186, 2, 2),
-            (230, 57, 57),
-            States.MENU,
-        )
-        self.col_x = [150, 500, 800]
-        self.y_headers = 50
-        self.row_height = 50
+        self.headers = ["Номер", "Имя", "Очки"]
+        self.col_x = [
+            self.rect_x + 50,
+            self.rect_x + self.rect_width // 2 - 150,
+            self.rect_x + self.rect_width - 150,
+        ]
+        self.y_headers = self.rect_y + 50
+        self.row_height = (self.rect_height - 100) // len(self.players)
 
     def draw(self) -> None:
-        self.screen.blit(self.bg, (0, 0))
+        super().draw()
 
         title = self.font.render(self.table_name, True, (255, 255, 255))
-        title_rect = title.get_rect(center=(self.screen.get_width() // 2, 30))
+        title_rect = title.get_rect(
+            center=(self.screen.get_width() // 2, self.rect_y + 25)
+        )
         self.screen.blit(title, title_rect)
 
         for i, header in enumerate(self.headers):
@@ -65,15 +44,3 @@ class LeadersTable:
             self.screen.blit(
                 score_text, (self.col_x[2], self.y_headers + self.row_height * i)
             )
-
-        self.button.draw(self.screen)
-
-    def handle_events(self) -> Optional[States]:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                return States.EXIT
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                action = self.button.check_event(event)
-                if action:
-                    return action
-        return None
