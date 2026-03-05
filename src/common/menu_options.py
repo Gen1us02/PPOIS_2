@@ -3,7 +3,7 @@ from pygame import Surface
 import pygame
 from src.interface.button import Button
 from src.config import config
-from src.states import States
+from src.enums import States
 
 
 class MenuOptionMixin:

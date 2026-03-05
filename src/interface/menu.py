@@ -1,6 +1,6 @@
 from typing import Optional
 from pygame import Surface
-from src.states import States
+from src.enums import States
 from src.interface.button import Button
 from src.utils.utils import Utils
 from src.config import config

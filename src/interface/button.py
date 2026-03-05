@@ -1,5 +1,5 @@
 from typing import Optional, Tuple
-from src.states import States
+from src.enums import States
 from src.config import config
 from pygame import Surface
 import pygame

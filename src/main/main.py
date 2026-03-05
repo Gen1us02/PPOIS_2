@@ -1,23 +1,28 @@
 import pygame
 from src.interface.menu import Menu
-from src.states import States
+from src.enums import States
 from src.config import config
 from src.interface.leaders import LeadersTable
 from src.interface.rules import Rules
+from src.interface.game import Game
 
 pygame.init()
 
 SCREEN_WIDTH = int(config["DEFAULT"]["SCREEN_WIDTH"])
 SCREEN_HEIGHT = int(config["DEFAULT"]["SCREEN_HEIGHT"])
+FPS = int(config["DEFAULT"]["FPS"])
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 icon = pygame.image.load("assets/images/icon.png").convert_alpha()
 pygame.display.set_caption("Crimsonland")
 pygame.display.set_icon(icon)
 
+clock = pygame.time.Clock()
+
 menu = Menu(screen)
 leaders_table = LeadersTable(screen)
 rules = Rules(screen)
+game = Game(screen)
 pygame.mixer.music.load("assets/audio/menu_song.mp3")
 state = States.MENU
 
@@ -26,6 +31,7 @@ pygame.mixer.music.set_volume(0.5)
 
 running = True
 while running:
+    clock.tick(FPS)
     pygame.display.flip()
 
     if state == States.MENU:
@@ -44,7 +50,13 @@ while running:
             state = States.RULES
 
     if state == States.GAME:
-        pass
+        pygame.mixer.music.pause()
+        action = game.handle_events()
+        if action == States.EXIT:
+            running = False
+            
+        game.update()
+        game.draw()
 
     if state == States.LEADERS:
         leaders_table.draw()
