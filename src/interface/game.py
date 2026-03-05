@@ -71,6 +71,7 @@ class Game:
         )
         self.all_sprites.draw(self.screen)
         pygame.mouse.set_visible(False)
-        self.screen.blit(self.cursor, pygame.mouse.get_pos())
+        cursor_rect = self.cursor.get_rect(center=pygame.mouse.get_pos())
+        self.screen.blit(self.cursor, cursor_rect)
         self.screen.blit(wave_count, (30, 20))
         self.screen.blit(enemies_count, (200, 20))

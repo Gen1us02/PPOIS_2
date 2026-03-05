@@ -38,7 +38,9 @@ class Button:
         screen.blit(text, text_rect)
 
     def check_event(self, event) -> Optional[States]:
-        if self.__rect.collidepoint(event.pos):
+        if (
+            event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE
+        ) or self.__rect.collidepoint(event.pos):
             return self.__action
 
         return None

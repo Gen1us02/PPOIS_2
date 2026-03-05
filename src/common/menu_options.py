@@ -50,7 +50,7 @@ class MenuOptionMixin:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return States.EXIT
-            if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.KEYDOWN:
                 action = self.button.check_event(event)
                 if action:
                     return action
