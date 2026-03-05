@@ -2,20 +2,20 @@ import math
 import pygame
 from pygame import Surface
 from pygame.sprite import Group
-from src.objects.bullet import Bullet
 from src.utils.utils import Utils
+from src.objects.weapons import Gun
 
 
 class Player(pygame.sprite.Sprite):
     def __init__(
         self,
-        x,
-        y,
+        x: int,
+        y: int,
     ) -> None:
         pygame.sprite.Sprite.__init__(self)
         self.original_image = pygame.image.load("assets/images/player.png")
         self.original_image = Utils.scale_image(self.original_image, 50)
-        self.shooting_sound = pygame.mixer.Sound("assets/audio/gun_shot.mp3")
+        self.weapon = Gun()
         self.image = self.original_image
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
@@ -32,13 +32,7 @@ class Player(pygame.sprite.Sprite):
         screen.blit(self.image, self.rect)
 
     def shoot(self, bullets: Group, all_sprites) -> None:
-        if self.cooldown == 0:
-            self.cooldown = 20
-            mos_x, mos_y = pygame.mouse.get_pos()
-            bullet = Bullet(self.rect.centerx, self.rect.centery, mos_x, mos_y)
-            self.shooting_sound.play(0)
-            bullets.add(bullet)
-            all_sprites.add(bullet)
+        self.weapon.shoot(self.rect.centerx, self.rect.centery, bullets, all_sprites)
 
     def update(self) -> None:
         mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -50,6 +44,3 @@ class Player(pygame.sprite.Sprite):
             target_angle = angle - self.angle_offset
             self.image = pygame.transform.rotate(self.original_image, target_angle)
             self.rect = self.image.get_rect(center=self.rect.center)
-
-        if self.cooldown > 0:
-            self.cooldown -= 1
