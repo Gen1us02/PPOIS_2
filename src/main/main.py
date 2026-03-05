@@ -50,7 +50,6 @@ while running:
             state = States.RULES
 
     if state == States.GAME:
-        pygame.mixer.music.pause()
         action = game.handle_events()
         if action == States.EXIT:
             running = False

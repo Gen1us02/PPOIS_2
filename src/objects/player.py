@@ -15,6 +15,7 @@ class Player(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.original_image = pygame.image.load("assets/images/player.png")
         self.original_image = Utils.scale_image(self.original_image, 50)
+        self.shooting_sound = pygame.mixer.Sound("assets/audio/gun_shot.mp3")
         self.image = self.original_image
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
@@ -35,6 +36,7 @@ class Player(pygame.sprite.Sprite):
             self.cooldown = 20
             mos_x, mos_y = pygame.mouse.get_pos()
             bullet = Bullet(self.rect.centerx, self.rect.centery, mos_x, mos_y)
+            self.shooting_sound.play(0)
             bullets.add(bullet)
             all_sprites.add(bullet)
 
