@@ -46,6 +46,10 @@ class Game:
     def reset(self) -> None:
         self.played_music = False
         self.play_music()
+        x = self.screen.get_width() // 2
+        y = self.screen.get_height() // 2
+        self.player.rect.center = x, y
+        self.player.reset_weapon()
         self.all_sprites.empty()
         self.enemies.empty()
         self.bullets.empty()
@@ -99,10 +103,15 @@ class Game:
             dy -= speed
         if keys[pygame.K_s]:
             dy += speed
+        if keys[pygame.K_r]:
+            self.player.reload()
 
         mouse_buttons = pygame.mouse.get_pressed()
         if mouse_buttons[0]:
-            self.player.shoot(self.bullets, self.all_sprites)
+            if self.player.ammo > 0:
+                self.player.shoot(self.bullets, self.all_sprites)
+            else:
+                self.player.reload()
         self.player.move(dx, dy)
 
         if self.enemies_count == 0:
@@ -155,6 +164,7 @@ class Game:
             f"Врагов осталось: {self.enemies_count}", True, (0, 0, 0)
         )
         points = self.font.render(f"Очки: {self.total_points}", True, (0, 0, 0))
+        ammo = self.font.render(f"Боезапас: {self.player.ammo}", True, (0, 0, 0))
         self.all_sprites.add(self.player)
         self.enemies.draw(self.screen)
         self.all_sprites.draw(self.screen)
@@ -164,3 +174,4 @@ class Game:
         self.screen.blit(wave_count, (30, 20))
         self.screen.blit(enemies_count, (200, 20))
         self.screen.blit(points, (30, 70))
+        self.screen.blit(ammo, (700, 20))
