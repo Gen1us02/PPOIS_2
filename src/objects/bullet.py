@@ -21,7 +21,7 @@ class Bullet(pygame.sprite.Sprite):
 
         self.rect.center = (x, y)
         
-    def update(self) -> None:
+    def update(self, *args, **kwargs) -> None:
         self.rect.x += self.dx * self.speed
         self.rect.y += self.dy * self.speed
         

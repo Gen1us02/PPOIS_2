@@ -33,8 +33,16 @@ class Player(pygame.sprite.Sprite):
 
     def shoot(self, bullets: Group, all_sprites) -> None:
         self.weapon.shoot(self.rect.centerx, self.rect.centery, bullets, all_sprites)
+        
+    @property
+    def weapon_damage(self) -> int:
+        return self.weapon.damage
+    
+    @property
+    def is_alive(self) -> bool:
+        return self.health > 0
 
-    def update(self) -> None:
+    def update(self, *args, **kwargs) -> None:
         mouse_x, mouse_y = pygame.mouse.get_pos()
         dx = mouse_x - self.rect.centerx
         dy = mouse_y - self.rect.centery

@@ -5,6 +5,7 @@ from src.config import config
 from src.interface.leaders import LeadersTable
 from src.interface.rules import Rules
 from src.interface.game import Game
+from src.utils.fabrics import EnemyFabric
 
 pygame.init()
 
@@ -19,10 +20,12 @@ pygame.display.set_icon(icon)
 
 clock = pygame.time.Clock()
 
+fabric = EnemyFabric()
+
 menu = Menu(screen)
 leaders_table = LeadersTable(screen)
 rules = Rules(screen)
-game = Game(screen)
+game = Game(screen, fabric)
 pygame.mixer.music.load("assets/audio/menu_song.mp3")
 state = States.MENU
 
@@ -38,6 +41,7 @@ while running:
         menu.draw()
         action = menu.handle_events()
         if action == States.START:
+            game.reset()
             state = States.GAME
 
         if action == States.EXIT:
@@ -53,9 +57,15 @@ while running:
         action = game.handle_events()
         if action == States.EXIT:
             running = False
-            
-        game.update()
-        game.draw()
+
+        if action == States.MENU:
+            pygame.mouse.set_visible(True)
+            pygame.mixer.music.load("assets/audio/menu_song.mp3")
+            pygame.mixer.music.play(-1)
+            state = States.MENU
+        else:
+            game.update()
+            game.draw()
 
     if state == States.LEADERS:
         leaders_table.draw()

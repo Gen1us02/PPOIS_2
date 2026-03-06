@@ -15,7 +15,7 @@ class Gun(Weapon):
         self.shooting_sound = pygame.mixer.Sound("assets/audio/gun_shot.mp3")
         self.ammo = 8
         self.reload_time = 30
-        self.damage = 20
+        self.damage = 10
         self.last_shot_time = 0
         self.shot_delay = 350
 
@@ -34,7 +34,7 @@ class Rifle(Weapon):
         self.shooting_sound = pygame.mixer.Sound("assets/audio/rifle_shot.mp3")
         self.shooting_sound.set_volume(0.8)
         self.ammo = 30
-        self.damage = 30
+        self.damage = 20
         self.reload_time = 30
         self.last_shot_time = 0
         self.shot_delay = 150
@@ -54,7 +54,7 @@ class Shotgun(Weapon):
         self.shooting_sound = pygame.mixer.Sound("assets/audio/shotgun_shot.mp3")
         self.shooting_sound.set_volume(0.3)
         self.ammo = 6
-        self.damage = 50
+        self.damage = 30
         self.reload_time = 40
         self.last_shot_time = 0
         self.shot_delay = 450
