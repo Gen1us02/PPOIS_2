@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from typing import Optional
+import random
+from typing import Optional, Tuple
 from pygame import Surface
 import pygame
 from src.enums import States, EnemyType
@@ -83,6 +84,30 @@ class Game:
                         first_enemy.rect.y += 1
                         rest_enemy.rect.y -= 1
 
+    def get_enemies_coords(self) -> Tuple[int, int]:
+        directions = ["left", "right", "up", "down"]
+        target_direction = random.choice(directions)
+        screen_width = self.screen.get_width()
+        screen_height = self.screen.get_height()
+        x, y = 0, 0
+
+        if target_direction == "left":
+            x, y = random.randint(-150, -100), random.randint(0, screen_height + 100)
+        elif target_direction == "right":
+            x, y = (
+                random.randint(screen_width + 100, screen_width + 150),
+                random.randint(0, screen_height + 100),
+            )
+        elif target_direction == "up":
+            x, y = random.randint(0, screen_width + 100), random.randint(-150, -100)
+        else:
+            x, y = (
+                random.randint(0, screen_width + 100),
+                random.randint(screen_height + 100, screen_height + 150),
+            )
+            
+        return x,y
+
     def play_music(self) -> None:
         if not self.played_music:
             self.played_music = True
@@ -120,7 +145,7 @@ class Game:
             self.current_wave += 1
             self.enemies_count = self.current_wave * 2
             for i in range(self.enemies_count):
-                x, y = 400 * (-1 if i % 2 == 0 else 1), 400 * (-1 if i % 2 == 0 else 1)
+                x, y = self.get_enemies_coords()
                 enemy = self.fabric.create(EnemyType.ZOMBIE, x, y)
                 self.enemies.add(enemy)
 
