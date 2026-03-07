@@ -36,7 +36,7 @@ class Enemy(pygame.sprite.Sprite):
             self.sound.play()
             player.health -= self.hit_damage
             return True
-        
+
         return False
 
 
@@ -53,6 +53,10 @@ class Zombie(Enemy):
         self.attack_image = pygame.image.load(
             "assets/images/zombie_attack.png"
         ).convert_alpha()
+        self.dead_picture = pygame.image.load(
+            "assets/images/dead_zombie.png"
+        ).convert_alpha()
+        self.dead_picture = Utils.scale_image(self.dead_picture, 40)
         self.attack_image = Utils.scale_image(self.attack_image, 40)
         self.attack_duration = 200
         self.image = self.original_image
@@ -70,6 +74,9 @@ class Zombie(Enemy):
             self.attack_end = pygame.time.get_ticks() + self.attack_duration
 
     def update(self, *args, **kwargs) -> None:
+        if not self.is_alive:
+            return
+
         player_x, player_y = args
         dx = player_x - self.rect.centerx
         dy = player_y - self.rect.centery
@@ -82,7 +89,7 @@ class Zombie(Enemy):
                 original = self.attack_image
             else:
                 original = self.original_image
-                
+
             self.image = pygame.transform.rotate(original, target_angle)
             self.rect = self.image.get_rect(center=self.rect.center)
 
@@ -92,6 +99,14 @@ class Zombie(Enemy):
                 step_y = (dy / distance) * self.speed
                 self.rect.x += step_x
                 self.rect.y += step_y
+
+    def kill(self) -> None:
+        if not self.is_alive:
+            self.is_dead = True
+            self.image = self.dead_picture
+            self.rect = self.image.get_rect(center=self.rect.center)
+            self.speed = 0
+            self.hit_damage = 0
 
 
 class Spider(Enemy):

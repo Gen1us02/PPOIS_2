@@ -62,7 +62,7 @@ class Game:
         return len(self.waves[self.current_wave])
 
     def resolve_enemy_collisions(self) -> None:
-        enemies_list = list(self.enemies)
+        enemies_list = [e for e in self.enemies if not e.is_alive]
         for i in range(len(enemies_list)):
             first_enemy = enemies_list[i]
             for j in range(i + 1, len(enemies_list)):
@@ -124,9 +124,11 @@ class Game:
 
         self.enemies.update(self.player.rect.x, self.player.rect.y)
         self.resolve_enemy_collisions()
-        enemies_list = list(self.enemies)
+        enemies_list = [e for e in self.enemies if not e.is_alive]
         for i in range(len(enemies_list)):
             enemy = enemies_list[i]
+            if not enemy.is_alive:
+                continue
             if enemy.rect.colliderect(self.player):
                 if enemy.rect.centerx < self.player.rect.centerx:
                     enemy.rect.x -= 1
@@ -138,6 +140,9 @@ class Game:
                     enemy.rect.y += 1
 
         for enemy in self.enemies:
+            if not enemy.is_alive:
+                continue
+
             bullets = pygame.sprite.spritecollide(enemy, self.bullets, False)
             if bullets:
                 enemy.health -= self.player.weapon_damage
