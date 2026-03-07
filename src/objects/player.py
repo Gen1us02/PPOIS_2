@@ -19,7 +19,7 @@ class Player(pygame.sprite.Sprite):
         self.image = self.original_image
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
-        self.angle_offset = 270
+        self.angle_offset = 90
         self.cooldown = 0
         self.max_health = 100
         self.health = self.max_health

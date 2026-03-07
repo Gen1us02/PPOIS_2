@@ -146,7 +146,7 @@ class Game:
             self.enemies_count = self.current_wave * 2
             for i in range(self.enemies_count):
                 x, y = self.get_enemies_coords()
-                enemy = self.fabric.create(EnemyType.ZOMBIE, x, y)
+                enemy = self.fabric.create(EnemyType.THUG, x, y)
                 self.enemies.add(enemy)
 
         self.enemies.update(self.player.rect.x, self.player.rect.y)
