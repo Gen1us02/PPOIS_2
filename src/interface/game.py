@@ -149,7 +149,7 @@ class Game:
                     self.enemies_count -= 1
 
             if pygame.sprite.collide_rect(self.player, enemy):
-                self.player.health -= enemy.damage
+                enemy.damage(self.player)
 
         self.all_sprites.update()
 
