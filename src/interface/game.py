@@ -32,6 +32,7 @@ class Game:
         self.bg = pygame.transform.scale(
             self.bg, (self.screen.get_width(), self.screen.get_height())
         )
+        self.all_sprites.add(self.player)
 
     def handle_events(self) -> Optional[States]:
         if not self.player.is_alive:
@@ -53,6 +54,7 @@ class Game:
         self.all_sprites.empty()
         self.enemies.empty()
         self.bullets.empty()
+        self.all_sprites.add(self.player)
         self.player.health = 100
         self.total_points = 0
         self.current_wave = 0
@@ -62,7 +64,7 @@ class Game:
         return len(self.waves[self.current_wave])
 
     def resolve_enemy_collisions(self) -> None:
-        enemies_list = [e for e in self.enemies if not e.is_alive]
+        enemies_list = [e for e in self.enemies if e.is_alive]
         for i in range(len(enemies_list)):
             first_enemy = enemies_list[i]
             for j in range(i + 1, len(enemies_list)):
@@ -124,7 +126,7 @@ class Game:
 
         self.enemies.update(self.player.rect.x, self.player.rect.y)
         self.resolve_enemy_collisions()
-        enemies_list = [e for e in self.enemies if not e.is_alive]
+        enemies_list = [e for e in self.enemies if e.is_alive]
         for i in range(len(enemies_list)):
             enemy = enemies_list[i]
             if not enemy.is_alive:
@@ -170,9 +172,9 @@ class Game:
         )
         points = self.font.render(f"Очки: {self.total_points}", True, (0, 0, 0))
         ammo = self.font.render(f"Боезапас: {self.player.ammo}", True, (0, 0, 0))
-        self.all_sprites.add(self.player)
         self.enemies.draw(self.screen)
         self.all_sprites.draw(self.screen)
+        self.player.draw(self.screen)
         pygame.mouse.set_visible(False)
         cursor_rect = self.cursor.get_rect(center=pygame.mouse.get_pos())
         self.screen.blit(self.cursor, cursor_rect)

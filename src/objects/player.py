@@ -21,7 +21,8 @@ class Player(pygame.sprite.Sprite):
         self.rect.center = (x, y)
         self.angle_offset = 270
         self.cooldown = 0
-        self.health = 100
+        self.max_health = 100
+        self.health = self.max_health
         self.speed = 3
 
     def move(self, x: int, y: int) -> None:
@@ -29,6 +30,14 @@ class Player(pygame.sprite.Sprite):
         self.rect.y += y
 
     def draw(self, screen: Surface) -> None:
+        bar_width = 64
+        bar_height = 10
+        bar_x = self.rect.centerx - bar_width // 2
+        bar_y = self.rect.centery - bar_height - 30
+        pygame.draw.rect(screen, (255, 0, 0), (bar_x, bar_y, bar_width, bar_height))
+        health_percentage = self.health / self.max_health
+        current_width = bar_width * health_percentage
+        pygame.draw.rect(screen, (0, 255, 0), (bar_x, bar_y, current_width, bar_height))
         screen.blit(self.image, self.rect)
 
     def shoot(self, bullets: Group, all_sprites) -> None:
