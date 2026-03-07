@@ -21,6 +21,7 @@ class Weapon(ABC):
 class Gun(Weapon):
     def __init__(self) -> None:
         self.shooting_sound = pygame.mixer.Sound("assets/audio/gun_shot.mp3")
+        self.reload_sound = pygame.mixer.Sound("assets/audio/gun_reload.mp3")
         self.max_ammo = 8
         self.ammo = self.max_ammo
         self.damage = 10
@@ -47,6 +48,7 @@ class Gun(Weapon):
 
     def reload(self) -> None:
         if not self.is_reloading and self.ammo < self.max_ammo:
+            self.reload_sound.play()
             self.is_reloading = True
             self.start_reload = pygame.time.get_ticks()
 
@@ -67,6 +69,7 @@ class Gun(Weapon):
 class Rifle(Weapon):
     def __init__(self) -> None:
         self.shooting_sound = pygame.mixer.Sound("assets/audio/rifle_shot.mp3")
+        self.reload_sound = pygame.mixer.Sound("assets/audio/rifle_reload.mp3")
         self.shooting_sound.set_volume(0.8)
         self.max_ammo = 30
         self.ammo = self.max_ammo
@@ -94,6 +97,7 @@ class Rifle(Weapon):
 
     def reload(self) -> None:
         if not self.is_reloading and self.ammo < self.max_ammo:
+            self.reload_sound.play()
             self.is_reloading = True
             self.start_reload = pygame.time.get_ticks()
 
@@ -114,12 +118,13 @@ class Rifle(Weapon):
 class Shotgun(Weapon):
     def __init__(self) -> None:
         self.shooting_sound = pygame.mixer.Sound("assets/audio/shotgun_shot.mp3")
+        self.reload_sound = pygame.mixer.Sound("assets/audio/shotgun_reload.mp3")
         self.shooting_sound.set_volume(0.3)
         self.max_ammo = 6
         self.ammo = self.max_ammo
         self.damage = 30
         self.shot_delay = 450
-        self.reload_time = 2000
+        self.reload_time = 3100
         self.last_shot_time = 0
         self.is_reloading = False
         self.start_reload = 0
@@ -143,6 +148,7 @@ class Shotgun(Weapon):
 
     def reload(self) -> None:
         if not self.is_reloading and self.ammo < self.max_ammo:
+            self.reload_sound.play()
             self.is_reloading = True
             self.start_reload = pygame.time.get_ticks()
 

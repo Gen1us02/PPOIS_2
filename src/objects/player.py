@@ -33,21 +33,21 @@ class Player(pygame.sprite.Sprite):
 
     def shoot(self, bullets: Group, all_sprites) -> None:
         self.weapon.shoot(self.rect.centerx, self.rect.centery, bullets, all_sprites)
-        
+
     def reset_weapon(self) -> None:
         self.weapon.reset()
-        
+
     def reload(self) -> None:
         self.weapon.reload()
-        
+
     @property
     def weapon_damage(self) -> int:
         return self.weapon.damage
-    
+
     @property
     def is_alive(self) -> bool:
         return self.health > 0
-    
+
     @property
     def ammo(self) -> int:
         return self.weapon.ammo
@@ -62,5 +62,5 @@ class Player(pygame.sprite.Sprite):
             target_angle = angle - self.angle_offset
             self.image = pygame.transform.rotate(self.original_image, target_angle)
             self.rect = self.image.get_rect(center=self.rect.center)
-            
+
         self.weapon.update()
