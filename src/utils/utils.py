@@ -16,6 +16,28 @@ class Utils:
 
         players = sorted(players, key=lambda x: -x[1])
         return players
+    
+    @staticmethod
+    def save_leaderboard(filename: str, leaderboard):
+        data = []
+        for leader in leaderboard:
+            data.append({"name" : leader[0], "score": leader[1]})
+            
+        with open(filename, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=4)
+
+    @staticmethod
+    def is_highscore(score, leaderboard):
+        if len(leaderboard) == 0:
+            return True
+        
+        return score > leaderboard[0][1]
+
+    @staticmethod
+    def add_score(name, score, leaderboard):
+        leaderboard.append((name, score))
+        leaderboard.sort(key=lambda x: x[1], reverse=True)
+        return leaderboard[:10]
 
     @staticmethod
     def load_rules(filename: str) -> List[str]:
@@ -37,3 +59,9 @@ class Utils:
         scale_factor = target_width / original_width
         new_height = int(original_height * scale_factor)
         return pygame.transform.smoothscale(image, (target_width, new_height))
+    
+    @staticmethod
+    def update_sound_and_mouse() -> None:
+        pygame.mouse.set_visible(True)
+        pygame.mixer.music.load("assets/audio/menu_song.mp3")
+        pygame.mixer.music.play(-1)

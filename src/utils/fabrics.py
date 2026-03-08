@@ -11,7 +11,7 @@ class Fabric(ABC):
 
 
 class EnemyFabric(Fabric):
-    def create(self, type: EnemyType, *args) -> Optional[Enemy]:
+    def create(self, type: str, *args) -> Optional[Enemy]:
         if type == EnemyType.ZOMBIE.value:
             return Zombie(*args)
         elif type == EnemyType.SPIDER.value:

@@ -38,7 +38,7 @@ class Game:
 
     def handle_events(self) -> Optional[States]:
         if not self.player.is_alive:
-            return States.MENU
+            return States.GAME_OVER
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -63,10 +63,11 @@ class Game:
         self.enemies_count = 0
 
     def get_enemies_count(self) -> None:
+        self.enemies_count = 0
         wave_enemies = self.waves[self.current_wave]["enemies"]
         for enemy in wave_enemies:
             self.enemies_count += enemy["count"]
-            
+
     def get_current_wave_enemies(self) -> List[Dict[str, Any]]:
         return self.waves[self.current_wave]["enemies"]
 
@@ -155,7 +156,7 @@ class Game:
                     x, y = self.get_enemies_coords()
                     enemy_obj = self.fabric.create(enemy["type"], x, y)
                     self.enemies.add(enemy_obj)
-                
+
             self.current_wave += 1
 
         self.enemies.update(self.player.rect.x, self.player.rect.y)

@@ -6,6 +6,8 @@ class States(Enum):
     GAME = "game"
     LEADERS = "leaders"
     RULES = "rules"
+    GAME_OVER = "game_over"
+    NAME_INPUT = "name_input"
     EXIT = "exit"
     START = "start"
 

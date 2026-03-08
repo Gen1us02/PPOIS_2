@@ -44,3 +44,6 @@ class LeadersTable(MenuOptionMixin):
             self.screen.blit(
                 score_text, (self.col_x[2], self.y_headers + self.row_height * i)
             )
+
+    def update(self) -> None:
+        self.players = Utils.load_players("leaders.json")
