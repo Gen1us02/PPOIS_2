@@ -1,0 +1,280 @@
+{
+    "waves": [
+        {
+            "enemies": [
+                {
+                    "type": "Zombie",
+                    "count": 5
+                }
+            ]
+        },
+        {
+            "enemies": [
+                {
+                    "type": "Zombie",
+                    "count": 8
+                }
+            ]
+        },
+        {
+            "enemies": [
+                {
+                    "type": "Zombie",
+                    "count": 10
+                },
+                {
+                    "type": "Spider",
+                    "count": 2
+                }
+            ]
+        },
+        {
+            "enemies": [
+                {
+                    "type": "Zombie",
+                    "count": 12
+                },
+                {
+                    "type": "Spider",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "enemies": [
+                {
+                    "type": "Zombie",
+                    "count": 10
+                },
+                {
+                    "type": "Spider",
+                    "count": 5
+                },
+                {
+                    "type": "Lizard",
+                    "count": 2
+                }
+            ]
+        },
+        {
+            "enemies": [
+                {
+                    "type": "Zombie",
+                    "count": 8
+                },
+                {
+                    "type": "Spider",
+                    "count": 6
+                },
+                {
+                    "type": "Lizard",
+                    "count": 4
+                }
+            ]
+        },
+        {
+            "enemies": [
+                {
+                    "type": "Zombie",
+                    "count": 5
+                },
+                {
+                    "type": "Spider",
+                    "count": 8
+                },
+                {
+                    "type": "Lizard",
+                    "count": 6
+                }
+            ]
+        },
+        {
+            "enemies": [
+                {
+                    "type": "Spider",
+                    "count": 10
+                },
+                {
+                    "type": "Lizard",
+                    "count": 8
+                },
+                {
+                    "type": "WildDog",
+                    "count": 2
+                }
+            ]
+        },
+        {
+            "enemies": [
+                {
+                    "type": "Spider",
+                    "count": 5
+                },
+                {
+                    "type": "Lizard",
+                    "count": 10
+                },
+                {
+                    "type": "WildDog",
+                    "count": 4
+                }
+            ]
+        },
+        {
+            "enemies": [
+                {
+                    "type": "Lizard",
+                    "count": 12
+                },
+                {
+                    "type": "WildDog",
+                    "count": 4
+                },
+                {
+                    "type": "Thug",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "enemies": [
+                {
+                    "type": "Lizard",
+                    "count": 10
+                },
+                {
+                    "type": "WildDog",
+                    "count": 5
+                }
+            ]
+        },
+        {
+            "enemies": [
+                {
+                    "type": "Zombie",
+                    "count": 5
+                },
+                {
+                    "type": "Spider",
+                    "count": 5
+                },
+                {
+                    "type": "Lizard",
+                    "count": 10
+                },
+                {
+                    "type": "WildDog",
+                    "count": 2
+                }
+            ]
+        },
+        {
+            "enemies": [
+                {
+                    "type": "Zombie",
+                    "count": 10
+                },
+                {
+                    "type": "Spider",
+                    "count": 10
+                },
+                {
+                    "type": "Lizard",
+                    "count": 8
+                },
+                {
+                    "type": "WildDog",
+                    "count": 10
+                },
+                {
+                    "type": "Thug",
+                    "count": 6
+                }
+            ]
+        },
+        {
+            "enemies": [
+                {
+                    "type": "Spider",
+                    "count": 10
+                },
+                {
+                    "type": "Lizard",
+                    "count": 10
+                }
+            ]
+        },
+        {
+            "enemies": [
+                {
+                    "type": "Lizard",
+                    "count": 20
+                }
+            ]
+        },
+        {
+            "enemies": [
+                {
+                    "type": "Zombie",
+                    "count": 12
+                },
+                {
+                    "type": "Spider",
+                    "count": 12
+                },
+                {
+                    "type": "Lizard",
+                    "count": 15
+                },
+                {
+                    "type": "WildDog",
+                    "count": 5
+                }
+            ]
+        },
+        {
+            "enemies": [
+                {
+                    "type": "WildDog",
+                    "count": 15
+                }
+            ]
+        },
+        {
+            "enemies": [
+                {
+                    "type": "Spider",
+                    "count": 20
+                },
+                {
+                    "type": "Lizard",
+                    "count": 10
+                }
+            ]
+        },
+        {
+            "enemies": [
+                {
+                    "type": "Spider",
+                    "count": 10
+                },
+                {
+                    "type": "Lizard",
+                    "count": 10
+                },
+                {
+                    "type": "WildDog",
+                    "count": 10
+                }
+            ]
+        },
+        {
+            "enemies": [
+                {
+                    "type": "Thug",
+                    "count": 5
+                }
+            ]
+        }
+    ]
+}

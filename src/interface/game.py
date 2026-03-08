@@ -8,6 +8,7 @@ from src.enums import States, EnemyType
 from src.config import config
 from src.objects.player import Player
 from src.utils.fabrics import Fabric
+from src.utils.utils import Utils
 
 
 class Game:
@@ -24,7 +25,7 @@ class Game:
         self.enemies = pygame.sprite.Group()
         self.bullets = pygame.sprite.Group()
         self.cursor = pygame.image.load("assets/images/scope.png")
-        self.waves = ...  # список загружается из json
+        self.waves = Utils.load_waves("waves.json")
         self.total_points = 0
         self.current_wave = 0
         self.enemies_count = 0
@@ -62,7 +63,9 @@ class Game:
         self.enemies_count = 0
 
     def get_enemies_count(self) -> None:
-        return len(self.waves[self.current_wave])
+        wave_enemies = self.waves[self.current_wave]["enemies"]
+        for enemy in wave_enemies:
+            self.enemies_count += enemy["count"]
 
     def resolve_enemy_collisions(self) -> None:
         enemies_list = [e for e in self.enemies if e.is_alive]
@@ -105,8 +108,8 @@ class Game:
                 random.randint(0, screen_width + 100),
                 random.randint(screen_height + 100, screen_height + 150),
             )
-            
-        return x,y
+
+        return x, y
 
     def play_music(self) -> None:
         if not self.played_music:
@@ -142,12 +145,13 @@ class Game:
         self.player.move(dx, dy)
 
         if self.enemies_count == 0:
-            self.current_wave += 1
-            self.enemies_count = self.current_wave * 2
+            self.get_enemies_count()
             for i in range(self.enemies_count):
                 x, y = self.get_enemies_coords()
-                enemy = self.fabric.create(EnemyType.THUG, x, y)
+                enemy = self.fabric.create(EnemyType.ZOMBIE, x, y)
                 self.enemies.add(enemy)
+                
+            self.current_wave += 1
 
         self.enemies.update(self.player.rect.x, self.player.rect.y)
         self.resolve_enemy_collisions()
