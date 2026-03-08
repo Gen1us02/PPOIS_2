@@ -24,6 +24,7 @@ class Utils:
 
         return [string.strip("\n") for string in rules]
     
+    @staticmethod
     def load_waves(filename: str) -> List[Dict[str, Any]]:
         with open(filename, "r", encoding="utf-8") as file:
             waves = json.load(file)
