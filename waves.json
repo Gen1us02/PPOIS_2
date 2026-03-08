@@ -3,7 +3,7 @@
         {
             "enemies": [
                 {
-                    "type": "Zombie",
+                    "type": "zombie",
                     "count": 5
                 }
             ]
@@ -11,7 +11,7 @@
         {
             "enemies": [
                 {
-                    "type": "Zombie",
+                    "type": "zombie",
                     "count": 8
                 }
             ]
@@ -19,11 +19,11 @@
         {
             "enemies": [
                 {
-                    "type": "Zombie",
+                    "type": "zombie",
                     "count": 10
                 },
                 {
-                    "type": "Spider",
+                    "type": "spider",
                     "count": 2
                 }
             ]
@@ -31,11 +31,11 @@
         {
             "enemies": [
                 {
-                    "type": "Zombie",
+                    "type": "zombie",
                     "count": 12
                 },
                 {
-                    "type": "Spider",
+                    "type": "spider",
                     "count": 3
                 }
             ]
@@ -43,15 +43,15 @@
         {
             "enemies": [
                 {
-                    "type": "Zombie",
+                    "type": "zombie",
                     "count": 10
                 },
                 {
-                    "type": "Spider",
+                    "type": "spider",
                     "count": 5
                 },
                 {
-                    "type": "Lizard",
+                    "type": "lizard",
                     "count": 2
                 }
             ]
@@ -59,15 +59,15 @@
         {
             "enemies": [
                 {
-                    "type": "Zombie",
+                    "type": "zombie",
                     "count": 8
                 },
                 {
-                    "type": "Spider",
+                    "type": "spider",
                     "count": 6
                 },
                 {
-                    "type": "Lizard",
+                    "type": "lizard",
                     "count": 4
                 }
             ]
@@ -75,15 +75,15 @@
         {
             "enemies": [
                 {
-                    "type": "Zombie",
+                    "type": "zombie",
                     "count": 5
                 },
                 {
-                    "type": "Spider",
+                    "type": "spider",
                     "count": 8
                 },
                 {
-                    "type": "Lizard",
+                    "type": "lizard",
                     "count": 6
                 }
             ]
@@ -91,15 +91,15 @@
         {
             "enemies": [
                 {
-                    "type": "Spider",
+                    "type": "spider",
                     "count": 10
                 },
                 {
-                    "type": "Lizard",
+                    "type": "lizard",
                     "count": 8
                 },
                 {
-                    "type": "WildDog",
+                    "type": "wildDog",
                     "count": 2
                 }
             ]
@@ -107,15 +107,15 @@
         {
             "enemies": [
                 {
-                    "type": "Spider",
+                    "type": "spider",
                     "count": 5
                 },
                 {
-                    "type": "Lizard",
+                    "type": "lizard",
                     "count": 10
                 },
                 {
-                    "type": "WildDog",
+                    "type": "wildDog",
                     "count": 4
                 }
             ]
@@ -123,15 +123,15 @@
         {
             "enemies": [
                 {
-                    "type": "Lizard",
+                    "type": "lizard",
                     "count": 12
                 },
                 {
-                    "type": "WildDog",
+                    "type": "wildDog",
                     "count": 4
                 },
                 {
-                    "type": "Thug",
+                    "type": "thug",
                     "count": 1
                 }
             ]
@@ -139,11 +139,11 @@
         {
             "enemies": [
                 {
-                    "type": "Lizard",
+                    "type": "lizard",
                     "count": 10
                 },
                 {
-                    "type": "WildDog",
+                    "type": "wildDog",
                     "count": 5
                 }
             ]
@@ -151,19 +151,19 @@
         {
             "enemies": [
                 {
-                    "type": "Zombie",
+                    "type": "zombie",
                     "count": 5
                 },
                 {
-                    "type": "Spider",
+                    "type": "spider",
                     "count": 5
                 },
                 {
-                    "type": "Lizard",
+                    "type": "lizard",
                     "count": 10
                 },
                 {
-                    "type": "WildDog",
+                    "type": "wild_dog",
                     "count": 2
                 }
             ]
@@ -171,23 +171,23 @@
         {
             "enemies": [
                 {
-                    "type": "Zombie",
+                    "type": "zombie",
                     "count": 10
                 },
                 {
-                    "type": "Spider",
+                    "type": "spider",
                     "count": 10
                 },
                 {
-                    "type": "Lizard",
+                    "type": "lizard",
                     "count": 8
                 },
                 {
-                    "type": "WildDog",
+                    "type": "wild_dog",
                     "count": 10
                 },
                 {
-                    "type": "Thug",
+                    "type": "thug",
                     "count": 6
                 }
             ]
@@ -195,11 +195,11 @@
         {
             "enemies": [
                 {
-                    "type": "Spider",
+                    "type": "spider",
                     "count": 10
                 },
                 {
-                    "type": "Lizard",
+                    "type": "lizard",
                     "count": 10
                 }
             ]
@@ -207,7 +207,7 @@
         {
             "enemies": [
                 {
-                    "type": "Lizard",
+                    "type": "lizard",
                     "count": 20
                 }
             ]
@@ -215,19 +215,19 @@
         {
             "enemies": [
                 {
-                    "type": "Zombie",
+                    "type": "zombie",
                     "count": 12
                 },
                 {
-                    "type": "Spider",
+                    "type": "spider",
                     "count": 12
                 },
                 {
-                    "type": "Lizard",
+                    "type": "lizard",
                     "count": 15
                 },
                 {
-                    "type": "WildDog",
+                    "type": "wild_dog",
                     "count": 5
                 }
             ]
@@ -235,7 +235,7 @@
         {
             "enemies": [
                 {
-                    "type": "WildDog",
+                    "type": "wild_dog",
                     "count": 15
                 }
             ]
@@ -243,11 +243,11 @@
         {
             "enemies": [
                 {
-                    "type": "Spider",
+                    "type": "spider",
                     "count": 20
                 },
                 {
-                    "type": "Lizard",
+                    "type": "lizard",
                     "count": 10
                 }
             ]
@@ -255,15 +255,15 @@
         {
             "enemies": [
                 {
-                    "type": "Spider",
+                    "type": "spider",
                     "count": 10
                 },
                 {
-                    "type": "Lizard",
+                    "type": "lizard",
                     "count": 10
                 },
                 {
-                    "type": "WildDog",
+                    "type": "wild_dog",
                     "count": 10
                 }
             ]
@@ -271,7 +271,7 @@
         {
             "enemies": [
                 {
-                    "type": "Thug",
+                    "type": "thug",
                     "count": 5
                 }
             ]

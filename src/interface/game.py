@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 import random
-from typing import Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 from pygame import Surface
 import pygame
-from src.enums import States, EnemyType
+from src.enums import States
 from src.config import config
 from src.objects.player import Player
 from src.utils.fabrics import Fabric
@@ -66,6 +66,9 @@ class Game:
         wave_enemies = self.waves[self.current_wave]["enemies"]
         for enemy in wave_enemies:
             self.enemies_count += enemy["count"]
+            
+    def get_current_wave_enemies(self) -> List[Dict[str, Any]]:
+        return self.waves[self.current_wave]["enemies"]
 
     def resolve_enemy_collisions(self) -> None:
         enemies_list = [e for e in self.enemies if e.is_alive]
@@ -146,10 +149,12 @@ class Game:
 
         if self.enemies_count == 0:
             self.get_enemies_count()
-            for i in range(self.enemies_count):
-                x, y = self.get_enemies_coords()
-                enemy = self.fabric.create(EnemyType.ZOMBIE, x, y)
-                self.enemies.add(enemy)
+            wave = self.get_current_wave_enemies()
+            for enemy in wave:
+                for _ in range(enemy["count"]):
+                    x, y = self.get_enemies_coords()
+                    enemy_obj = self.fabric.create(enemy["type"], x, y)
+                    self.enemies.add(enemy_obj)
                 
             self.current_wave += 1
 

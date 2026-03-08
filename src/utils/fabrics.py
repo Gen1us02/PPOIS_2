@@ -12,15 +12,15 @@ class Fabric(ABC):
 
 class EnemyFabric(Fabric):
     def create(self, type: EnemyType, *args) -> Optional[Enemy]:
-        if type == EnemyType.ZOMBIE:
+        if type == EnemyType.ZOMBIE.value:
             return Zombie(*args)
-        elif type == EnemyType.SPIDER:
+        elif type == EnemyType.SPIDER.value:
             return Spider(*args)
-        elif type == EnemyType.LIZARD:
+        elif type == EnemyType.LIZARD.value:
             return Lizard(*args)
-        elif type == EnemyType.WILD_DOG:
+        elif type == EnemyType.WILD_DOG.value:
             return WildDog(*args)
-        elif type == EnemyType.THUG:
+        elif type == EnemyType.THUG.value:
             return Thug(*args)
         else:
             return None
