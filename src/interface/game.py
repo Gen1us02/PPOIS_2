@@ -26,6 +26,7 @@ class Game:
         self.bullets = pygame.sprite.Group()
         self.cursor = pygame.image.load("assets/images/scope.png")
         self.waves = Utils.load_waves("waves.json")
+        self.max_wave = len(self.waves)
         self.total_points = 0
         self.current_wave = 0
         self.enemies_count = 0
@@ -37,6 +38,9 @@ class Game:
         self.all_sprites.add(self.player)
 
     def handle_events(self) -> Optional[States]:
+        if self.current_wave > self.max_wave:
+            return States.WIN
+
         if not self.player.is_alive:
             return States.GAME_OVER
 
@@ -192,6 +196,7 @@ class Game:
 
             if pygame.sprite.collide_rect(self.player, enemy):
                 enemy.damage(self.player)
+                pass
 
         self.all_sprites.update()
 

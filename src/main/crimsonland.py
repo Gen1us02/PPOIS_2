@@ -9,6 +9,7 @@ from src.utils.fabrics import EnemyFabric
 from src.interface.game_over import GameOverScreen
 from src.interface.input_record import RecordInputScreen
 from src.utils.utils import Utils
+from src.interface.win_screen import WinScreen
 
 
 class CrimsonLand:
@@ -34,8 +35,12 @@ class CrimsonLand:
         self.rules = Rules(self.screen)
         self.game = Game(self.screen, self.fabric)
         self.game_over_screen = GameOverScreen(self.screen)
+        self.win_screen = WinScreen(self.screen)
         self.name_input_screen = RecordInputScreen(self.screen)
-        pygame.mixer.music.load("assets/audio/menu_song.mp3")
+        self.main_music_path = "assets/audio/menu_song.mp3"
+        self.win_music_path = "assets/audio/win_music.mp3"
+        self.game_over_music_path = "assets/audio/game_over_music.mp3"
+        pygame.mixer.music.load(self.main_music_path)
         self.state = States.MENU
         self.running = True
 
@@ -69,7 +74,12 @@ class CrimsonLand:
                     self.running = False
 
                 if action == States.GAME_OVER:
+                    Utils.update_sound_and_mouse(self.game_over_music_path, 0.8)
                     self.state = States.GAME_OVER
+                    
+                if action == States.WIN:
+                    Utils.update_sound_and_mouse(self.win_music_path, 0.8)
+                    self.state = States.WIN
 
                 if action == States.MENU:
                     Utils.update_sound_and_mouse()
@@ -107,7 +117,7 @@ class CrimsonLand:
                 if action == States.EXIT:
                     self.running = False
                 elif action == States.MENU:
-                    Utils.update_sound_and_mouse()
+                    Utils.update_sound_and_mouse(self.main_music_path)
                     self.state = States.MENU
                 elif action == States.NAME_INPUT:
                     self.state = States.NAME_INPUT
@@ -118,10 +128,10 @@ class CrimsonLand:
                 if action == States.EXIT:
                     self.running = False
                 elif action == States.MENU:
-                    Utils.update_sound_and_mouse()
+                    Utils.update_sound_and_mouse(self.main_music_path)
                     self.state = States.MENU
                 elif action == States.LEADERS:
-                    Utils.update_sound_and_mouse()
+                    Utils.update_sound_and_mouse(self.main_music_path)
                     leaderboard = Utils.load_players("leaders.json")
                     leaderboard = Utils.add_score(
                         name, self.name_input_screen.score, leaderboard
@@ -129,5 +139,22 @@ class CrimsonLand:
                     Utils.save_leaderboard("leaders.json", leaderboard)
                     self.state = States.MENU
                 self.name_input_screen.draw()
+
+            if self.state == States.WIN:
+                action = self.win_screen.handle_events()
+                leaderboard = Utils.load_players("leaders.json")
+                highscore = Utils.is_highscore(self.game.total_points, leaderboard)
+                self.win_screen.set_score(self.game.total_points, highscore)
+                if highscore:
+                    self.name_input_screen.set_score(self.game.total_points)
+
+                if action == States.EXIT:
+                    self.running = False
+                elif action == States.MENU:
+                    Utils.update_sound_and_mouse(self.main_music_path)
+                    self.state = States.MENU
+                elif action == States.NAME_INPUT:
+                    self.state = States.NAME_INPUT
+                self.win_screen.draw()
 
         pygame.quit()

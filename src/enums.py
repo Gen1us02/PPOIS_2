@@ -10,6 +10,7 @@ class States(Enum):
     NAME_INPUT = "name_input"
     EXIT = "exit"
     START = "start"
+    WIN = "win"
 
 
 class EnemyType(Enum):

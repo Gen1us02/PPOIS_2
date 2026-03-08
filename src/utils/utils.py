@@ -61,7 +61,8 @@ class Utils:
         return pygame.transform.smoothscale(image, (target_width, new_height))
 
     @staticmethod
-    def update_sound_and_mouse() -> None:
+    def update_sound_and_mouse(music_path: str, volume: float = 0.5) -> None:
         pygame.mouse.set_visible(True)
-        pygame.mixer.music.load("assets/audio/menu_song.mp3")
+        pygame.mixer.music.load(music_path)
+        pygame.mixer.music.set_volume(volume)
         pygame.mixer.music.play(-1)
