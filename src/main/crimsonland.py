@@ -11,14 +11,13 @@ from src.interface.input_record import RecordInputScreen
 from src.utils.utils import Utils
 
 
-
 class CrimsonLand:
     SCREEN_WIDTH = int(config["DEFAULT"]["SCREEN_WIDTH"])
     SCREEN_HEIGHT = int(config["DEFAULT"]["SCREEN_HEIGHT"])
     FPS = int(config["DEFAULT"]["FPS"])
-    
+
     def __init__(self) -> None:
-        
+
         pygame.init()
 
         self.screen = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
@@ -124,10 +123,11 @@ class CrimsonLand:
                 elif action == States.LEADERS:
                     Utils.update_sound_and_mouse()
                     leaderboard = Utils.load_players("leaders.json")
-                    leaderboard = Utils.add_score(name, self.name_input_screen.score, leaderboard)
+                    leaderboard = Utils.add_score(
+                        name, self.name_input_screen.score, leaderboard
+                    )
                     Utils.save_leaderboard("leaders.json", leaderboard)
                     self.state = States.MENU
                 self.name_input_screen.draw()
-
 
         pygame.quit()

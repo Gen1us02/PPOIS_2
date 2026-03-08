@@ -16,13 +16,13 @@ class Utils:
 
         players = sorted(players, key=lambda x: -x[1])
         return players
-    
+
     @staticmethod
     def save_leaderboard(filename: str, leaderboard):
         data = []
         for leader in leaderboard:
-            data.append({"name" : leader[0], "score": leader[1]})
-            
+            data.append({"name": leader[0], "score": leader[1]})
+
         with open(filename, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=4)
 
@@ -30,7 +30,7 @@ class Utils:
     def is_highscore(score, leaderboard):
         if len(leaderboard) == 0:
             return True
-        
+
         return score > leaderboard[0][1]
 
     @staticmethod
@@ -45,12 +45,12 @@ class Utils:
             rules = file.readlines()
 
         return [string.strip("\n") for string in rules]
-    
+
     @staticmethod
     def load_waves(filename: str) -> List[Dict[str, Any]]:
         with open(filename, "r", encoding="utf-8") as file:
             waves = json.load(file)
-            
+
         return waves["waves"]
 
     @staticmethod
@@ -59,7 +59,7 @@ class Utils:
         scale_factor = target_width / original_width
         new_height = int(original_height * scale_factor)
         return pygame.transform.smoothscale(image, (target_width, new_height))
-    
+
     @staticmethod
     def update_sound_and_mouse() -> None:
         pygame.mouse.set_visible(True)

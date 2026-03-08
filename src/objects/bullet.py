@@ -20,11 +20,11 @@ class Bullet(pygame.sprite.Sprite):
             self.dx, self.dy = 0, 0
 
         self.rect.center = (x, y)
-        
+
     def update(self, *args, **kwargs) -> None:
         self.rect.x += self.dx * self.speed
         self.rect.y += self.dy * self.speed
-        
+
         screen_rect = pygame.display.get_surface().get_rect()
         if not screen_rect.colliderect(self.rect):
             self.kill()
