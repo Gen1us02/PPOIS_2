@@ -16,14 +16,17 @@ class Player(pygame.sprite.Sprite):
         self.original_image = pygame.image.load("assets/images/player.png")
         self.original_image = Utils.scale_image(self.original_image, 50)
         self.weapon = Gun()
+        self.is_double_speed = False
         self.image = self.original_image
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
         self.angle_offset = 90
-        self.cooldown = 0
+        self.double_speed_time = 0
+        self.double_speed_duration = 10000
         self.max_health = 100
         self.health = self.max_health
         self.speed = 3
+        self.current_speed = self.speed
 
     def move(self, x: int, y: int) -> None:
         self.rect.x += x
@@ -62,6 +65,12 @@ class Player(pygame.sprite.Sprite):
         return self.weapon.ammo
 
     def update(self, *args, **kwargs) -> None:
+        current_time = pygame.time.get_ticks()
+        if current_time - self.double_speed_time > self.double_speed_duration:
+            self.double_speed_time = current_time
+            self.is_double_speed = False
+            self.current_speed = self.speed
+            
         mouse_x, mouse_y = pygame.mouse.get_pos()
         dx = mouse_x - self.rect.centerx
         dy = mouse_y - self.rect.centery

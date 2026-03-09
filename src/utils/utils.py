@@ -66,3 +66,15 @@ class Utils:
         pygame.mixer.music.load(music_path)
         pygame.mixer.music.set_volume(volume)
         pygame.mixer.music.play(-1)
+        
+    @staticmethod
+    def create_all_bonuses() -> Tuple[Any]:
+        from src.objects.bonuses import GunBox, RifleBox, ShotgunBox, FirstAid, SpeedBoost
+        first_aid = FirstAid()
+        speed_boost = SpeedBoost()
+        gun_box = GunBox()
+        rifle_box = RifleBox()
+        shotgun_box = ShotgunBox()
+            
+        return first_aid, speed_boost, gun_box, rifle_box, shotgun_box
+        

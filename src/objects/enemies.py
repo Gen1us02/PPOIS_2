@@ -1,9 +1,12 @@
 import math
+import random
+from typing import Optional
 import pygame
 from pygame.mixer import Sound
 from src.objects.player import Player
 from src.utils.utils import Utils
 from src.enums import EnemyType
+from src.objects.bonuses import Bonus
 
 
 class Enemy(pygame.sprite.Sprite):
@@ -24,6 +27,7 @@ class Enemy(pygame.sprite.Sprite):
         self.last_damage_time = 0
         self.cooldown = cooldown
         self.sound = sound
+        self.weights = [75, 5, 5, 5, 5, 5]
 
     @property
     def is_alive(self) -> bool:
@@ -38,6 +42,17 @@ class Enemy(pygame.sprite.Sprite):
             return True
 
         return False
+    
+    def spawn_bonus(self) -> Optional[Bonus]:
+        bonuses = [None]
+        bonuses.extend(Utils.create_all_bonuses())
+        bonus = random.choices(bonuses, weights=self.weights, k=1)
+        bonus = bonus[0]
+        if bonus:
+            bonus.set_center(self.rect.x, self.rect.y)
+            return bonus
+        
+        return None
 
 
 class Zombie(Enemy):
@@ -99,7 +114,7 @@ class Zombie(Enemy):
                 self.rect.x += step_x
                 self.rect.y += step_y
 
-    def kill(self) -> None:
+    def dead(self) -> None:
         if not self.is_alive:
             self.is_dead = True
             self.image = self.dead_picture
@@ -167,7 +182,7 @@ class Spider(Enemy):
                 self.rect.x += step_x
                 self.rect.y += step_y
 
-    def kill(self) -> None:
+    def dead(self) -> None:
         if not self.is_alive:
             self.is_dead = True
             self.image = self.dead_picture
@@ -234,7 +249,7 @@ class Lizard(Enemy):
                 self.rect.x += step_x
                 self.rect.y += step_y
 
-    def kill(self) -> None:
+    def dead(self) -> None:
         if not self.is_alive:
             self.is_dead = True
             self.image = self.dead_picture
@@ -302,7 +317,7 @@ class WildDog(Enemy):
                 self.rect.x += step_x
                 self.rect.y += step_y
 
-    def kill(self) -> None:
+    def dead(self) -> None:
         if not self.is_alive:
             self.is_dead = True
             self.image = self.dead_picture
@@ -370,7 +385,7 @@ class Thug(Enemy):
                 self.rect.x += step_x
                 self.rect.y += step_y
 
-    def kill(self) -> None:
+    def dead(self) -> None:
         if not self.is_alive:
             self.is_dead = True
             self.image = self.dead_picture

@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import random
 from typing import Any, Dict, List, Optional, Tuple
 from pygame import Surface
@@ -24,6 +22,7 @@ class Game:
         self.all_sprites = pygame.sprite.Group()
         self.enemies = pygame.sprite.Group()
         self.bullets = pygame.sprite.Group()
+        self.bonuses = pygame.sprite.Group()
         self.cursor = pygame.image.load("assets/images/scope.png")
         self.waves = Utils.load_waves("waves.json")
         self.max_wave = len(self.waves)
@@ -74,6 +73,11 @@ class Game:
 
     def get_current_wave_enemies(self) -> List[Dict[str, Any]]:
         return self.waves[self.current_wave]["enemies"]
+    
+    def clear_dead_mods(self) -> None:
+        for enemy in self.enemies:
+            if not enemy.is_alive:
+                enemy.kill()
 
     def resolve_enemy_collisions(self) -> None:
         enemies_list = [e for e in self.enemies if e.is_alive]
@@ -131,7 +135,7 @@ class Game:
         keys = pygame.key.get_pressed()
         dx = 0
         dy = 0
-        speed = self.player.speed
+        speed = self.player.current_speed
 
         if keys[pygame.K_a]:
             dx -= speed
@@ -153,6 +157,7 @@ class Game:
         self.player.move(dx, dy)
 
         if self.enemies_count == 0:
+            self.clear_dead_mods()
             self.get_enemies_count()
             wave = self.get_current_wave_enemies()
             for enemy in wave:
@@ -168,8 +173,6 @@ class Game:
         enemies_list = [e for e in self.enemies if e.is_alive]
         for i in range(len(enemies_list)):
             enemy = enemies_list[i]
-            if not enemy.is_alive:
-                continue
             if enemy.rect.colliderect(self.player):
                 if enemy.rect.centerx < self.player.rect.centerx:
                     enemy.rect.x -= 1
@@ -191,13 +194,21 @@ class Game:
                     bullet.kill()
                 if not enemy.is_alive:
                     self.total_points += enemy.points
-                    enemy.kill()
+                    bonus = enemy.spawn_bonus()
+                    if bonus:
+                        self.bonuses.add(bonus)
+                        self.all_sprites.add(bonus)
+                    enemy.dead()
                     self.enemies_count -= 1
 
             if pygame.sprite.collide_rect(self.player, enemy):
                 enemy.damage(self.player)
-                pass
+            
+        bonus_hits = pygame.sprite.spritecollide(self.player, self.bonuses, True)
+        for bonus in bonus_hits:
+            bonus.action(self.player)
 
+        self.bonuses.update()
         self.all_sprites.update()
 
     def next_wave(self) -> None:
