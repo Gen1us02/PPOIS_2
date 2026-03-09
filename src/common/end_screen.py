@@ -34,6 +34,7 @@ class EndScreenMixin:
         return None
 
     def draw(self):
+        pygame.mouse.set_visible(True)
         overlay = pygame.Surface(self.screen.get_size(), pygame.SRCALPHA)
         overlay.fill((0, 0, 0, 180))
         self.screen.blit(overlay, (0, 0))
