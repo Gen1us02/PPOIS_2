@@ -28,9 +28,11 @@ class Player(pygame.sprite.Sprite):
         self.speed = 3
         self.current_speed = self.speed
 
-    def move(self, x: int, y: int) -> None:
+    def move(self, x: int, y: int, screen:Surface) -> None:
         self.rect.x += x
         self.rect.y += y
+        self.rect.clamp_ip(screen.get_rect())
+        
 
     def draw(self, screen: Surface) -> None:
         bar_width = 64

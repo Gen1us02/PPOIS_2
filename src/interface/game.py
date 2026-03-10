@@ -156,7 +156,7 @@ class Game:
                 self.player.shoot(self.bullets, self.all_sprites)
             else:
                 self.player.reload()
-        self.player.move(dx, dy)
+        self.player.move(dx, dy, self.screen)
 
         if self.enemies_count == 0:
             self.clear_dead_mods()
