@@ -21,6 +21,11 @@ class Bonus(ABC, pygame.sprite.Sprite):
         current_time = pygame.time.get_ticks()
         if current_time - self.spawn_time > self.time:
             self.kill()
+        elif current_time - self.spawn_time > self.time - 5000:
+            if (current_time // 200) % 2 == 0:
+                self.image.set_alpha(80)
+            else:
+                self.image.set_alpha(255)
 
     @abstractmethod
     def action(self, player: Player) -> None:
