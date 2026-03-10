@@ -267,15 +267,15 @@ class WildDog(Enemy):
             "assets/images/wild_dog.png"
         ).convert_alpha()
         self.type = EnemyType.WILD_DOG
-        self.original_image = Utils.scale_image(self.original_image, 50)
+        self.original_image = Utils.scale_image(self.original_image, 64)
         self.attack_image = pygame.image.load(
             "assets/images/zombie_attack.png"
         ).convert_alpha()
         self.dead_picture = pygame.image.load(
-            "assets/images/dead_zombie.png"
+            "assets/images/dead_dog.png"
         ).convert_alpha()
-        self.dead_picture = Utils.scale_image(self.dead_picture, 40)
-        self.attack_image = Utils.scale_image(self.attack_image, 40)
+        self.dead_picture = Utils.scale_image(self.dead_picture, 64)
+        self.attack_image = Utils.scale_image(self.attack_image, 64)
         self.image = self.original_image
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)

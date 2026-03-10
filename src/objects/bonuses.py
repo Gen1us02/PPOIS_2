@@ -44,8 +44,8 @@ class FirstAid(Bonus):
 class SpeedBoost(Bonus):
     def __init__(self) -> None:
         super().__init__(15000)
-        self.image = pygame.image.load("assets/images/thug.png")
-        self.image = Utils.scale_image(self.image, 40)
+        self.image = pygame.image.load("assets/images/speed_boost.png")
+        self.image = Utils.scale_image(self.image, 64)
         self.rect = self.image.get_rect()
         self.spawn_time = pygame.time.get_ticks()
 
