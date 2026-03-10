@@ -43,7 +43,7 @@ class Enemy(pygame.sprite.Sprite):
             return True
 
         return False
-    
+
     def spawn_bonus(self) -> Optional[Bonus]:
         bonuses = [None]
         bonuses.extend(Utils.create_all_bonuses())
@@ -52,7 +52,7 @@ class Enemy(pygame.sprite.Sprite):
         if bonus:
             bonus.set_center(self.rect.x, self.rect.y)
             return bonus
-        
+
         return None
 
 
@@ -198,19 +198,26 @@ class Lizard(Enemy):
             120, 2, 150, 15, 500, pygame.mixer.Sound("assets/audio/zombie_hit.mp3")
         )
         self.original_image = pygame.image.load(
-            "assets/images/lizard.png"
+            "assets/images/lizard/lizard.png"
         ).convert_alpha()
         self.type = EnemyType.LIZARD
         self.original_image = Utils.scale_image(self.original_image, 60)
+        self.move_images = []
+        for i in range(len(os.listdir("assets/images/lizard/lizard_move"))):
+            move_image = pygame.image.load(
+                f"assets/images/lizard/lizard_move/lizard_move_{i}.png"
+            ).convert_alpha()
+            move_image = Utils.scale_image(move_image, 75)
+            self.move_images.append(move_image)
         self.attack_images = []
-        for i in range(len(os.listdir("assets/images/lizard_attack"))):
+        for i in range(len(os.listdir("assets/images/lizard/lizard_attack"))):
             attack_image = pygame.image.load(
-            f"assets/images/lizard_attack/lizard_attack_{i}.png"
-        ).convert_alpha()
+                f"assets/images/lizard/lizard_attack/lizard_attack_{i}.png"
+            ).convert_alpha()
             attack_image = Utils.scale_image(attack_image, 75)
             self.attack_images.append(attack_image)
         self.dead_picture = pygame.image.load(
-            "assets/images/dead_lizard.png"
+            "assets/images/lizard/dead_lizard.png"
         ).convert_alpha()
         self.dead_picture = Utils.scale_image(self.dead_picture, 60)
         self.image = self.original_image
@@ -219,6 +226,8 @@ class Lizard(Enemy):
         self.angle_offset = 90
         self.current_attack = 0
         self.attack_duration = 1000
+        self.move_image = 0
+        self.change_move_frame = 0
         self.attack_frame_time = 0
         self.attack_end = 0
 
@@ -251,7 +260,11 @@ class Lizard(Enemy):
                     frame = len(self.attack_images) - 1
                 original = self.attack_images[frame]
             else:
-                original = self.original_image
+                current_time = pygame.time.get_ticks()
+                if current_time - self.change_move_frame >= 150:
+                    self.change_move_frame = current_time
+                    self.move_image = (self.move_image + 1) % len(self.move_images)
+                original = self.move_images[self.move_image]
 
             self.image = pygame.transform.rotate(original, target_angle)
             self.rect = self.image.get_rect(center=self.rect.center)
