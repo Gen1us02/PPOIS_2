@@ -2,6 +2,7 @@ import random
 from typing import Any, Dict, List, Optional, Tuple
 from pygame import Surface
 import pygame
+from src.objects.weapons import Gun
 from src.enums import States
 from src.config import config
 from src.objects.player import Player
@@ -55,6 +56,7 @@ class Game:
         x = self.screen.get_width() // 2
         y = self.screen.get_height() // 2
         self.player.rect.center = x, y
+        self.player.weapon = Gun()
         self.player.reset_weapon()
         self.all_sprites.empty()
         self.enemies.empty()
