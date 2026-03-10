@@ -7,6 +7,7 @@ from src.objects.player import Player
 from src.utils.utils import Utils
 from src.enums import EnemyType
 from src.objects.bonuses import Bonus
+import os
 
 
 class Enemy(pygame.sprite.Sprite):
@@ -201,9 +202,13 @@ class Lizard(Enemy):
         ).convert_alpha()
         self.type = EnemyType.LIZARD
         self.original_image = Utils.scale_image(self.original_image, 60)
-        self.attack_image = pygame.image.load(
-            "assets/images/zombie_attack.png"
+        self.attack_images = []
+        for i in range(len(os.listdir("assets/images/lizard_attack"))):
+            attack_image = pygame.image.load(
+            f"assets/images/lizard_attack/lizard_attack_{i}.png"
         ).convert_alpha()
+            attack_image = Utils.scale_image(attack_image, 75)
+            self.attack_images.append(attack_image)
         self.dead_picture = pygame.image.load(
             "assets/images/dead_lizard.png"
         ).convert_alpha()
@@ -212,7 +217,9 @@ class Lizard(Enemy):
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
         self.angle_offset = 90
-        self.attack_duration = 200
+        self.current_attack = 0
+        self.attack_duration = 1000
+        self.attack_frame_time = 0
         self.attack_end = 0
 
     def draw(self, screen) -> None:
@@ -221,6 +228,8 @@ class Lizard(Enemy):
     def damage(self, player: Player) -> None:
         if super().damage(player):
             self.attack_end = pygame.time.get_ticks() + self.attack_duration
+            self.attack_frame_index = 0
+            self.attack_frame_time = pygame.time.get_ticks()
 
     def update(self, *args, **kwargs) -> None:
         if not self.is_alive:
@@ -235,7 +244,12 @@ class Lizard(Enemy):
             target_angle = angle - self.angle_offset
             current_time = pygame.time.get_ticks()
             if current_time < self.attack_end:
-                original = self.attack_image
+                elapsed = current_time - (self.attack_end - self.attack_duration)
+                progress = elapsed / self.attack_duration
+                frame = int(progress * len(self.attack_images))
+                if frame >= len(self.attack_images):
+                    frame = len(self.attack_images) - 1
+                original = self.attack_images[frame]
             else:
                 original = self.original_image
 
