@@ -3,8 +3,8 @@
         {
             "enemies": [
                 {
-                    "type": "thug",
-                    "count": 1
+                    "type": "zombie",
+                    "count": 3
                 }
             ]
         },
