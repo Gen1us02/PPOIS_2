@@ -7,7 +7,6 @@ from src.objects.player import Player
 from src.utils.utils import Utils
 from src.enums import EnemyType
 from src.objects.bonuses import Bonus
-import os
 
 
 class Enemy(pygame.sprite.Sprite):
@@ -55,6 +54,22 @@ class Enemy(pygame.sprite.Sprite):
 
         return None
 
+    def change_attack_frame(self) -> int:
+        current_time = pygame.time.get_ticks()
+        elapsed = current_time - (self.attack_end - self.attack_duration)
+        progress = elapsed / self.attack_duration
+        frame = int(progress * len(self.attack_images))
+        if frame >= len(self.attack_images):
+            frame = len(self.attack_images) - 1
+
+        return frame
+
+    def change_move_frame(self) -> None:
+        current_time = pygame.time.get_ticks()
+        if current_time - self.frame_change_time >= 300:
+            self.frame_change_time = current_time
+            self.move_image = (self.move_image + 1) % len(self.move_images)
+
 
 class Zombie(Enemy):
     def __init__(self, x: int, y: int) -> None:
@@ -66,26 +81,14 @@ class Zombie(Enemy):
         ).convert_alpha()
         self.type = EnemyType.ZOMBIE
         self.original_image = Utils.scale_image(self.original_image, 40)
-        self.move_images = []
-        for i in range(len(os.listdir("assets/images/zombie/zombie_move"))):
-            move_image = pygame.image.load(
-                f"assets/images/zombie/zombie_move/zombie_move_{i}.png"
-            ).convert_alpha()
-            move_image = Utils.scale_image(move_image, 40)
-            self.move_images.append(move_image)
-        self.attack_images = []
-        for i in range(len(os.listdir("assets/images/zombie/zombie_attack"))):
-            attack_image = pygame.image.load(
-                f"assets/images/zombie/zombie_attack/zombie_attack_{i}.png"
-            ).convert_alpha()
-            attack_image = Utils.scale_image(attack_image, 40)
-            self.attack_images.append(attack_image)
+        self.move_images = Utils.get_frames("assets/images/zombie/zombie_move", 40)
+        self.attack_images = Utils.get_frames("assets/images/zombie/zombie_attack", 40)
         self.dead_picture = pygame.image.load(
             "assets/images/zombie/dead_zombie.png"
         ).convert_alpha()
         self.dead_picture = Utils.scale_image(self.dead_picture, 40)
         self.move_image = 0
-        self.change_move_frame = 0
+        self.frame_change_time = 0
         self.image = self.original_image
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
@@ -113,17 +116,10 @@ class Zombie(Enemy):
             target_angle = angle - self.angle_offset
             current_time = pygame.time.get_ticks()
             if current_time < self.attack_end:
-                elapsed = current_time - (self.attack_end - self.attack_duration)
-                progress = elapsed / self.attack_duration
-                frame = int(progress * len(self.attack_images))
-                if frame >= len(self.attack_images):
-                    frame = len(self.attack_images) - 1
+                frame = self.change_attack_frame()
                 original = self.attack_images[frame]
             else:
-                current_time = pygame.time.get_ticks()
-                if current_time - self.change_move_frame >= 300:
-                    self.change_move_frame = current_time
-                    self.move_image = (self.move_image + 1) % len(self.move_images)
+                self.change_move_frame()
                 original = self.move_images[self.move_image]
 
             self.image = pygame.transform.rotate(original, target_angle)
@@ -158,27 +154,15 @@ class Spider(Enemy):
         self.dead_picture = pygame.image.load(
             "assets/images/spider/dead_spider.png"
         ).convert_alpha()
-        self.move_images = []
-        for i in range(len(os.listdir("assets/images/spider/spider_move"))):
-            move_image = pygame.image.load(
-                f"assets/images/spider/spider_move/spider_move_{i}.png"
-            ).convert_alpha()
-            move_image = Utils.scale_image(move_image, 50)
-            self.move_images.append(move_image)
-        self.attack_images = []
-        for i in range(len(os.listdir("assets/images/spider/spider_attack"))):
-            attack_image = pygame.image.load(
-                f"assets/images/spider/spider_attack/spider_attack_{i}.png"
-            ).convert_alpha()
-            attack_image = Utils.scale_image(attack_image, 50)
-            self.attack_images.append(attack_image)
+        self.move_images = Utils.get_frames("assets/images/spider/spider_move", 50)
+        self.attack_images = Utils.get_frames("assets/images/spider/spider_attack", 50)
         self.dead_picture = pygame.image.load(
             "assets/images/spider/dead_spider.png"
         ).convert_alpha()
         self.dead_picture = Utils.scale_image(self.dead_picture, 40)
         self.image = self.original_image
         self.move_image = 0
-        self.change_move_frame = 0
+        self.frame_change_time = 0
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
         self.angle_offset = 90
@@ -205,17 +189,10 @@ class Spider(Enemy):
             target_angle = angle - self.angle_offset
             current_time = pygame.time.get_ticks()
             if current_time < self.attack_end:
-                elapsed = current_time - (self.attack_end - self.attack_duration)
-                progress = elapsed / self.attack_duration
-                frame = int(progress * len(self.attack_images))
-                if frame >= len(self.attack_images):
-                    frame = len(self.attack_images) - 1
+                frame = self.change_attack_frame()
                 original = self.attack_images[frame]
             else:
-                current_time = pygame.time.get_ticks()
-                if current_time - self.change_move_frame >= 300:
-                    self.change_move_frame = current_time
-                    self.move_image = (self.move_image + 1) % len(self.move_images)
+                self.change_move_frame()
                 original = self.move_images[self.move_image]
 
             self.image = pygame.transform.rotate(original, target_angle)
@@ -247,20 +224,8 @@ class Lizard(Enemy):
         ).convert_alpha()
         self.type = EnemyType.LIZARD
         self.original_image = Utils.scale_image(self.original_image, 60)
-        self.move_images = []
-        for i in range(len(os.listdir("assets/images/lizard/lizard_move"))):
-            move_image = pygame.image.load(
-                f"assets/images/lizard/lizard_move/lizard_move_{i}.png"
-            ).convert_alpha()
-            move_image = Utils.scale_image(move_image, 75)
-            self.move_images.append(move_image)
-        self.attack_images = []
-        for i in range(len(os.listdir("assets/images/lizard/lizard_attack"))):
-            attack_image = pygame.image.load(
-                f"assets/images/lizard/lizard_attack/lizard_attack_{i}.png"
-            ).convert_alpha()
-            attack_image = Utils.scale_image(attack_image, 75)
-            self.attack_images.append(attack_image)
+        self.move_images = Utils.get_frames("assets/images/lizard/lizard_move", 75)
+        self.attack_images = Utils.get_frames("assets/images/lizard/lizard_attack", 75)
         self.dead_picture = pygame.image.load(
             "assets/images/lizard/dead_lizard.png"
         ).convert_alpha()
@@ -272,7 +237,7 @@ class Lizard(Enemy):
         self.current_attack = 0
         self.attack_duration = 1000
         self.move_image = 0
-        self.change_move_frame = 0
+        self.frame_change_time = 0
         self.attack_frame_time = 0
         self.attack_end = 0
 
@@ -298,17 +263,10 @@ class Lizard(Enemy):
             target_angle = angle - self.angle_offset
             current_time = pygame.time.get_ticks()
             if current_time < self.attack_end:
-                elapsed = current_time - (self.attack_end - self.attack_duration)
-                progress = elapsed / self.attack_duration
-                frame = int(progress * len(self.attack_images))
-                if frame >= len(self.attack_images):
-                    frame = len(self.attack_images) - 1
+                frame = self.change_attack_frame()
                 original = self.attack_images[frame]
             else:
-                current_time = pygame.time.get_ticks()
-                if current_time - self.change_move_frame >= 150:
-                    self.change_move_frame = current_time
-                    self.move_image = (self.move_image + 1) % len(self.move_images)
+                self.change_move_frame()
                 original = self.move_images[self.move_image]
 
             self.image = pygame.transform.rotate(original, target_angle)
@@ -340,27 +298,15 @@ class WildDog(Enemy):
         ).convert_alpha()
         self.type = EnemyType.WILD_DOG
         self.original_image = Utils.scale_image(self.original_image, 64)
-        self.move_images = []
-        for i in range(len(os.listdir("assets/images/wild_dog/wild_dog_move"))):
-            move_image = pygame.image.load(
-                f"assets/images/wild_dog/wild_dog_move/wild_dog_move_{i}.png"
-            ).convert_alpha()
-            move_image = Utils.scale_image(move_image, 64)
-            self.move_images.append(move_image)
-        self.attack_images = []
-        for i in range(len(os.listdir("assets/images/wild_dog/wild_dog_attack"))):
-            attack_image = pygame.image.load(
-                f"assets/images/wild_dog/wild_dog_attack/wild_dog_attack_{i}.png"
-            ).convert_alpha()
-            attack_image = Utils.scale_image(attack_image, 64)
-            self.attack_images.append(attack_image)
+        self.move_images = Utils.get_frames("assets/images/wild_dog/wild_dog_move", 64)
+        self.attack_images = Utils.get_frames("assets/images/wild_dog/wild_dog_attack", 64)
         self.dead_picture = pygame.image.load(
             "assets/images/wild_dog/dead_dog.png"
         ).convert_alpha()
         self.dead_picture = Utils.scale_image(self.dead_picture, 64)
         self.image = self.original_image
         self.move_image = 0
-        self.change_move_frame = 0
+        self.frame_change_time = 0
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
         self.angle_offset = 270
@@ -387,17 +333,10 @@ class WildDog(Enemy):
             target_angle = angle - self.angle_offset
             current_time = pygame.time.get_ticks()
             if current_time < self.attack_end:
-                elapsed = current_time - (self.attack_end - self.attack_duration)
-                progress = elapsed / self.attack_duration
-                frame = int(progress * len(self.attack_images))
-                if frame >= len(self.attack_images):
-                    frame = len(self.attack_images) - 1
+                frame = self.change_attack_frame()
                 original = self.attack_images[frame]
             else:
-                current_time = pygame.time.get_ticks()
-                if current_time - self.change_move_frame >= 300:
-                    self.change_move_frame = current_time
-                    self.move_image = (self.move_image + 1) % len(self.move_images)
+                self.change_move_frame()
                 original = self.move_images[self.move_image]
 
             self.image = pygame.transform.rotate(original, target_angle)
@@ -429,20 +368,8 @@ class Thug(Enemy):
         ).convert_alpha()
         self.type = EnemyType.THUG
         self.original_image = Utils.scale_image(self.original_image, 80)
-        self.move_images = []
-        for i in range(len(os.listdir("assets/images/thug/thug_move"))):
-            move_image = pygame.image.load(
-                f"assets/images/thug/thug_move/thug_move_{i}.png"
-            ).convert_alpha()
-            move_image = Utils.scale_image(move_image, 80)
-            self.move_images.append(move_image)
-        self.attack_images = []
-        for i in range(len(os.listdir("assets/images/thug/thug_attack"))):
-            attack_image = pygame.image.load(
-                f"assets/images/thug/thug_attack/thug_attack_{i}.png"
-            ).convert_alpha()
-            attack_image = Utils.scale_image(attack_image, 80)
-            self.attack_images.append(attack_image)
+        self.move_images = Utils.get_frames("assets/images/thug/thug_move", 80)
+        self.attack_images = Utils.get_frames("assets/images/thug/thug_attack", 80)
         self.dead_picture = pygame.image.load(
             "assets/images/thug/dead_thug.png"
         ).convert_alpha()
@@ -450,7 +377,7 @@ class Thug(Enemy):
         self.image = self.original_image
         self.rect = self.image.get_rect()
         self.move_image = 0
-        self.change_move_frame = 0
+        self.frame_change_time = 0
         self.rect.center = (x, y)
         self.angle_offset = 270
         self.attack_duration = 500
@@ -476,17 +403,10 @@ class Thug(Enemy):
             target_angle = angle - self.angle_offset
             current_time = pygame.time.get_ticks()
             if current_time < self.attack_end:
-                elapsed = current_time - (self.attack_end - self.attack_duration)
-                progress = elapsed / self.attack_duration
-                frame = int(progress * len(self.attack_images))
-                if frame >= len(self.attack_images):
-                    frame = len(self.attack_images) - 1
+                frame = self.change_attack_frame()
                 original = self.attack_images[frame]
             else:
-                current_time = pygame.time.get_ticks()
-                if current_time - self.change_move_frame >= 500:
-                    self.change_move_frame = current_time
-                    self.move_image = (self.move_image + 1) % len(self.move_images)
+                self.change_move_frame()
                 original = self.move_images[self.move_image]
 
             self.image = pygame.transform.rotate(original, target_angle)

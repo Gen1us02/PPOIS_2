@@ -139,9 +139,10 @@ class Shotgun(Weapon):
             self.last_shot_time = current_time
             self.ammo -= 1
             mouse_x, mouse_y = pygame.mouse.get_pos()
+            spread = 20
             for i in range(4):
-                offset = (-1 if i % 2 == 0 else 1) * i * 10
-                bullet = Bullet(x, y, mouse_x + offset, mouse_y)
+                offset_x = (i - 1.5) * spread
+                bullet = Bullet(x, y, mouse_x + offset_x, mouse_y)
                 bullets.add(bullet)
                 all_sprites.add(bullet)
             self.shooting_sound.play()

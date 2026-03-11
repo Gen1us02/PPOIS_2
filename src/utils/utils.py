@@ -2,6 +2,7 @@ import json
 from typing import Any, Dict, List, Tuple
 from pygame import Surface
 import pygame
+import os
 
 
 class Utils:
@@ -66,15 +67,32 @@ class Utils:
         pygame.mixer.music.load(music_path)
         pygame.mixer.music.set_volume(volume)
         pygame.mixer.music.play(-1)
-        
+
     @staticmethod
     def create_all_bonuses() -> Tuple[Any]:
-        from src.objects.bonuses import GunBox, RifleBox, ShotgunBox, FirstAid, SpeedBoost
+        from src.objects.bonuses import (
+            GunBox,
+            RifleBox,
+            ShotgunBox,
+            FirstAid,
+            SpeedBoost,
+        )
+
         first_aid = FirstAid()
         speed_boost = SpeedBoost()
         gun_box = GunBox()
         rifle_box = RifleBox()
         shotgun_box = ShotgunBox()
-            
+
         return first_aid, speed_boost, gun_box, rifle_box, shotgun_box
-        
+
+    @staticmethod
+    def get_frames(path: str, scale_size: int) -> List[Surface]:
+        images = []
+        for file in os.listdir(path):
+            target_path = os.path.join(path, file)
+            image = pygame.image.load(target_path).convert_alpha()
+            image = Utils.scale_image(image, scale_size)
+            images.append(image)
+
+        return images

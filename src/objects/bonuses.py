@@ -59,6 +59,8 @@ class SpeedBoost(Bonus):
             player.is_double_speed = True
             player.current_speed *= 2
 
+        player.double_speed_time = pygame.time.get_ticks()
+
 
 class WeaponBox(Bonus):
     def __init__(self, weapon: Weapon, box_image: Surface) -> None:

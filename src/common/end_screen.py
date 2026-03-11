@@ -45,11 +45,13 @@ class EndScreenMixin:
 
         if self.is_highscore:
             prompt = self.font.render(
-                "Новый рекорд! Нажмите Enter, чтобы ввести имя", True, (255, 255, 0)
+                "Новый рекорд! Нажмите Enter, чтобы ввести имя или Esc, чтобы выйти в меню",
+                True,
+                (255, 255, 0),
             )
         else:
             prompt = self.font.render(
-                "Нажмите Enter, чтобы вернуться в меню", True, (255, 255, 255)
+                "Нажмите Enter или Esc, чтобы вернуться в меню", True, (255, 255, 255)
             )
         prompt_rect = prompt.get_rect(center=(self.screen.get_width() // 2, 350))
         self.screen.blit(prompt, prompt_rect)
