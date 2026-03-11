@@ -151,19 +151,34 @@ class Spider(Enemy):
             100, 2, 100, 15, 700, pygame.mixer.Sound("assets/audio/zombie_hit.mp3")
         )
         self.original_image = pygame.image.load(
-            "assets/images/spider.png"
+            "assets/images/spider/spider.png"
         ).convert_alpha()
         self.type = EnemyType.SPIDER
         self.original_image = Utils.scale_image(self.original_image, 50)
-        self.attack_image = pygame.image.load(
-            "assets/images/zombie_attack.png"
-        ).convert_alpha()
         self.dead_picture = pygame.image.load(
-            "assets/images/dead_spider.png"
+            "assets/images/spider/dead_spider.png"
+        ).convert_alpha()
+        self.move_images = []
+        for i in range(len(os.listdir("assets/images/spider/spider_move"))):
+            move_image = pygame.image.load(
+                f"assets/images/spider/spider_move/spider_move_{i}.png"
+            ).convert_alpha()
+            move_image = Utils.scale_image(move_image, 50)
+            self.move_images.append(move_image)
+        self.attack_images = []
+        for i in range(len(os.listdir("assets/images/spider/spider_attack"))):
+            attack_image = pygame.image.load(
+                f"assets/images/spider/spider_attack/spider_attack_{i}.png"
+            ).convert_alpha()
+            attack_image = Utils.scale_image(attack_image, 50)
+            self.attack_images.append(attack_image)
+        self.dead_picture = pygame.image.load(
+            "assets/images/spider/dead_spider.png"
         ).convert_alpha()
         self.dead_picture = Utils.scale_image(self.dead_picture, 40)
-        self.attack_image = Utils.scale_image(self.attack_image, 40)
         self.image = self.original_image
+        self.move_image = 0
+        self.change_move_frame = 0
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
         self.angle_offset = 90
@@ -190,9 +205,18 @@ class Spider(Enemy):
             target_angle = angle - self.angle_offset
             current_time = pygame.time.get_ticks()
             if current_time < self.attack_end:
-                original = self.attack_image
+                elapsed = current_time - (self.attack_end - self.attack_duration)
+                progress = elapsed / self.attack_duration
+                frame = int(progress * len(self.attack_images))
+                if frame >= len(self.attack_images):
+                    frame = len(self.attack_images) - 1
+                original = self.attack_images[frame]
             else:
-                original = self.original_image
+                current_time = pygame.time.get_ticks()
+                if current_time - self.change_move_frame >= 300:
+                    self.change_move_frame = current_time
+                    self.move_image = (self.move_image + 1) % len(self.move_images)
+                original = self.move_images[self.move_image]
 
             self.image = pygame.transform.rotate(original, target_angle)
             self.rect = self.image.get_rect(center=self.rect.center)
