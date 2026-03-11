@@ -3,7 +3,7 @@ import pygame
 from pygame import Surface
 from pygame.sprite import Group
 from src.utils.utils import Utils
-from src.objects.weapons import Gun
+from src.objects.weapons import Weapon, Gun
 
 
 class Player(pygame.sprite.Sprite):
@@ -28,11 +28,10 @@ class Player(pygame.sprite.Sprite):
         self.speed = 3
         self.current_speed = self.speed
 
-    def move(self, x: int, y: int, screen:Surface) -> None:
+    def move(self, x: int, y: int, screen: Surface) -> None:
         self.rect.x += x
         self.rect.y += y
         self.rect.clamp_ip(screen.get_rect())
-        
 
     def draw(self, screen: Surface) -> None:
         bar_width = 64
@@ -54,6 +53,9 @@ class Player(pygame.sprite.Sprite):
     def reload(self) -> None:
         self.weapon.reload()
 
+    def set_weapon(self, weapon: Weapon) -> None:
+        self.weapon = weapon
+
     @property
     def weapon_damage(self) -> int:
         return self.weapon.damage
@@ -72,7 +74,7 @@ class Player(pygame.sprite.Sprite):
             self.double_speed_time = current_time
             self.is_double_speed = False
             self.current_speed = self.speed
-            
+
         mouse_x, mouse_y = pygame.mouse.get_pos()
         dx = mouse_x - self.rect.centerx
         dy = mouse_y - self.rect.centery
