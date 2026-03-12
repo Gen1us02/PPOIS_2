@@ -137,10 +137,6 @@
                 {
                     "type": "wild_dog",
                     "count": 2
-                },
-                {
-                    "type": "thug",
-                    "count": 1
                 }
             ]
         },
@@ -148,7 +144,7 @@
             "enemies": [
                 {
                     "type": "zombie",
-                    "count": 6
+                    "count": 5
                 },
                 {
                     "type": "spider",
@@ -161,50 +157,6 @@
                 {
                     "type": "wild_dog",
                     "count": 2
-                }
-            ]
-        },
-        {
-            "enemies": [
-                {
-                    "type": "zombie",
-                    "count": 5
-                },
-                {
-                    "type": "spider",
-                    "count": 5
-                },
-                {
-                    "type": "lizard",
-                    "count": 4
-                },
-                {
-                    "type": "wild_dog",
-                    "count": 2
-                },
-                {
-                    "type": "thug",
-                    "count": 1
-                }
-            ]
-        },
-        {
-            "enemies": [
-                {
-                    "type": "zombie",
-                    "count": 6
-                },
-                {
-                    "type": "spider",
-                    "count": 5
-                },
-                {
-                    "type": "lizard",
-                    "count": 4
-                },
-                {
-                    "type": "wild_dog",
-                    "count": 3
                 },
                 {
                     "type": "thug",
@@ -224,6 +176,94 @@
                 },
                 {
                     "type": "lizard",
+                    "count": 4
+                },
+                {
+                    "type": "wild_dog",
+                    "count": 2
+                }
+            ]
+        },
+        {
+            "enemies": [
+                {
+                    "type": "zombie",
+                    "count": 6
+                },
+                {
+                    "type": "spider",
+                    "count": 5
+                },
+                {
+                    "type": "lizard",
+                    "count": 4
+                },
+                {
+                    "type": "wild_dog",
+                    "count": 2
+                },
+                {
+                    "type": "thug",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "enemies": [
+                {
+                    "type": "zombie",
+                    "count": 5
+                },
+                {
+                    "type": "spider",
+                    "count": 5
+                },
+                {
+                    "type": "lizard",
+                    "count": 5
+                },
+                {
+                    "type": "wild_dog",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "enemies": [
+                {
+                    "type": "zombie",
+                    "count": 6
+                },
+                {
+                    "type": "spider",
+                    "count": 5
+                },
+                {
+                    "type": "lizard",
+                    "count": 4
+                },
+                {
+                    "type": "wild_dog",
+                    "count": 3
+                },
+                {
+                    "type": "thug",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "enemies": [
+                {
+                    "type": "zombie",
+                    "count": 5
+                },
+                {
+                    "type": "spider",
+                    "count": 5
+                },
+                {
+                    "type": "lizard",
                     "count": 5
                 },
                 {
@@ -240,15 +280,15 @@
             "enemies": [
                 {
                     "type": "zombie",
-                    "count": 7
-                },
-                {
-                    "type": "spider",
                     "count": 5
                 },
                 {
+                    "type": "spider",
+                    "count": 6
+                },
+                {
                     "type": "lizard",
-                    "count": 4
+                    "count": 5
                 },
                 {
                     "type": "wild_dog",
@@ -264,11 +304,59 @@
             "enemies": [
                 {
                     "type": "zombie",
+                    "count": 5
+                },
+                {
+                    "type": "spider",
+                    "count": 5
+                },
+                {
+                    "type": "lizard",
+                    "count": 5
+                },
+                {
+                    "type": "wild_dog",
+                    "count": 4
+                },
+                {
+                    "type": "thug",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "enemies": [
+                {
+                    "type": "zombie",
                     "count": 6
                 },
                 {
                     "type": "spider",
-                    "count": 6
+                    "count": 5
+                },
+                {
+                    "type": "lizard",
+                    "count": 5
+                },
+                {
+                    "type": "wild_dog",
+                    "count": 3
+                },
+                {
+                    "type": "thug",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "enemies": [
+                {
+                    "type": "zombie",
+                    "count": 5
+                },
+                {
+                    "type": "spider",
+                    "count": 5
                 },
                 {
                     "type": "lizard",
@@ -281,102 +369,6 @@
                 {
                     "type": "thug",
                     "count": 2
-                }
-            ]
-        },
-        {
-            "enemies": [
-                {
-                    "type": "zombie",
-                    "count": 7
-                },
-                {
-                    "type": "spider",
-                    "count": 6
-                },
-                {
-                    "type": "lizard",
-                    "count": 5
-                },
-                {
-                    "type": "wild_dog",
-                    "count": 4
-                },
-                {
-                    "type": "thug",
-                    "count": 2
-                }
-            ]
-        },
-        {
-            "enemies": [
-                {
-                    "type": "zombie",
-                    "count": 6
-                },
-                {
-                    "type": "spider",
-                    "count": 6
-                },
-                {
-                    "type": "lizard",
-                    "count": 6
-                },
-                {
-                    "type": "wild_dog",
-                    "count": 4
-                },
-                {
-                    "type": "thug",
-                    "count": 2
-                }
-            ]
-        },
-        {
-            "enemies": [
-                {
-                    "type": "zombie",
-                    "count": 8
-                },
-                {
-                    "type": "spider",
-                    "count": 7
-                },
-                {
-                    "type": "lizard",
-                    "count": 5
-                },
-                {
-                    "type": "wild_dog",
-                    "count": 4
-                },
-                {
-                    "type": "thug",
-                    "count": 2
-                }
-            ]
-        },
-        {
-            "enemies": [
-                {
-                    "type": "zombie",
-                    "count": 8
-                },
-                {
-                    "type": "spider",
-                    "count": 6
-                },
-                {
-                    "type": "lizard",
-                    "count": 6
-                },
-                {
-                    "type": "wild_dog",
-                    "count": 5
-                },
-                {
-                    "type": "thug",
-                    "count": 3
                 }
             ]
         }

@@ -70,39 +70,6 @@ class Enemy(pygame.sprite.Sprite):
             self.frame_change_time = current_time
             self.move_image = (self.move_image + 1) % len(self.move_images)
 
-
-class Zombie(Enemy):
-    def __init__(self, x: int, y: int) -> None:
-        super().__init__(
-            50, 1, 50, 10, 1000, pygame.mixer.Sound("assets/audio/zombie_hit.mp3")
-        )
-        self.original_image = pygame.image.load(
-            "assets/images/zombie/zombie.png"
-        ).convert_alpha()
-        self.type = EnemyType.ZOMBIE
-        self.original_image = Utils.scale_image(self.original_image, 40)
-        self.move_images = Utils.get_frames("assets/images/zombie/zombie_move", 40)
-        self.attack_images = Utils.get_frames("assets/images/zombie/zombie_attack", 40)
-        self.dead_picture = pygame.image.load(
-            "assets/images/zombie/dead_zombie.png"
-        ).convert_alpha()
-        self.dead_picture = Utils.scale_image(self.dead_picture, 40)
-        self.move_image = 0
-        self.frame_change_time = 0
-        self.image = self.original_image
-        self.rect = self.image.get_rect()
-        self.rect.center = (x, y)
-        self.angle_offset = 270
-        self.attack_duration = 200
-        self.attack_end = 0
-
-    def draw(self, screen) -> None:
-        screen.blit(self.image, self.rect)
-
-    def damage(self, player: Player) -> None:
-        if super().damage(player):
-            self.attack_end = pygame.time.get_ticks() + self.attack_duration
-
     def update(self, *args, **kwargs) -> None:
         if not self.is_alive:
             return
@@ -139,6 +106,39 @@ class Zombie(Enemy):
             self.rect = self.image.get_rect(center=self.rect.center)
             self.speed = 0
             self.hit_damage = 0
+
+
+class Zombie(Enemy):
+    def __init__(self, x: int, y: int) -> None:
+        super().__init__(
+            50, 1, 50, 10, 1000, pygame.mixer.Sound("assets/audio/zombie_hit.mp3")
+        )
+        self.original_image = pygame.image.load(
+            "assets/images/zombie/zombie.png"
+        ).convert_alpha()
+        self.type = EnemyType.ZOMBIE
+        self.original_image = Utils.scale_image(self.original_image, 40)
+        self.move_images = Utils.get_frames("assets/images/zombie/zombie_move", 40)
+        self.attack_images = Utils.get_frames("assets/images/zombie/zombie_attack", 40)
+        self.dead_picture = pygame.image.load(
+            "assets/images/zombie/dead_zombie.png"
+        ).convert_alpha()
+        self.dead_picture = Utils.scale_image(self.dead_picture, 40)
+        self.move_image = 0
+        self.frame_change_time = 0
+        self.image = self.original_image
+        self.rect = self.image.get_rect()
+        self.rect.center = (x, y)
+        self.angle_offset = 270
+        self.attack_duration = 200
+        self.attack_end = 0
+
+    def draw(self, screen) -> None:
+        screen.blit(self.image, self.rect)
+
+    def damage(self, player: Player) -> None:
+        if super().damage(player):
+            self.attack_end = pygame.time.get_ticks() + self.attack_duration
 
 
 class Spider(Enemy):
@@ -175,43 +175,6 @@ class Spider(Enemy):
     def damage(self, player: Player) -> None:
         if super().damage(player):
             self.attack_end = pygame.time.get_ticks() + self.attack_duration
-
-    def update(self, *args, **kwargs) -> None:
-        if not self.is_alive:
-            return
-
-        player_x, player_y = args
-        dx = player_x - self.rect.centerx
-        dy = player_y - self.rect.centery
-
-        if dx != 0 or dy != 0:
-            angle = math.degrees(math.atan2(-dy, dx))
-            target_angle = angle - self.angle_offset
-            current_time = pygame.time.get_ticks()
-            if current_time < self.attack_end:
-                frame = self.change_attack_frame()
-                original = self.attack_images[frame]
-            else:
-                self.change_move_frame()
-                original = self.move_images[self.move_image]
-
-            self.image = pygame.transform.rotate(original, target_angle)
-            self.rect = self.image.get_rect(center=self.rect.center)
-
-            distance = math.hypot(dx, dy)
-            if distance != 0:
-                step_x = (dx / distance) * self.speed
-                step_y = (dy / distance) * self.speed
-                self.rect.x += step_x
-                self.rect.y += step_y
-
-    def dead(self) -> None:
-        if not self.is_alive:
-            self.is_dead = True
-            self.image = self.dead_picture
-            self.rect = self.image.get_rect(center=self.rect.center)
-            self.speed = 0
-            self.hit_damage = 0
 
 
 class Lizard(Enemy):
@@ -250,43 +213,6 @@ class Lizard(Enemy):
             self.attack_frame_index = 0
             self.attack_frame_time = pygame.time.get_ticks()
 
-    def update(self, *args, **kwargs) -> None:
-        if not self.is_alive:
-            return
-
-        player_x, player_y = args
-        dx = player_x - self.rect.centerx
-        dy = player_y - self.rect.centery
-
-        if dx != 0 or dy != 0:
-            angle = math.degrees(math.atan2(-dy, dx))
-            target_angle = angle - self.angle_offset
-            current_time = pygame.time.get_ticks()
-            if current_time < self.attack_end:
-                frame = self.change_attack_frame()
-                original = self.attack_images[frame]
-            else:
-                self.change_move_frame()
-                original = self.move_images[self.move_image]
-
-            self.image = pygame.transform.rotate(original, target_angle)
-            self.rect = self.image.get_rect(center=self.rect.center)
-
-            distance = math.hypot(dx, dy)
-            if distance != 0:
-                step_x = (dx / distance) * self.speed
-                step_y = (dy / distance) * self.speed
-                self.rect.x += step_x
-                self.rect.y += step_y
-
-    def dead(self) -> None:
-        if not self.is_alive:
-            self.is_dead = True
-            self.image = self.dead_picture
-            self.rect = self.image.get_rect(center=self.rect.center)
-            self.speed = 0
-            self.hit_damage = 0
-
 
 class WildDog(Enemy):
     def __init__(self, x: int, y: int) -> None:
@@ -299,7 +225,9 @@ class WildDog(Enemy):
         self.type = EnemyType.WILD_DOG
         self.original_image = Utils.scale_image(self.original_image, 64)
         self.move_images = Utils.get_frames("assets/images/wild_dog/wild_dog_move", 64)
-        self.attack_images = Utils.get_frames("assets/images/wild_dog/wild_dog_attack", 64)
+        self.attack_images = Utils.get_frames(
+            "assets/images/wild_dog/wild_dog_attack", 64
+        )
         self.dead_picture = pygame.image.load(
             "assets/images/wild_dog/dead_dog.png"
         ).convert_alpha()
@@ -319,43 +247,6 @@ class WildDog(Enemy):
     def damage(self, player: Player) -> None:
         if super().damage(player):
             self.attack_end = pygame.time.get_ticks() + self.attack_duration
-
-    def update(self, *args, **kwargs) -> None:
-        if not self.is_alive:
-            return
-
-        player_x, player_y = args
-        dx = player_x - self.rect.centerx
-        dy = player_y - self.rect.centery
-
-        if dx != 0 or dy != 0:
-            angle = math.degrees(math.atan2(-dy, dx))
-            target_angle = angle - self.angle_offset
-            current_time = pygame.time.get_ticks()
-            if current_time < self.attack_end:
-                frame = self.change_attack_frame()
-                original = self.attack_images[frame]
-            else:
-                self.change_move_frame()
-                original = self.move_images[self.move_image]
-
-            self.image = pygame.transform.rotate(original, target_angle)
-            self.rect = self.image.get_rect(center=self.rect.center)
-
-            distance = math.hypot(dx, dy)
-            if distance != 0:
-                step_x = (dx / distance) * self.speed
-                step_y = (dy / distance) * self.speed
-                self.rect.x += step_x
-                self.rect.y += step_y
-
-    def dead(self) -> None:
-        if not self.is_alive:
-            self.is_dead = True
-            self.image = self.dead_picture
-            self.rect = self.image.get_rect(center=self.rect.center)
-            self.speed = 0
-            self.hit_damage = 0
 
 
 class Thug(Enemy):
@@ -389,40 +280,3 @@ class Thug(Enemy):
     def damage(self, player: Player) -> None:
         if super().damage(player):
             self.attack_end = pygame.time.get_ticks() + self.attack_duration
-
-    def update(self, *args, **kwargs) -> None:
-        if not self.is_alive:
-            return
-
-        player_x, player_y = args
-        dx = player_x - self.rect.centerx
-        dy = player_y - self.rect.centery
-
-        if dx != 0 or dy != 0:
-            angle = math.degrees(math.atan2(-dy, dx))
-            target_angle = angle - self.angle_offset
-            current_time = pygame.time.get_ticks()
-            if current_time < self.attack_end:
-                frame = self.change_attack_frame()
-                original = self.attack_images[frame]
-            else:
-                self.change_move_frame()
-                original = self.move_images[self.move_image]
-
-            self.image = pygame.transform.rotate(original, target_angle)
-            self.rect = self.image.get_rect(center=self.rect.center)
-
-            distance = math.hypot(dx, dy)
-            if distance != 0:
-                step_x = (dx / distance) * self.speed
-                step_y = (dy / distance) * self.speed
-                self.rect.x += step_x
-                self.rect.y += step_y
-
-    def dead(self) -> None:
-        if not self.is_alive:
-            self.is_dead = True
-            self.image = self.dead_picture
-            self.rect = self.image.get_rect(center=self.rect.center)
-            self.speed = 0
-            self.hit_damage = 0

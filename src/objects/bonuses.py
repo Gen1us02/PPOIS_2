@@ -77,7 +77,7 @@ class GunBox(WeaponBox):
         gun = Gun()
         image = pygame.image.load("assets/images/gun_box.png")
         super().__init__(gun, image)
-        self.image = Utils.scale_image(self.image, 30)
+        self.image = Utils.scale_image(self.image, 40)
         self.rect = self.image.get_rect()
         self.spawn_time = pygame.time.get_ticks()
 
