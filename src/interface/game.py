@@ -75,7 +75,7 @@ class Game:
 
     def get_current_wave_enemies(self) -> List[Dict[str, Any]]:
         return self.waves[self.current_wave]["enemies"]
-    
+
     def clear_dead_mods(self) -> None:
         for enemy in self.enemies:
             if not enemy.is_alive:
@@ -205,7 +205,7 @@ class Game:
 
             if pygame.sprite.collide_rect(self.player, enemy):
                 enemy.damage(self.player)
-            
+
         bonus_hits = pygame.sprite.spritecollide(self.player, self.bonuses, True)
         for bonus in bonus_hits:
             bonus.action(self.player)

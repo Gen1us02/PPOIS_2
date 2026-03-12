@@ -26,7 +26,7 @@ class GameOverScreen(EndScreenMixin):
 
     def draw(self):
         super().draw()
-        
+
         title = self.font.render("ИГРА ОКОНЧЕНА", True, (255, 100, 100))
         title_rect = title.get_rect(center=(self.screen.get_width() // 2, 150))
         self.screen.blit(title, title_rect)

@@ -76,7 +76,7 @@ class CrimsonLand:
                 if action == States.GAME_OVER:
                     Utils.update_sound_and_mouse(self.game_over_music_path, 0.8)
                     self.state = States.GAME_OVER
-                    
+
                 if action == States.WIN:
                     Utils.update_sound_and_mouse(self.win_music_path, 0.8)
                     self.state = States.WIN
