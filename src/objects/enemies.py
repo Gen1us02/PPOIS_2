@@ -144,7 +144,7 @@ class Zombie(Enemy):
 class Spider(Enemy):
     def __init__(self, x: int, y: int) -> None:
         super().__init__(
-            100, 2, 100, 15, 700, pygame.mixer.Sound("assets/audio/zombie_hit.mp3")
+            60, 3, 100, 15, 700, pygame.mixer.Sound("assets/audio/zombie_hit.mp3")
         )
         self.original_image = pygame.image.load(
             "assets/images/spider/spider.png"
@@ -217,7 +217,7 @@ class Lizard(Enemy):
 class WildDog(Enemy):
     def __init__(self, x: int, y: int) -> None:
         super().__init__(
-            100, 4, 250, 10, 600, pygame.mixer.Sound("assets/audio/zombie_hit.mp3")
+            40, 4, 250, 10, 600, pygame.mixer.Sound("assets/audio/zombie_hit.mp3")
         )
         self.original_image = pygame.image.load(
             "assets/images/wild_dog/wild_dog.png"
