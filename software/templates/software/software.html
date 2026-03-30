@@ -1,0 +1,97 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %}ПО робота - Система робота{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Заголовок и кнопка добавления -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0"><i class="bi bi-motherboard"></i> Программное обеспечение</h2>
+        <a href="{% url 'software:add_software' %}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Добавить ПО
+        </a>
+    </div>
+
+    {% if all_software %}
+        <!-- Список ПО в виде карточек -->
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            {% for soft in all_software %}
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">{{ soft.software_type.name }}</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                <li><strong>Версия:</strong> {{ soft.version }}</li>
+                                <li><strong>Производитель:</strong> {{ soft.creator|default:"—" }}</li>
+                                <li><strong>Размер:</strong> {{ soft.size }} МБ</li>
+                                <li><strong>Обновлено:</strong> {{ soft.updated_at|date:"d.m.Y H:i" }}</li>
+                            </ul>
+                            {% if soft.description %}
+                                <p class="mt-2 mb-0"><strong>Описание:</strong> {{ soft.description|truncatewords:20 }}</p>
+                            {% endif %}
+                        </div>
+                        <div class="card-footer text-center bg-transparent">
+                            <a href="{% url "software:edit_software" soft.id %}" class="btn btn-sm btn-warning">Редактировать</a>
+                             <form action="{% url "software:delete_software" soft.id %}" method="post" class="d-inline" onsubmit="return confirm('Вы уверены, что хотите удалить это ПО?');">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">
+                                    <i class="bi bi-trash"></i> Удалить
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Пагинация -->
+        {% if is_paginated %}
+        <nav class="pagination">
+            <a class="page-btn {% if not page_obj.has_previous %}disabled{% endif %}" 
+            href="{% if page_obj.has_previous %}?page={{ page_obj.previous_page_number }}{% else %}#{% endif %}">←</a>
+            
+            <a class="page-btn {% if page_obj.number == 1 %}active{% endif %}" 
+            href="{% if page_obj.number != 1 %}?page=1{% else %}#{% endif %}">1</a>
+            
+            {% if page_obj.number|add:-2 > 2 %}
+                <span class="page-dots">...</span>
+            {% endif %}
+            
+            {% for page in page_obj.paginator.page_range %}
+                {% if page > 1 and page < page_obj.paginator.num_pages %}
+                    {% if page == page_obj.number %}
+                        <a class="page-btn active">{{ page }}</a>
+                    {% elif page >= page_obj.number|add:-2 and page <= page_obj.number|add:2 %}
+                        <a class="page-btn" href="?page={{ page }}">{{ page }}</a>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            
+            {% if page_obj.number|add:3 < page_obj.paginator.num_pages %}
+                <span class="page-dots">...</span>
+            {% endif %}
+            
+            <a class="page-btn {% if page_obj.number == page_obj.paginator.num_pages %}active{% endif %}" 
+            href="{% if page_obj.number != page_obj.paginator.num_pages %}?page={{ page_obj.paginator.num_pages }}{% else %}#{% endif %}">
+                {{ page_obj.paginator.num_pages }}
+            </a>
+            
+            <a class="page-btn {% if not page_obj.has_next %}disabled{% endif %}" 
+            href="{% if page_obj.has_next %}?page={{ page_obj.next_page_number }}{% else %}#{% endif %}">→</a>
+        </nav>
+        {% endif %}
+    {% else %}
+        <!-- Если ПО нет -->
+        <div class="container d-flex align-items-center justify-content-center" style="min-height: 50vh;">
+            <div class="text-center">
+                <a href="{% url 'software:add_software' %}" class="btn btn-primary btn-lg rounded-pill px-5 py-3 shadow">
+                    <i class="bi bi-motherboard"></i> Добавить ПО для робота
+                </a>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

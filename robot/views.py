@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic import DetailView, UpdateView, CreateView, View
 from .models import Robot, Phrases
 from .forms import AddRobotForm, AddPhraseForm
+from common.mixins import ContextSoftwareMixin
 
 
 # Create your views here.
@@ -10,8 +11,8 @@ class RobotView(DetailView):
     template_name = "robot/robot.html"
 
     def get_object(self, queryset=...):
-        robot = Robot.objects.all()
-        return robot[0] if robot else None
+        robot = Robot.objects.all().first()
+        return robot
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -22,7 +23,7 @@ class RobotView(DetailView):
         return context
 
 
-class RobotCreateView(CreateView):
+class RobotCreateView(ContextSoftwareMixin, CreateView):
     model = Robot
     template_name = "robot/add_robot.html"
     success_url = reverse_lazy("robot:index")
@@ -37,7 +38,7 @@ class RobotDeleteView(View):
         return HttpResponseRedirect(reverse_lazy("robot:index"))
 
 
-class RobotEditView(UpdateView):
+class RobotEditView(ContextSoftwareMixin, UpdateView):
     model = Robot
     template_name = "robot/add_robot.html"
     success_url = reverse_lazy("robot:index")

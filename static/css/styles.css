@@ -77,6 +77,10 @@
   --bs-link-hover-color: #0a58ca;
   --bs-code-color: #d63384;
   --bs-highlight-bg: #fff3cd;
+  --border-color: #dee2e6;
+  --green: #28a745;
+  --dark: #343a40;
+  --transparent-brown: rgba(139, 69, 19, 0.5);
 }
 
 *,
@@ -11336,4 +11340,60 @@ form input:focus, form select:focus, form textarea:focus {
     border-color: #86b7fe;
     outline: 0;
     box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 40px;
+}
+
+.page-btn {
+  width: 42px;
+  height: 42px;
+
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: white;
+  color: var(--dark);
+
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.page-btn:hover {
+  background: var(--green);
+  color: white;
+  border-color: var(--green);
+}
+
+.page-btn.active {
+  background: var(--dark);
+  color: white;
+  border-color: var(--dark);
+  cursor: default;
+}
+
+.page-btn.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.page-dots {
+  padding: 0 5px;
+  font-weight: 600;
+  color: var(--transparent-brown);
+}
+
+.create-ad-link {
+  color:#2D2C28;
 }
