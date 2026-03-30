@@ -1,0 +1,92 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %}Страница робота - Система робота{% endblock %}
+
+{% block content %}
+    {% if robot %}
+        <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
+                <div class="text-center mb-4">
+                    <h1 class="display-4">Мой робот</h1>
+                    <h2 class="h3 text-secondary">{{ robot.name }}</h2>
+                </div>
+
+                <div class="text-center mb-5">
+                    {% if robot.image %}
+                        <img src="{{ robot.image.url }}" alt="{{ robot.name }}" class="img-fluid rounded shadow" style="max-height: 300px;">
+                    {% else %}
+                        <img src="{% static 'assets/img/default.png' %}" alt="Robot" class="img-fluid rounded shadow" style="max-height: 300px;">
+                    {% endif %}
+                </div>
+
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h3 class="h5 mb-0">Характеристики</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span class="fw-bold">Заряд батареи:</span>
+                                <span>{{ robot.battery|default:"—" }}%</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span class="fw-bold">Cкорость:</span>
+                                <span>{{ robot.speed|default:"—" }} м/c</span>
+                            </li>
+                            {% if phrases %}
+                                <div class="card shadow-sm mt-4">
+                                    <div class="card-header bg-info text-white">
+                                        <h3 class="h5 mb-0">Выученные фразы</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <select class="form-select" size="6">
+                                            {% for phrase in phrases %}
+                                                <option>{{ phrase.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span class="fw-bold">Состояние:</span>
+                                <span>{{ robot.status|default:"—" }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="d-flex flex-wrap justify-content-center gap-3 mt-4">
+                    <a href="{% url "robot:edit_robot" robot.name %}" class="btn btn-primary">
+                        <i class="bi bi-pencil-square"></i> Изменение робота
+                    </a>
+
+                    <a href="#" class="btn btn-success">
+                        <i class="bi bi-globe"></i> Взаимодействие с окружающей средой
+                    </a>
+
+                    <a href="{% url "robot:learn" robot.name %}" class="btn btn-warning">
+                        <i class="bi bi-book"></i> Выучить фразу
+                    </a>
+
+                    <form action="{% url "robot:delete_robot" robot.name %}" method="post" class="d-inline" onsubmit="return confirm('Вы уверены, что хотите удалить связные компоненты?');">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-trash"></i> Удалить робота
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+     <div class="container d-flex align-items-center justify-content-center" style="min-height: 70vh;">
+            <div class="text-center">
+                <a href="{% url 'robot:add_robot' %}" class="btn btn-primary btn-lg rounded-pill px-5 py-3 shadow">
+                    <i class="bi bi-robot fs-2 me-2"></i> Добавить робота
+                </a>
+            </div>
+        </div>
+    {% endif %}
+    
+{% endblock content %}
