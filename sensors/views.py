@@ -60,3 +60,13 @@ class SensorDeleteView(View):
         sensor.delete()
 
         return HttpResponseRedirect(reverse_lazy("sensors:index"))
+    
+    
+class SensorDetachView(View):
+    def post(self, request, *args, **kwargs):
+        sensor = Sensor.objects.get(id=self.kwargs.get("sensor_id"))
+        sensor.robot_id = None
+        sensor.is_active = False
+        sensor.save()
+
+        return HttpResponseRedirect(reverse_lazy("robot:index"))

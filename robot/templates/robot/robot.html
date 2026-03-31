@@ -58,46 +58,76 @@
                 </div>
 
                 <!-- Блок информации о ПО -->
-                {% if robot.software %}
                 <div class="card shadow-sm mt-4">
-                    <div class="card-header bg-success text-white">
+                    <div class="card-header {% if robot.software %}bg-success{% else %}bg-secondary{% endif %}  text-white d-flex justify-content-between align-items-center">
                         <h3 class="h5 mb-0"><i class="bi bi-motherboard"></i> Программное обеспечение</h3>
+                        {% if robot.software %}
+                            <form action="{% url "robot:detach_software" robot.name %}" method="post" class="d-inline">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-outline-light" onclick="return confirm('Отключить ПО от робота?');">
+                                    <i class="bi bi-x-circle"></i> Отключить ПО
+                                </button>
+                            </form>
+                        {% endif %}
                     </div>
                     <div class="card-body">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <span class="fw-bold">Тип ПО:</span>
-                                <span>{{ robot.software.software_type.name }}</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <span class="fw-bold">Версия:</span>
-                                <span>{{ robot.software.version }}</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <span class="fw-bold">Размер:</span>
-                                <span>{{ robot.software.size|default:"—" }} МБ</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <span class="fw-bold">Создатель:</span>
-                                <span>{{ robot.software.creator|default:"—" }}</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <span class="fw-bold">Обновлено:</span>
-                                <span>{{ robot.software.updated_at|date:"d.m.Y H:i" }}</span>
-                            </li>
-                        </ul>
+                        {% if robot.software %}
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold">Тип ПО:</span>
+                                    <span>{{ robot.software.software_type.name }}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold">Версия:</span>
+                                    <span>{{ robot.software.version }}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold">Размер:</span>
+                                    <span>{{ robot.software.size|default:"—" }} МБ</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold">Создатель:</span>
+                                    <span>{{ robot.software.creator|default:"—" }}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold">Обновлено:</span>
+                                    <span>{{ robot.software.updated_at|date:"d.m.Y H:i" }}</span>
+                                </li>
+                            </ul>
+                        {% else %}
+                            <p class="text-center mb-0">ПО не установлено</p>
+                        {% endif %}
                     </div>
                 </div>
-                {% else %}
+
+                <!-- Блок сенсоров -->
                 <div class="card shadow-sm mt-4">
-                    <div class="card-header bg-secondary text-white">
-                        <h3 class="h5 mb-0">Программное обеспечение</h3>
+                    <div class="card-header {% if robot.sensors.all %}bg-info{% else %}bg-secondary{% endif %} text-white">
+                        <h3 class="h5 mb-0"><i class="bi bi-speedometer2"></i> Сенсоры</h3>
                     </div>
-                    <div class="card-body text-center">
-                        <p class="mb-2">ПО не установлено</p>
+                    <div class="card-body">
+                        {% if robot.sensors.all %}
+                            <div class="list-group">
+                                {% for sensor in robot.sensors.all %}
+                                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <strong>{{ sensor.name }}</strong><br>
+                                            <small class="text-muted">Тип: {{ sensor.type.name }}</small>
+                                        </div>
+                                        <form action="{% url "sensors:detach_sensor" sensor.id %}" method="post" class="d-inline">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Отвязать сенсор от робота?');">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p class="text-center mb-0">Нет привязанных сенсоров</p>
+                        {% endif %}
                     </div>
                 </div>
-                {% endif %}
 
                 <div class="d-flex flex-wrap justify-content-center gap-3 mt-4">
                     <a href="{% url "robot:edit_robot" robot.name %}" class="btn btn-primary">

@@ -68,3 +68,13 @@ class PhraseCreateView(CreateView):
         phrase.robot_id = robot
         phrase.save()
         return HttpResponseRedirect(self.success_url)
+    
+
+class RobotSoftwareDetachView(View):
+    def post(self, request, *args, **kwargs):
+        robot = Robot.objects.get(name=self.kwargs.get("robot_name"))
+        robot.software = None
+        robot.save()
+
+        return HttpResponseRedirect(reverse_lazy("robot:index"))
+    
