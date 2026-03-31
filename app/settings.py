@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     
     'main',
     "robot",
-    "software"
+    "software",
+    "sensors"
 ]
 
 MIDDLEWARE = [
