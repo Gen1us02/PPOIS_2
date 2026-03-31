@@ -12,7 +12,7 @@ class Robot(models.Model):
     )
     battery = models.IntegerField(default=100, verbose_name="Заряд")
     software = models.ForeignKey(
-        to=Software, on_delete=models.CASCADE, blank=True, null=True, verbose_name="ПО"
+        to=Software, on_delete=models.SET_NULL, blank=True, null=True, verbose_name="ПО"
     )
 
     class Meta:

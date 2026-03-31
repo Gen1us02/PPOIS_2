@@ -54,3 +54,4 @@ class SoftwareDeleteView(View):
         software.delete()
 
         return HttpResponseRedirect(reverse_lazy("software:index"))
+    
