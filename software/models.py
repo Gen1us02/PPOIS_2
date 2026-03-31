@@ -27,3 +27,6 @@ class Software(models.Model):
         db_table = "software"
         verbose_name = "програмное обеспечение"
         verbose_name_plural = "Програмные обеспечения"
+        
+    def __str__(self):
+        return f"{self.software_type.name} v{self.version}"

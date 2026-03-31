@@ -46,15 +46,13 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="software" class="form-label">Программное обеспечение</label>
-                            <select name="software" id="software" class="form-select">
-                                <option value="">-- Без ПО --</option>
-                                {% for soft in all_software %}
-                                    <option value="{{ soft.id }}" {% if soft.id == robot.software.id %}selected{% endif %}>
-                                        {{ soft.software_type.name }} v{{ soft.version }}
-                                    </option>
-                                {% endfor %}
-                            </select>
+                            <label for="{{ form.software.id_for_label }}" class="form-label fw-bold">
+                                ПО робота
+                            </label>
+                            {{ form.software }}
+                            {% if form.software.errors %}
+                                <div class="text-danger small">{{ form.software.errors }}</div>
+                            {% endif %}
                         </div>
 
                         <div class="d-flex justify-content-between mt-4">
