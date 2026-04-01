@@ -46,12 +46,11 @@ class SoftwareEditView(UpdateView):
             }
         )
         return initial
-    
-    
+
+
 class SoftwareDeleteView(View):
     def post(self, request, *args, **kwargs):
         software = Software.objects.get(id=self.kwargs.get("software_id"))
         software.delete()
 
         return HttpResponseRedirect(reverse_lazy("software:index"))
-    

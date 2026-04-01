@@ -10,6 +10,9 @@ class MechanismType(models.Model):
         db_table = "mechanism_types"
         verbose_name = "тип механизма"
         verbose_name_plural = "Типы механизмов"
+        
+    def __str__(self):
+        return self.name
 
 
 class Mechanism(models.Model):
@@ -20,10 +23,18 @@ class Mechanism(models.Model):
     )
     damage = models.IntegerField(default=0, verbose_name="Состояние")
     robot_id = models.ForeignKey(
-        to=Robot, on_delete=models.SET_NULL, null=True, blank=True, related_name="mechanisms",verbose_name="Робот"
+        to=Robot,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="mechanisms",
+        verbose_name="Робот",
     )
 
     class Meta:
         db_table = "mechanisms"
         verbose_name = "механизм"
         verbose_name_plural = "Механизмы"
+        
+    def __str__(self):
+        return self.name

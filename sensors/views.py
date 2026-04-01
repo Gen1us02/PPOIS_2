@@ -22,7 +22,7 @@ class SensorCreateView(CreateView):
     template_name = "sensors/add_sensor.html"
     success_url = reverse_lazy("sensors:index")
     form_class = AddSensorForm
-    
+
     def form_valid(self, form):
         sensor = form.save(commit=False)
         if self.request.POST.get("robot_id", None):
@@ -31,7 +31,6 @@ class SensorCreateView(CreateView):
             sensor.is_active = False
         sensor.save()
         return super().form_valid(form)
-    
 
 
 class SensorEditView(UpdateView):
@@ -43,7 +42,7 @@ class SensorEditView(UpdateView):
     def get_object(self, queryset=...):
         sensor = Sensor.objects.get(id=self.kwargs.get("sensor_id"))
         return sensor
-    
+
     def form_valid(self, form):
         sensor = form.save(commit=False)
         if self.request.POST.get("robot_id", None):
@@ -60,8 +59,8 @@ class SensorDeleteView(View):
         sensor.delete()
 
         return HttpResponseRedirect(reverse_lazy("sensors:index"))
-    
-    
+
+
 class SensorDetachView(View):
     def post(self, request, *args, **kwargs):
         sensor = Sensor.objects.get(id=self.kwargs.get("sensor_id"))
@@ -70,8 +69,8 @@ class SensorDetachView(View):
         sensor.save()
 
         return HttpResponseRedirect(reverse_lazy("robot:index"))
-    
-    
+
+
 class SensorRepairView(View):
     def post(self, request, *args, **kwargs):
         id = self.kwargs.get("sensor_id")

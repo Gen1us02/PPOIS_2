@@ -33,16 +33,16 @@ class MechanismUpdateView(UpdateView):
     def get_object(self, queryset=...):
         mechanism = Mechanism.objects.get(name=self.kwargs.get("mechanism_name"))
         return mechanism
-    
-    
+
+
 class MechanismDeleteView(View):
     def post(self, request, *args, **kwargs):
         mechanism = Mechanism.objects.get(id=self.kwargs.get("mechanism_id"))
         mechanism.delete()
 
         return HttpResponseRedirect(reverse_lazy("mechanisms:index"))
-    
-    
+
+
 class MechanismDetachView(View):
     def post(self, request, *args, **kwargs):
         mechanism = Mechanism.objects.get(id=self.kwargs.get("mechanism_id"))
@@ -50,8 +50,8 @@ class MechanismDetachView(View):
         mechanism.save()
 
         return HttpResponseRedirect(reverse_lazy("robot:index"))
-    
-    
+
+
 class MechanismRepairView(View):
     def post(self, request, *args, **kwargs):
         id = self.kwargs.get("mechanism_id")

@@ -27,13 +27,18 @@ class Sensor(models.Model):
     )
     data = models.JSONField(default=dict, verbose_name="Данные")
     robot_id = models.ForeignKey(
-        to=Robot, on_delete=models.SET_NULL, blank=True, null=True, related_name="sensors" ,verbose_name="Робот"
+        to=Robot,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="sensors",
+        verbose_name="Робот",
     )
 
     class Meta:
         db_table = "sensors"
         verbose_name = "сенсор"
         verbose_name_plural = "Сенсоры"
-        
+
     def __str__(self):
         return f"{self.type.name}: {self.name}"
