@@ -1,0 +1,83 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %}Механизмы - Система робота{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+
+    {% if mechanisms %}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="bi bi-gear-fill"></i> Механизмы</h2>
+        <a href="{% url "mechanisms:add_mechanism" %}" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Добавить механизм
+        </a>
+    </div>
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            {% for mechanism in mechanisms %}
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-success">
+                        <div class="card-header bg-success text-white">
+                            <h5 class="mb-0">{{ mechanism.name }}</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                <li><strong>Тип:</strong> {{ mechanism.type.name }}</li>
+                                <li><strong>Производитель:</strong> {{ mechanism.creator }}</li>
+                                <li><strong>Состояние:</strong> {{ mechanism.damage }} / 100 едениц урона</li>
+                                <li><strong>Робот:</strong> {% if mechanism.robot_id %}{{ mechanism.robot_id.name }}{% else %}—{% endif %}</li>
+                            </ul>
+                        </div>
+                        <div class="card-footer text-center bg-transparent">
+                            <a href="{% url "mechanisms:edit_mechanism" mechanism.name %}" class="btn btn-warning"><i class="bi bi-pencil-square"></i> Редактировать</a>
+                             <form action="{% url "mechanisms:delete_mechanism" mechanism.id %}" method="post" class="d-inline" onsubmit="return confirm('Вы уверены, что хотите удалить этот механизм');">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">
+                                   <i class="bi bi-trash"></i> Удалить
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Пагинация (аналогично сенсорам) -->
+        {% if is_paginated %}
+        <nav class="pagination mt-4">
+            <a class="page-btn {% if not page_obj.has_previous %}disabled{% endif %}" 
+               href="{% if page_obj.has_previous %}?page={{ page_obj.previous_page_number }}{% else %}#{% endif %}">←</a>
+            <a class="page-btn {% if page_obj.number == 1 %}active{% endif %}" 
+               href="{% if page_obj.number != 1 %}?page=1{% else %}#{% endif %}">1</a>
+            {% if page_obj.number|add:-2 > 2 %}
+                <span class="page-dots">...</span>
+            {% endif %}
+            {% for page in page_obj.paginator.page_range %}
+                {% if page > 1 and page < page_obj.paginator.num_pages %}
+                    {% if page == page_obj.number %}
+                        <a class="page-btn active">{{ page }}</a>
+                    {% elif page >= page_obj.number|add:-2 and page <= page_obj.number|add:2 %}
+                        <a class="page-btn" href="?page={{ page }}">{{ page }}</a>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            {% if page_obj.number|add:3 < page_obj.paginator.num_pages %}
+                <span class="page-dots">...</span>
+            {% endif %}
+            <a class="page-btn {% if page_obj.number == page_obj.paginator.num_pages %}active{% endif %}" 
+               href="{% if page_obj.number != page_obj.paginator.num_pages %}?page={{ page_obj.paginator.num_pages }}{% else %}#{% endif %}">
+                {{ page_obj.paginator.num_pages }}
+            </a>
+            <a class="page-btn {% if not page_obj.has_next %}disabled{% endif %}" 
+               href="{% if page_obj.has_next %}?page={{ page_obj.next_page_number }}{% else %}#{% endif %}">→</a>
+        </nav>
+        {% endif %}
+
+    {% else %}
+        <div class="text-center py-5">
+            <p class="lead">Механизмы не добавлены</p>
+            <a href="{% url "mechanisms:add_mechanism" %}" class="btn btn-success">Добавить механизм</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
