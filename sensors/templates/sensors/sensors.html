@@ -7,73 +7,91 @@
 <div class="container py-4">
 
     {% if sensors %}
-    <!-- Заголовок и кнопка добавления -->
+    <!-- Заголовок и кнопки -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2><i class="bi bi-speedometer2"></i> Сенсоры</h2>
-        <a href="{% url "sensors:add_sensor" %}" class="btn btn-warning">
-            <i class="bi bi-plus-circle"></i> Добавить сенсор
-        </a>
+        <div class="d-flex gap-2">
+            <form action="{% url "sensors:repair_all" %}" method="post" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success">
+                    <i class="bi bi-wrench-adjustable-circle"></i> Ремонт всех сенсоров
+                </button>
+            </form>
+            <a href="{% url "sensors:add_sensor" %}" class="btn btn-warning">
+                <i class="bi bi-plus-circle"></i> Добавить сенсор
+            </a>
+        </div>
     </div>
-        <div class="row row-cols-1 row-cols-md-2 g-4">
-            {% for sensor in sensors %}
-                <div class="col">
-                    <div class="card h-100 shadow-sm {% if sensor.is_active %}border-warning{% else %}border-secondary{% endif %}">
-                        <div class="card-header {% if sensor.is_active %}bg-warning{% else %}bg-secondary text-white{% endif %}">
-                            <h5 class="mb-0">{{ sensor.name }}</h5>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-unstyled">
-                                <li><strong>Тип:</strong> {{ sensor.type.name }}</li>
-                                <li><strong>Статус:</strong>{% if sensor.is_active %} Активен{% else %} Неактивен{% endif %}</li>
-                                <li><strong>Состояние:</strong> {{ sensor.damage }} / 100 едениц урона</li>
-                                <li><strong>Создатель:</strong> {{ sensor.creator }}</li>
-                                <li><strong>Установлен на:</strong>{% if sensor.robot_id %} Робот {{ sensor.robot_id.name }}{% else %} —{% endif %}</li>
-                            </ul>
-                        </div>
-                        <div class="card-footer text-center bg-transparent">
-                            <a href="{% url "sensors:edit_sensor" sensor.id %}" class="btn btn-warning"><i class="bi bi-pencil-square"></i> Редактировать</a>
-                             <form action="{% url "sensors:delete_sensor" sensor.id %}" method="post" class="d-inline" onsubmit="return confirm('Вы уверены, что хотите удалить этот сенсор');">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-danger">
-                                   <i class="bi bi-trash"></i> Удалить
-                                </button>
-                            </form>
-                        </div>
+
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        {% for sensor in sensors %}
+            <div class="col">
+                <div class="card h-100 shadow-sm {% if sensor.is_active %}border-warning{% else %}border-secondary{% endif %}">
+                    <div class="card-header {% if sensor.is_active %}bg-warning{% else %}bg-secondary text-white{% endif %}">
+                        <h5 class="mb-0">{{ sensor.name }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li><strong>Тип:</strong> {{ sensor.type.name }}</li>
+                            <li><strong>Статус:</strong>{% if sensor.is_active %} Активен{% else %} Неактивен{% endif %}</li>
+                            <li><strong>Состояние:</strong> {{ sensor.damage }} / 100 единиц урона</li>
+                            <li><strong>Создатель:</strong> {{ sensor.creator }}</li>
+                            <li><strong>Установлен на:</strong>{% if sensor.robot_id %} Робот {{ sensor.robot_id.name }}{% else %} —{% endif %}</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer text-center bg-transparent">
+                        <!-- Кнопка ремонта конкретного сенсора -->
+                        <form action="{% url "sensors:repair_one" sensor.id %}" method="post" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-wrench"></i> Починить
+                            </button>
+                        </form>
+                        <a href="{% url "sensors:edit_sensor" sensor.id %}" class="btn btn-warning">
+                            <i class="bi bi-pencil-square"></i> Редактировать
+                        </a>
+                        <form action="{% url "sensors:delete_sensor" sensor.id %}" method="post" class="d-inline" onsubmit="return confirm('Вы уверены, что хотите удалить этот сенсор');">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">
+                                <i class="bi bi-trash"></i> Удалить
+                            </button>
+                        </form>
                     </div>
                 </div>
-            {% endfor %}
-        </div>
+            </div>
+        {% endfor %}
+    </div>
 
-        <!-- Пагинация -->
-        {% if is_paginated %}
-        <nav class="pagination mt-4">
-            <a class="page-btn {% if not page_obj.has_previous %}disabled{% endif %}" 
-               href="{% if page_obj.has_previous %}?page={{ page_obj.previous_page_number }}{% else %}#{% endif %}">←</a>
-            <a class="page-btn {% if page_obj.number == 1 %}active{% endif %}" 
-               href="{% if page_obj.number != 1 %}?page=1{% else %}#{% endif %}">1</a>
-            {% if page_obj.number|add:-2 > 2 %}
-                <span class="page-dots">...</span>
-            {% endif %}
-            {% for page in page_obj.paginator.page_range %}
-                {% if page > 1 and page < page_obj.paginator.num_pages %}
-                    {% if page == page_obj.number %}
-                        <a class="page-btn active">{{ page }}</a>
-                    {% elif page >= page_obj.number|add:-2 and page <= page_obj.number|add:2 %}
-                        <a class="page-btn" href="?page={{ page }}">{{ page }}</a>
-                    {% endif %}
-                {% endif %}
-            {% endfor %}
-            {% if page_obj.number|add:3 < page_obj.paginator.num_pages %}
-                <span class="page-dots">...</span>
-            {% endif %}
-            <a class="page-btn {% if page_obj.number == page_obj.paginator.num_pages %}active{% endif %}" 
-               href="{% if page_obj.number != page_obj.paginator.num_pages %}?page={{ page_obj.paginator.num_pages }}{% else %}#{% endif %}">
-                {{ page_obj.paginator.num_pages }}
-            </a>
-            <a class="page-btn {% if not page_obj.has_next %}disabled{% endif %}" 
-               href="{% if page_obj.has_next %}?page={{ page_obj.next_page_number }}{% else %}#{% endif %}">→</a>
-        </nav>
+    <!-- Пагинация (без изменений) -->
+    {% if is_paginated %}
+    <nav class="pagination mt-4">
+        <a class="page-btn {% if not page_obj.has_previous %}disabled{% endif %}" 
+           href="{% if page_obj.has_previous %}?page={{ page_obj.previous_page_number }}{% else %}#{% endif %}">←</a>
+        <a class="page-btn {% if page_obj.number == 1 %}active{% endif %}" 
+           href="{% if page_obj.number != 1 %}?page=1{% else %}#{% endif %}">1</a>
+        {% if page_obj.number|add:-2 > 2 %}
+            <span class="page-dots">...</span>
         {% endif %}
+        {% for page in page_obj.paginator.page_range %}
+            {% if page > 1 and page < page_obj.paginator.num_pages %}
+                {% if page == page_obj.number %}
+                    <a class="page-btn active">{{ page }}</a>
+                {% elif page >= page_obj.number|add:-2 and page <= page_obj.number|add:2 %}
+                    <a class="page-btn" href="?page={{ page }}">{{ page }}</a>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+        {% if page_obj.number|add:3 < page_obj.paginator.num_pages %}
+            <span class="page-dots">...</span>
+        {% endif %}
+        <a class="page-btn {% if page_obj.number == page_obj.paginator.num_pages %}active{% endif %}" 
+           href="{% if page_obj.number != page_obj.paginator.num_pages %}?page={{ page_obj.paginator.num_pages }}{% else %}#{% endif %}">
+            {{ page_obj.paginator.num_pages }}
+        </a>
+        <a class="page-btn {% if not page_obj.has_next %}disabled{% endif %}" 
+           href="{% if page_obj.has_next %}?page={{ page_obj.next_page_number }}{% else %}#{% endif %}">→</a>
+    </nav>
+    {% endif %}
 
     {% else %}
         <div class="text-center py-5">

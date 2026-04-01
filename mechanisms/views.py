@@ -50,3 +50,16 @@ class MechanismDetachView(View):
         mechanism.save()
 
         return HttpResponseRedirect(reverse_lazy("robot:index"))
+    
+    
+class MechanismRepairView(View):
+    def post(self, request, *args, **kwargs):
+        id = self.kwargs.get("mechanism_id")
+        if id:
+            mechanism = Mechanism.objects.get(id=id)
+            mechanism.damage = 0
+            mechanism.save()
+        else:
+            Mechanism.objects.all().update(damage=0)
+
+        return HttpResponseRedirect(reverse_lazy("mechanisms:index"))

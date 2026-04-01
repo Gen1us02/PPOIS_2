@@ -70,3 +70,16 @@ class SensorDetachView(View):
         sensor.save()
 
         return HttpResponseRedirect(reverse_lazy("robot:index"))
+    
+    
+class SensorRepairView(View):
+    def post(self, request, *args, **kwargs):
+        id = self.kwargs.get("sensor_id")
+        if id:
+            sensor = Sensor.objects.get(id=id)
+            sensor.damage = 0
+            sensor.save()
+        else:
+            Sensor.objects.all().update(damage=0)
+
+        return HttpResponseRedirect(reverse_lazy("sensors:index"))
