@@ -25,4 +25,5 @@ urlpatterns = [
     path("robot/", include("robot.urls", namespace="robot")),
     path("software/", include("software.urls", namespace="software")),
     path("sensors/", include("sensors.urls", namespace="sensors")),
+    path("mechanisms/", include("mechanisms.urls", namespace="mechanisms"))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

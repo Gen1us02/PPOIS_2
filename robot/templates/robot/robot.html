@@ -49,17 +49,13 @@
                                     </div>
                                 </div>
                             {% endif %}
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <span class="fw-bold">Состояние:</span>
-                                <span>{{ robot.status|default:"—" }}</span>
-                            </li>
                         </ul>
                     </div>
                 </div>
 
                 <!-- Блок информации о ПО -->
                 <div class="card shadow-sm mt-4">
-                    <div class="card-header {% if robot.software %}bg-success{% else %}bg-secondary{% endif %}  text-white d-flex justify-content-between align-items-center">
+                    <div class="card-header {% if robot.software %}bg-primary{% else %}bg-secondary{% endif %}  text-white d-flex justify-content-between align-items-center">
                         <h3 class="h5 mb-0"><i class="bi bi-motherboard"></i> Программное обеспечение</h3>
                         {% if robot.software %}
                             <form action="{% url "robot:detach_software" robot.name %}" method="post" class="d-inline">
@@ -100,9 +96,38 @@
                     </div>
                 </div>
 
+                <!-- Блок механизмов -->
+                <div class="card shadow-sm mt-4">
+                    <div class="card-header {% if robot.mechanisms.all %}bg-success{% else %}bg-secondary{% endif %} text-white">
+                        <h3 class="h5 mb-0"><i class="bi bi-gear-fill"></i> Механизмы</h3>
+                    </div>
+                    <div class="card-body">
+                        {% if robot.mechanisms.all %}
+                            <div class="list-group">
+                                {% for mechanism in robot.mechanisms.all %}
+                                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <strong>{{ mechanism.name }}</strong><br>
+                                            <small class="text-muted">Тип: {{ mechanism.type.name }} | Состояние: {{ mechanism.damage }}/100 едениц урона</small>
+                                        </div>
+                                        <form action="{% url "mechanisms:detach_mechanism" mechanism.id %}" method="post" class="d-inline">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Отвязать механизм от робота?');">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p class="text-center mb-0">Нет привязанных механизмов</p>
+                        {% endif %}
+                    </div>
+                </div>
+
                 <!-- Блок сенсоров -->
                 <div class="card shadow-sm mt-4">
-                    <div class="card-header {% if robot.sensors.all %}bg-info{% else %}bg-secondary{% endif %} text-white">
+                    <div class="card-header {% if robot.sensors.all %}bg-warning text-black{% else %}bg-secondary text-white{% endif %}">
                         <h3 class="h5 mb-0"><i class="bi bi-speedometer2"></i> Сенсоры</h3>
                     </div>
                     <div class="card-body">
@@ -112,7 +137,7 @@
                                     <div class="list-group-item d-flex justify-content-between align-items-center">
                                         <div>
                                             <strong>{{ sensor.name }}</strong><br>
-                                            <small class="text-muted">Тип: {{ sensor.type.name }}</small>
+                                            <small class="text-muted">Тип: {{ sensor.type.name }} | Состояние: {{ sensor.damage }}/100 едениц урона</small>
                                         </div>
                                         <form action="{% url "sensors:detach_sensor" sensor.id %}" method="post" class="d-inline">
                                             {% csrf_token %}
