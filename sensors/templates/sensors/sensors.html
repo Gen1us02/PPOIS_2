@@ -62,36 +62,8 @@
         {% endfor %}
     </div>
 
-    <!-- Пагинация (без изменений) -->
-    {% if is_paginated %}
-    <nav class="pagination mt-4">
-        <a class="page-btn {% if not page_obj.has_previous %}disabled{% endif %}" 
-           href="{% if page_obj.has_previous %}?page={{ page_obj.previous_page_number }}{% else %}#{% endif %}">←</a>
-        <a class="page-btn {% if page_obj.number == 1 %}active{% endif %}" 
-           href="{% if page_obj.number != 1 %}?page=1{% else %}#{% endif %}">1</a>
-        {% if page_obj.number|add:-2 > 2 %}
-            <span class="page-dots">...</span>
-        {% endif %}
-        {% for page in page_obj.paginator.page_range %}
-            {% if page > 1 and page < page_obj.paginator.num_pages %}
-                {% if page == page_obj.number %}
-                    <a class="page-btn active">{{ page }}</a>
-                {% elif page >= page_obj.number|add:-2 and page <= page_obj.number|add:2 %}
-                    <a class="page-btn" href="?page={{ page }}">{{ page }}</a>
-                {% endif %}
-            {% endif %}
-        {% endfor %}
-        {% if page_obj.number|add:3 < page_obj.paginator.num_pages %}
-            <span class="page-dots">...</span>
-        {% endif %}
-        <a class="page-btn {% if page_obj.number == page_obj.paginator.num_pages %}active{% endif %}" 
-           href="{% if page_obj.number != page_obj.paginator.num_pages %}?page={{ page_obj.paginator.num_pages }}{% else %}#{% endif %}">
-            {{ page_obj.paginator.num_pages }}
-        </a>
-        <a class="page-btn {% if not page_obj.has_next %}disabled{% endif %}" 
-           href="{% if page_obj.has_next %}?page={{ page_obj.next_page_number }}{% else %}#{% endif %}">→</a>
-    </nav>
-    {% endif %}
+    <!-- Пагинация -->
+    {% include "includes/pagination.html" %}
 
     {% else %}
         <div class="text-center py-5">
