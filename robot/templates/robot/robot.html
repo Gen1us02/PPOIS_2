@@ -21,8 +21,30 @@
                     {% endif %}
                 </div>
 
+                <!-- НОВЫЙ БЛОК КНОПОК УПРАВЛЕНИЯ (заглушки) -->
+                <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
+                    <form action="{% url 'robot:repair' robot.id %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-primary">
+                            <i class="bi bi-wrench"></i> Починить
+                        </button>
+                    </form>
+                    <form action="{% url 'robot:charge' robot.id %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-success">
+                            <i class="bi bi-battery-charging"></i> Зарядить
+                        </button>
+                    </form>
+                    <form action="{% url 'robot:enable' robot.id %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-warning">
+                            <i class="bi bi-play-circle"></i> {% if robot.status.name != 'Неактивен' %}Деактивировать{% else %}Активировать{% endif %}
+                        </button>
+                    </form>
+                </div>
+
                 <div class="card shadow-sm">
-                    <div class="card-header bg-primary text-white text-center">
+                    <div class="card-header {% if robot.status.name == "Активен" %}bg-primary{% else %}bg-secondary{% endif %} text-white text-center">
                         <h3 class="h5 mb-0">Характеристики</h3>
                     </div>
                     <div class="card-body">
@@ -34,6 +56,10 @@
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <span class="fw-bold">Cкорость:</span>
                                 <span>{{ robot.speed|default:"—" }} м/c</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span class="fw-bold">Статус:</span>
+                                <span>{{ robot.status.name }}</span>
                             </li>
                             {% if phrases %}
                                 <div class="card shadow-sm mt-4">
