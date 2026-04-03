@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, View
 from .models import Sensor
 from .forms import AddSensorForm
+from .utils import get_initial_data_for_sensor_type
 
 
 # Create your views here.
@@ -25,6 +26,8 @@ class SensorCreateView(CreateView):
 
     def form_valid(self, form):
         sensor = form.save(commit=False)
+        sensor_type = form.cleaned_data.get("type")
+        sensor.data = get_initial_data_for_sensor_type(sensor_type.name)
         if self.request.POST.get("robot_id", None):
             sensor.is_active = True
         else:
@@ -77,8 +80,11 @@ class SensorRepairView(View):
         if id:
             sensor = Sensor.objects.get(id=id)
             sensor.damage = 0
+            if sensor.robot_id:
+                sensor.is_active = True
             sensor.save()
         else:
             Sensor.objects.all().update(damage=0)
+            Sensor.objects.filter(robot_id__isnull=False).update(is_active=True)
 
         return HttpResponseRedirect(reverse_lazy("sensors:index"))

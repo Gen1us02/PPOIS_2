@@ -83,6 +83,7 @@ class RobotChargeView(View):
     def post(self, request, *args, **kwargs):
         robot = Robot.objects.get(id=self.kwargs.get("robot_id"))
         robot.battery = 100
+        robot.status = RobotStatus.objects.get(name="Неактивен")
         robot.save()
 
         return HttpResponseRedirect(reverse_lazy("robot:index"))
@@ -92,7 +93,7 @@ class RobotEnableView(View):
     def post(self, request, *args, **kwargs):
         robot = Robot.objects.get(id=self.kwargs.get("robot_id"))
         curr_status = robot.status
-        if curr_status.name != "Разряжен":
+        if curr_status.name != "Разряжен" and curr_status.name != "Требуется ремонт":
             robot.status = RobotStatus.objects.get(name=("Неактивен" if robot.status.name == "Активен" else "Активен"))
         else:
             pass
@@ -104,8 +105,9 @@ class RobotEnableView(View):
 class RobotRepairView(View):
     def post(self, request, *args, **kwargs):
         robot = Robot.objects.get(id=self.kwargs.get("robot_id"))
+        robot.status = RobotStatus.objects.get(name="Неактивен")
         robot.mechanisms.all().update(damage=0)
-        robot.sensors.all().update(damage=0)
+        robot.sensors.all().update(damage=0, is_active=True)
         robot.save()
 
         return HttpResponseRedirect(reverse_lazy("robot:index"))

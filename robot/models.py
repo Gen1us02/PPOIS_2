@@ -5,7 +5,7 @@ from software.models import Software
 
 # Create your models here.
 class RobotStatus(models.Model):
-    name = models.CharField(max_length=30, verbose_name="Название")
+    name = models.CharField(max_length=30, unique=True, verbose_name="Название")
 
     class Meta:
         db_table = "robot_statuses"
@@ -60,3 +60,6 @@ class Phrases(models.Model):
         db_table = "phrases"
         verbose_name = "фразу"
         verbose_name_plural = "Фразы"
+        
+    def __str__(self):
+        return self.name
