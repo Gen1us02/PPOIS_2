@@ -5,9 +5,10 @@ from .models import Object
 from robot.models import Robot, Phrases
 from mechanisms.models import Mechanism
 from sensors.models import Sensor
-from .utils import discharge_robot, repair_check
+from .utils import discharge_robot, repair_check, parse_weather
 import random
 from math import ceil
+
 
 class InteractionsView(View):
     template_name = "interactions/interactions.html"
@@ -15,7 +16,9 @@ class InteractionsView(View):
     def get(self, request, *args, **kwargs):
         robot = get_object_or_404(Robot, name=self.kwargs.get("robot_name"))
         repair_check(robot)
-        mechanisms = Mechanism.objects.filter(robot_id=robot, damage__lt=100, type__name="Рука")
+        mechanisms = Mechanism.objects.filter(
+            robot_id=robot, damage__lt=100, type__name="Рука"
+        )
         objects = Object.objects.all()
         return render(
             request,
@@ -51,16 +54,26 @@ class InteractionsView(View):
                         sensor.save()
                     if sensor.type.name == "GPS":
                         if direction == "Вперед":
-                            sensor.data["Долгота"] = sensor.data.get("Долгота", 53.9) + distance
+                            sensor.data["Долгота"] = (
+                                sensor.data.get("Долгота", 53.9) + distance
+                            )
                         elif direction == "Назад":
-                            sensor.data["Долгота"] = sensor.data.get("Долгота", 53.9) - distance
+                            sensor.data["Долгота"] = (
+                                sensor.data.get("Долгота", 53.9) - distance
+                            )
                         elif direction == "Влево":
-                            sensor.data["Широта"] = sensor.data.get("Широта", 27.34) - distance
+                            sensor.data["Широта"] = (
+                                sensor.data.get("Широта", 27.34) - distance
+                            )
                         elif direction == "Вправо":
-                            sensor.data["Широта"] = sensor.data.get("Широта", 27.34) + distance
+                            sensor.data["Широта"] = (
+                                sensor.data.get("Широта", 27.34) + distance
+                            )
                         sensor.save()
 
-                messages.success(request, f"Робот переместился {direction} за {duration} сек.")
+                messages.success(
+                    request, f"Робот переместился {direction} за {duration} сек."
+                )
 
         elif action == "grab":
             discharge_robot(robot, 5)
@@ -89,6 +102,19 @@ class InteractionsView(View):
             else:
                 lines = []
                 for sensor in sensors:
+                    if sensor.type.name == "Температурный":
+                        data = parse_weather()
+                        sensor.data = {
+                            "Температура": data[0],
+                            "Температурный юнит": data[1],
+                        }
+                        sensor.save()
+
+                    if sensor.type.name == "Оптический":
+                        objects_count = random.randint(0, 15)
+                        sensor.data = {"Количество объектов": objects_count}
+                        sensor.save()
+
                     sensor.damage = min(100, sensor.damage + 5)
                     if sensor.damage == 100:
                         sensor.is_active = False
@@ -96,11 +122,13 @@ class InteractionsView(View):
                     lines.append(f"{sensor.name} ({sensor.type.name})")
                     lines.append(f"   • Повреждение: {sensor.damage}/100")
                     if sensor.data:
-                        data_str = ", ".join(f"{k}: {v}" for k, v in sensor.data.items())
+                        data_str = ", ".join(
+                            f"{k}: {v}" for k, v in sensor.data.items()
+                        )
                         lines.append(f"   • Данные: {data_str}")
                     else:
                         lines.append("   • Данные: отсутствуют")
-                        
+
                     lines.append("")
                 message = "\n".join(lines)
                 messages.success(request, message)
