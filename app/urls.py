@@ -27,4 +27,5 @@ urlpatterns = [
     path("software/", include("software.urls", namespace="software")),
     path("sensors/", include("sensors.urls", namespace="sensors")),
     path("mechanisms/", include("mechanisms.urls", namespace="mechanisms")),
+    path("interactions/", include("interactions.urls", namespace="interactions"))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

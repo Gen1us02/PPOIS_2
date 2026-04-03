@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "software",
     "sensors",
     "mechanisms",
+    "interactions",
 ]
 
 MIDDLEWARE = [
