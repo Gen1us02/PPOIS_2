@@ -10,7 +10,7 @@ class MechanismType(models.Model):
         db_table = "mechanism_types"
         verbose_name = "тип механизма"
         verbose_name_plural = "Типы механизмов"
-        
+
     def __str__(self):
         return self.name
 
@@ -35,6 +35,6 @@ class Mechanism(models.Model):
         db_table = "mechanisms"
         verbose_name = "механизм"
         verbose_name_plural = "Механизмы"
-        
+
     def __str__(self):
         return self.name

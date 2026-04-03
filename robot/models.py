@@ -60,6 +60,6 @@ class Phrases(models.Model):
         db_table = "phrases"
         verbose_name = "фразу"
         verbose_name_plural = "Фразы"
-        
+
     def __str__(self):
         return self.name

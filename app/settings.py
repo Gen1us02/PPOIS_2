@@ -82,13 +82,13 @@ WSGI_APPLICATION = "app.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {  
-    'default': {  
-        'ENGINE': 'django.db.backends.postgresql',  
-        'NAME': os.getenv('DATABASE_NAME'),  
-        'USER': os.getenv('USER'),  
-        'PASSWORD': os.getenv('DATABASE_PASSWORD'), 
-    }  
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("DATABASE_NAME"),
+        "USER": os.getenv("USER"),
+        "PASSWORD": os.getenv("DATABASE_PASSWORD"),
+    }
 }
 
 

@@ -8,7 +8,7 @@ from robot.views import (
     RobotSoftwareDetachView,
     RobotRepairView,
     RobotChargeView,
-    RobotEnableView
+    RobotEnableView,
 )
 
 app_name = "main"
@@ -26,5 +26,5 @@ urlpatterns = [
     ),
     path("repair/<int:robot_id>/", RobotRepairView.as_view(), name="repair"),
     path("charge/<int:robot_id>/", RobotChargeView.as_view(), name="charge"),
-    path("enable/<int:robot_id>/", RobotEnableView.as_view(), name="enable")
+    path("enable/<int:robot_id>/", RobotEnableView.as_view(), name="enable"),
 ]

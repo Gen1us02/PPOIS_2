@@ -8,14 +8,15 @@ class AddRobotForm(forms.ModelForm):
     image = forms.ImageField()
     speed = forms.IntegerField()
     software = forms.ModelChoiceField(queryset=Software.objects.all(), required=False)
-    
+
     class Meta:
         model = Robot
         fields = ["name", "image", "speed", "software"]
-        
+
+
 class AddPhraseForm(forms.ModelForm):
     name = forms.CharField()
-    
+
     class Meta:
         model = Phrases
         fields = ["name"]

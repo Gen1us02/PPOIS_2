@@ -13,7 +13,7 @@ class RobotView(DetailView):
     def get_object(self, queryset=...):
         robot = Robot.objects.all().first()
         return robot
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         robot = self.get_object()
@@ -68,7 +68,7 @@ class PhraseCreateView(CreateView):
         phrase.robot_id = robot
         phrase.save()
         return HttpResponseRedirect(self.success_url)
-    
+
 
 class RobotSoftwareDetachView(View):
     def post(self, request, *args, **kwargs):
@@ -77,8 +77,8 @@ class RobotSoftwareDetachView(View):
         robot.save()
 
         return HttpResponseRedirect(reverse_lazy("robot:index"))
-    
-    
+
+
 class RobotChargeView(View):
     def post(self, request, *args, **kwargs):
         robot = Robot.objects.get(id=self.kwargs.get("robot_id"))
@@ -87,21 +87,23 @@ class RobotChargeView(View):
         robot.save()
 
         return HttpResponseRedirect(reverse_lazy("robot:index"))
-    
-    
+
+
 class RobotEnableView(View):
     def post(self, request, *args, **kwargs):
         robot = Robot.objects.get(id=self.kwargs.get("robot_id"))
         curr_status = robot.status
         if curr_status.name != "Разряжен" and curr_status.name != "Требуется ремонт":
-            robot.status = RobotStatus.objects.get(name=("Неактивен" if robot.status.name == "Активен" else "Активен"))
+            robot.status = RobotStatus.objects.get(
+                name=("Неактивен" if robot.status.name == "Активен" else "Активен")
+            )
         else:
             pass
         robot.save()
 
         return HttpResponseRedirect(reverse_lazy("robot:index"))
-    
-    
+
+
 class RobotRepairView(View):
     def post(self, request, *args, **kwargs):
         robot = Robot.objects.get(id=self.kwargs.get("robot_id"))
@@ -111,4 +113,3 @@ class RobotRepairView(View):
         robot.save()
 
         return HttpResponseRedirect(reverse_lazy("robot:index"))
-    
