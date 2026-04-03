@@ -1,0 +1,30 @@
+[
+    {
+        "model": "robot.robotstatus",
+        "pk": 1,
+        "fields": {
+            "name": "Активен"
+        }
+    },
+    {
+        "model": "robot.robotstatus",
+        "pk": 2,
+        "fields": {
+            "name": "Неактивен"
+        }
+    },
+    {
+        "model": "robot.robotstatus",
+        "pk": 3,
+        "fields": {
+            "name": "Разряжен"
+        }
+    },
+    {
+        "model": "robot.robotstatus",
+        "pk": 4,
+        "fields": {
+            "name": "Требуется ремонт"
+        }
+    }
+]

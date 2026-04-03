@@ -1,0 +1,30 @@
+[
+    {
+        "model": "sensors.sensortype",
+        "pk": 1,
+        "fields": {
+            "name": "Температурный"
+        }
+    },
+    {
+        "model": "sensors.sensortype",
+        "pk": 2,
+        "fields": {
+            "name": "Оптический"
+        }
+    },
+    {
+        "model": "sensors.sensortype",
+        "pk": 3,
+        "fields": {
+            "name": "GPS"
+        }
+    },
+    {
+        "model": "sensors.sensortype",
+        "pk": 4,
+        "fields": {
+            "name": "Дистанционный"
+        }
+    }
+]

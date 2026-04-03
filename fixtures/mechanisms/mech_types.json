@@ -1,0 +1,16 @@
+[
+    {
+        "model": "mechanisms.mechanismtype",
+        "pk": 1,
+        "fields": {
+            "name": "Рука"
+        }
+    },
+    {
+        "model": "mechanisms.mechanismtype",
+        "pk": 2,
+        "fields": {
+            "name": "Нога"
+        }
+    }
+]
