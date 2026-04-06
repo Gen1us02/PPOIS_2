@@ -34,7 +34,6 @@ class InteractionsView(View):
             direction = request.POST.get("direction")
             duration = int(request.POST.get("duration"))
             discharge = ceil(duration * 0.2)
-            discharge_robot(robot, discharge)
 
             leg_mechanisms = Mechanism.objects.filter(robot_id=robot, type__name="Нога")
             if not leg_mechanisms:
@@ -42,6 +41,7 @@ class InteractionsView(View):
             elif all(leg.damage == 100 for leg in leg_mechanisms):
                 messages.warning(request, "Ноги робота сломаны. Движение не возможно")
             else:
+                discharge_robot(robot, discharge)
                 for mech in leg_mechanisms:
                     mech.damage = min(100, mech.damage + 10)
                     mech.save()

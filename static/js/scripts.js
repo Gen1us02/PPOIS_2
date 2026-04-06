@@ -26,13 +26,11 @@ window.addEventListener('DOMContentLoaded', event => {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-    const notifications = document.querySelectorAll('.alert');
+    const notifications = document.querySelectorAll('.message-alert');
     notifications.forEach(notification => {
         setTimeout(() => {
-            // Убираем класс show, добавляем fade (для Bootstrap 5)
             notification.classList.remove('show');
             notification.classList.add('fade');
-            // После окончания анимации (0.15с) скрываем элемент
             setTimeout(() => {
                 notification.style.display = 'none';
             }, 150);

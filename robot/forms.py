@@ -5,7 +5,7 @@ from .models import Robot, Phrases
 
 class AddRobotForm(forms.ModelForm):
     name = forms.CharField()
-    image = forms.ImageField()
+    image = forms.ImageField(required=False)
     speed = forms.IntegerField()
     software = forms.ModelChoiceField(queryset=Software.objects.all(), required=False)
 

@@ -11397,3 +11397,8 @@ form input:focus, form select:focus, form textarea:focus {
 .create-ad-link {
   color:#2D2C28;
 }
+
+input[name="image-clear"], 
+label[for="image-clear_id"] {
+    display: none;
+}

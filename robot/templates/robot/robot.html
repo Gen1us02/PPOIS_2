@@ -38,7 +38,7 @@
                     <form action="{% url 'robot:enable' robot.id %}" method="post" class="d-inline">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-outline-warning">
-                            <i class="bi bi-play-circle"></i> {% if robot.status.name != 'Неактивен' %}Деактивировать{% else %}Активировать{% endif %}
+                            <i class="bi bi-play-circle"></i> {% if robot.status.name == 'Активен' %}Деактивировать{% else %}Активировать{% endif %}
                         </button>
                     </form>
                 </div>

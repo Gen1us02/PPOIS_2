@@ -17,7 +17,7 @@ class MechanismType(models.Model):
 
 class Mechanism(models.Model):
     name = models.CharField(max_length=30, verbose_name="Название")
-    creator = models.CharField(max_length=30, verbose_name="Производитель")
+    creator = models.CharField(max_length=30, null=True, blank=True, verbose_name="Производитель")
     type = models.ForeignKey(
         to=MechanismType, on_delete=models.CASCADE, verbose_name="Тип механизма"
     )

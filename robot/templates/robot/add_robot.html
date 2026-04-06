@@ -37,7 +37,9 @@
 
                         <div class="mb-3">
                             <label for="{{ form.speed.id_for_label }}" class="form-label">Скорость (м/с)</label>
-                            {{ form.speed }}
+                            <input type="number" name="speed" id="{{ form.speed.id_for_label }}" 
+                                class="form-control" value="{{ form.speed.value|default:'' }}" 
+                                min="1" max="50" step="1">
                             {% if form.speed.errors %}
                                 <div class="text-danger small mt-1">
                                     {{ form.speed.errors|striptags }}

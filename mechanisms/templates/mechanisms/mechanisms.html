@@ -16,8 +16,8 @@
                     <i class="bi bi-wrench-adjustable-circle"></i> Ремонт всех механизмов
                 </button>
             </form>
-            <a href="{% url "sensors:add_sensor" %}" class="btn btn-warning">
-                <i class="bi bi-plus-circle"></i> Добавить сенсор
+            <a href="{% url "mechanisms:add_mechanism" %}" class="btn btn-success">
+                <i class="bi bi-plus-circle"></i> Добавить механизм
             </a>
         </div>
     </div>
@@ -31,7 +31,7 @@
                         <div class="card-body">
                             <ul class="list-unstyled">
                                 <li><strong>Тип:</strong> {{ mechanism.type.name }}</li>
-                                <li><strong>Производитель:</strong> {{ mechanism.creator }}</li>
+                                <li><strong>Производитель:</strong> {{ mechanism.creator|default:"—" }}</li>
                                 <li><strong>Состояние:</strong> {{ mechanism.damage }} / 100 едениц урона</li>
                                 <li><strong>Робот:</strong> {% if mechanism.robot_id %}{{ mechanism.robot_id.name }}{% else %}—{% endif %}</li>
                             </ul>

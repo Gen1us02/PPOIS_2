@@ -35,7 +35,7 @@
                             <li><strong>Тип:</strong> {{ sensor.type.name }}</li>
                             <li><strong>Статус:</strong>{% if sensor.is_active %} Активен{% else %} Неактивен{% endif %}</li>
                             <li><strong>Состояние:</strong> {{ sensor.damage }} / 100 единиц урона</li>
-                            <li><strong>Создатель:</strong> {{ sensor.creator }}</li>
+                            <li><strong>Создатель:</strong> {{ sensor.creator|default:"—" }}</li>
                             <li><strong>Установлен на:</strong>{% if sensor.robot_id %} Робот {{ sensor.robot_id.name }}{% else %} —{% endif %}</li>
                         </ul>
                     </div>
