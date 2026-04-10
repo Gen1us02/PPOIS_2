@@ -41,5 +41,5 @@ def parse_weather():
         temp = data["main"]["temp"]
 
         return (temp, "C")
-    else:
-        return 27, "C"
+
+    return 27, "C"
