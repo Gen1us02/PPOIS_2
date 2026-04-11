@@ -1,9 +1,9 @@
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, UpdateView, CreateView, View
-from software.forms import AddSoftwareForm
 from .models import Robot, Phrases, RobotStatus
 from .forms import AddRobotForm, AddPhraseForm
+from source.fabric import Fabric
 
 
 # Create your views here.
@@ -20,7 +20,6 @@ class RobotView(DetailView):
         phrases = Phrases.objects.filter(robot_id=robot)
         context["robot"] = robot
         context["phrases"] = phrases
-        context["form"] = AddSoftwareForm()
         return context
 
 
@@ -82,7 +81,10 @@ class RobotSoftwareDetachView(View):
 class RobotChargeView(View):
     def post(self, request, *args, **kwargs):
         robot = Robot.objects.get(id=self.kwargs.get("robot_id"))
-        robot.battery = 100
+        fabric = Fabric()
+        cli_robot = robot.to_library_robot(fabric)
+        cli_robot.charge(100)
+        robot.update_from_library_robot(cli_robot)
         robot.status = RobotStatus.objects.get(name="Неактивен")
         robot.save()
 
@@ -107,9 +109,12 @@ class RobotEnableView(View):
 class RobotRepairView(View):
     def post(self, request, *args, **kwargs):
         robot = Robot.objects.get(id=self.kwargs.get("robot_id"))
+        fabric = Fabric()
+        cli_robot = robot.to_library_robot(fabric)
+        cli_robot.repair()
+        robot.update_from_library_robot(cli_robot)
         robot.status = RobotStatus.objects.get(name="Неактивен")
-        robot.mechanisms.all().update(damage=0)
-        robot.sensors.all().update(damage=0, is_active=True)
+        robot.sensors.all().update(is_active=True)
         robot.save()
 
         return HttpResponseRedirect(reverse_lazy("robot:index"))
