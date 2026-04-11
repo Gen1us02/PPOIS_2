@@ -1,5 +1,4 @@
 from django.db import models
-from robot.models import Robot
 
 
 # Create your models here.
@@ -17,13 +16,15 @@ class MechanismType(models.Model):
 
 class Mechanism(models.Model):
     name = models.CharField(max_length=30, verbose_name="Название")
-    creator = models.CharField(max_length=30, null=True, blank=True, verbose_name="Производитель")
+    creator = models.CharField(
+        max_length=30, null=True, blank=True, verbose_name="Производитель"
+    )
     type = models.ForeignKey(
         to=MechanismType, on_delete=models.CASCADE, verbose_name="Тип механизма"
     )
     damage = models.IntegerField(default=0, verbose_name="Состояние")
     robot_id = models.ForeignKey(
-        to=Robot,
+        to="robot.Robot",
         on_delete=models.SET_NULL,
         null=True,
         blank=True,

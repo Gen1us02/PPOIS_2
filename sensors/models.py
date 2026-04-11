@@ -1,5 +1,4 @@
 from django.db import models
-from robot.models import Robot
 
 
 # Create your models here.
@@ -27,7 +26,7 @@ class Sensor(models.Model):
     )
     data = models.JSONField(default=dict, verbose_name="Данные")
     robot_id = models.ForeignKey(
-        to=Robot,
+        to="robot.Robot",
         on_delete=models.SET_NULL,
         blank=True,
         null=True,

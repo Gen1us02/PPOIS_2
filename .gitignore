@@ -9,3 +9,5 @@ migrations
 media
 
 .env
+
+.vscode
