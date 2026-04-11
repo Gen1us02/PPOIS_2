@@ -12,12 +12,12 @@ def convert_from_library_sensor(lib_sensor):
 
 def convert_to_library_sensor(sensor):
     if sensor == "Температурный":
-        return "TEMPERATURE"
+        return "temperature"
 
     if sensor == "Оптический":
-        return "OPTICAL"
+        return "optical"
 
     if sensor == "GPS":
-        return "GPS"
+        return "gps"
 
-    return "DISTANCE"
+    return "distance"

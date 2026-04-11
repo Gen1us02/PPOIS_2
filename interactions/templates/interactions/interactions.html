@@ -80,12 +80,15 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Рука</label>
-                                <select name="mechanism_id" class="form-select" required>
+                                <select name="mechanism_id" id="arm_select" class="form-select" required>
                                     <option value="">Выберите руку</option>
-                                    {% for mech in mechanisms %}
-                                        <option value="{{ mech.id }}">{{ mech.name }}</option>
+                                    {% for index, mech in mechanisms %}
+                                        <option value="{{ mech.id }}" data-index="{{ index }}">
+                                            {{ mech.name }}
+                                        </option>
                                     {% endfor %}
-                                </select>
+                            </select>
+                            <input type="hidden" name="mechanism_index" id="arm_index">
                             </div>
                             <div class="text-center">
                                 <button type="submit" class="btn btn-success w-50">Взять</button>
@@ -130,6 +133,13 @@
                 </div>
             </div>
         </div>
+        <script>
+            document.getElementById('arm_select').addEventListener('change', function() {
+                const selected = this.options[this.selectedIndex];
+                const idx = selected.getAttribute('data-index');
+                document.getElementById('arm_index').value = (idx !== null) ? idx : '';
+            });
+        </script>
     {% endif %}
     {% else %}
         <div class="alert alert-warning mt-4">

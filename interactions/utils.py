@@ -1,6 +1,7 @@
 from robot.models import RobotStatus
 from mechanisms.models import Mechanism
 from sensors.models import Sensor
+from source.enums import Direction
 import requests
 import os
 from dotenv import load_dotenv
@@ -43,3 +44,16 @@ def parse_weather():
         return (temp, "C")
 
     return 27, "C"
+
+
+def convert_direction(direction: str):
+    if direction == "Вперед":
+        return Direction.FORWARD
+
+    if direction == "Назад":
+        return Direction.BACKWARD
+
+    if direction == "Влево":
+        return Direction.LEFT
+
+    return Direction.RIGHT

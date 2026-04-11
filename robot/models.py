@@ -1,6 +1,6 @@
 from django.db import models
 from django.db.models import Q
-from software.models import Software
+from software.models import Software, SoftwareTypes
 from sensors.models import Sensor, SensorType
 from mechanisms.models import Mechanism, MechanismType
 import source.robot as cli_robot
@@ -61,12 +61,12 @@ class Robot(models.Model):
     def to_library_robot(self, fabric: Fabric) -> cli_robot.Robot:
         lib_robot = cli_robot.Robot(self.name)
 
-        lib_robot.status = cli_enums.RobotStatus[self.status.name]
+        lib_robot.status = cli_enums.RobotStatus["ACTIVE"]
         lib_robot.battery = Battery(self.battery)
 
         if self.software:
             lib_robot.software = cli_software.Software(
-                self.software.version, self.software.name
+                self.software.version, self.software.software_type.name
             )
 
         phrases = Phrases.objects.filter(robot_id=self)
@@ -111,12 +111,15 @@ class Robot(models.Model):
     def update_from_library_robot(self, lib_robot: cli_robot.Robot) -> None:
         self.name = lib_robot.name
         self.battery = lib_robot.battery.battery_level
-        status_name = lib_robot.status.name
-        self.status = RobotStatus.objects.get(name=status_name)
+        if lib_robot.battery_level == 0:
+            self.status = RobotStatus.objects.get(name="Разряжен")
+        else:
+            self.status = RobotStatus.objects.get(name="Активен")
         if lib_robot.software:
+            sw_type = SoftwareTypes.objects.get(name=lib_robot.software.name)
             sw_obj, _ = Software.objects.get_or_create(
-                name=lib_robot.software.name,
-                defaults={"version": lib_robot.software.version},
+                software_type=sw_type,
+                version=lib_robot.software.version,
             )
             self.software = sw_obj
         else:
@@ -168,7 +171,7 @@ class Robot(models.Model):
 class Phrases(models.Model):
     name = models.CharField(max_length=30, unique=True, verbose_name="Фраза")
     robot_id = models.ForeignKey(
-        to=Robot, on_delete=models.CASCADE, verbose_name="Робот"
+        to=Robot, on_delete=models.CASCADE, related_name="phrases", verbose_name="Робот"
     )
 
     class Meta:
