@@ -87,8 +87,8 @@ def test_arms_action():
 
     robot.activate()
     assert (
-        robot.arms_action(items=["apple", "box"])
-        == "Robot arm grab apple\nRobot arm grab box\n"
+        robot.arms_action(0 ,item="apple")
+        == "Рука робота взяла apple\n"
     )
 
     assert robot.battery_level == 90
@@ -102,7 +102,7 @@ def test_move():
     robot.activate()
     assert (
         robot.move(Direction.FORWARD, 10, 20)
-        == "Robot leg moved forward with speed 10 m/s. It passed 200 m\nRobot leg moved forward with speed 10 m/s. It passed 200 m\n"
+        == "Нога робота перемещается вперед со скоростью 10 м/с. Она прошла 200 м\nНога робота перемещается вперед со скоростью 10 м/с. Она прошла 200 м\n"
     )
 
     assert robot.battery_level == 90
@@ -114,7 +114,7 @@ def test_learn_data():
     with pytest.raises(RobotException):
         robot.learn_data(data)
     robot.activate()
-    assert robot.learn_data(data) == "Robot successfuly learn new data"
+    assert robot.learn_data(data) == "Робот успешно выучил новые данные"
     assert len(robot.data) == 2
     assert robot.data[0] == "Hello"
     assert robot.data[1] == "Artemdjdj"
