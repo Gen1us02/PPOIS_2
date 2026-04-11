@@ -8,6 +8,8 @@ from exceptions.exceptions import SensorException
 class Sensor(Device, ABC):
     def __init__(self, sensor_type: SensorType):
         super().__init__()
+        self.name = None
+        self.creator = None
         self.sensor_type = sensor_type
         self.is_active = True
 
@@ -39,8 +41,6 @@ class TemperatureSensor(Sensor):
         if not self.is_available():
             raise SensorException("Сенсор недоступен")
 
-        self.damage(5)
-
         return {"temperature": self.temperature, "temp_unit": self.temp_unit}
 
     def update_data(self, temperature: int = None, temp_unit: str = "C"):
@@ -63,8 +63,6 @@ class OpticalSensor(Sensor):
         if not self.is_available():
             raise SensorException("Сенсор недоступен")
 
-        self.damage(5)
-
         return {"objects_count": self.objects_count}
 
     def update_data(self, objects_count: int = None):
@@ -84,8 +82,6 @@ class DistanceSensor(Sensor):
     def read_data(self) -> Dict[str, Any]:
         if not self.is_available():
             raise SensorException("Сенсор недоступен")
-
-        self.damage(5)
 
         return {"distance": self.distance, "dist_unit": self.dist_unit}
 
@@ -109,8 +105,6 @@ class GPSSensor(Sensor):
     def read_data(self) -> Dict[str, Any]:
         if not self.is_available():
             raise SensorException("Сенсор недоступен")
-
-        self.damage(5)
 
         return {
             "latitude": self.latitude,

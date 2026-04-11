@@ -126,9 +126,10 @@ class RobotCLI:
 
     def _arm_action(self) -> None:
         print("\n=== Захват предметов ===")
-        items = self._prompt_items_list("Введите предметы через пробел: ")
+        item = self._prompt_non_empty_string("Введите предмет для подбора:" )
+        index = self._prompt_positive_int("Введите индекс руки: ")
         try:
-            result = self.cs.arm_action(items)
+            result = self.cs.arm_action(index, item)
             print(f"Результат захвата:\n{result}")
         except ControlSystemException as e:
             print(f"Ошибка захвата: {e}")

@@ -6,6 +6,8 @@ from exceptions.exceptions import MechanismException
 class ArmMechanism(Device):
     def __init__(self) -> None:
         super().__init__()
+        self.name = None
+        self.creator = None
         self.item = None
 
     def grab(self, item: str) -> str:
@@ -19,7 +21,7 @@ class ArmMechanism(Device):
             return f"Рука робота взяла {item}"
 
         try:
-            action = self.drop() + f" и взял {item}"
+            action = self.drop() + f" и взяла {item}"
             self.item = item
             return action
         except MechanismException as e:
@@ -34,12 +36,14 @@ class ArmMechanism(Device):
 
         self.damage(2)
 
-        return f"Robot arm drop {self.item}"
+        return f"Рука робота бросила {self.item}"
 
 
 class LegMechanism(Device):
     def __init__(self) -> None:
         super().__init__()
+        self.name = None
+        self.creator = None
         self.speed = 0
 
     def move(self, direction: Direction, speed: int, time: int) -> str:

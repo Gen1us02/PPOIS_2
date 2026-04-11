@@ -19,5 +19,5 @@ class RobotStatus(Enum):
 class Direction(Enum):
     FORWARD = "вперед"
     BACKWARD = "назад"
-    LEFT = "вправо"
-    RIGHT = "влево"
+    LEFT = "влево"
+    RIGHT = "вправо"

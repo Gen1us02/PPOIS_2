@@ -56,10 +56,10 @@ class ControlSystem:
         except RobotException as e:
             raise ControlSystemException("Системная ошибка\n", exception=e)
 
-    def arm_action(self, items: List[str]) -> str:
+    def arm_action(self, arm_id: int, item: str) -> str:
         try:
             self.robot.activate()
-            res = self.robot.arms_action(items)
+            res = self.robot.arms_action(arm_id, item)
             self.robot.wait()
             return res
         except RobotException as e:
@@ -84,7 +84,7 @@ class ControlSystem:
             self.robot.maintenance()
             self.robot.repair()
             self.robot.wait()
-            return "Обслуживание завершилось успешное"
+            return "Обслуживание завершилось успешно"
         except RobotException as e:
             raise ControlSystemException("Системная ошибка\n", exception=e)
 

@@ -14,6 +14,8 @@ class Serializer:
             "battery": robot.battery.battery_level,
             "sensors": [
                 {
+                    "name": sensor.name,
+                    "creator": sensor.creator,
                     "type": sensor.sensor_type.name,
                     "is_active": sensor.is_active,
                     "data": sensor.read_data(),
@@ -21,8 +23,8 @@ class Serializer:
                 }
                 for sensor in robot.sensors
             ],
-            "arms": [{"damage": arm.curr_damage} for arm in robot.arms],
-            "legs": [{"damage": leg.curr_damage} for leg in robot.legs],
+            "arms": [{"damage": arm.curr_damage, "name": arm.name, "creator": arm.creator} for arm in robot.arms],
+            "legs": [{"damage": leg.curr_damage, "name": leg.name, "creator": leg.creator} for leg in robot.legs],
             "software": {"name": robot.software.name, "version": robot.software.version}
             if robot.software
             else None,

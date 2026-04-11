@@ -61,7 +61,7 @@ class Robot:
             except SoftwareException as e:
                 raise RobotException("Ошибка робота ", exception=e)
 
-    def arms_action(self, items: List[str]) -> str:
+    def arms_action(self, arm, item: str) -> str:
         if not self.arms:
             raise RobotException("У робота нет рук")
 
@@ -69,17 +69,15 @@ class Robot:
             raise RobotException("Робот неактивен")
 
         try:
-            res = []
-            for i, item in enumerate(items):
-                res.append(self.arms[i % len(self.arms)].grab(item) + "\n")
+            res = self.arms[arm].grab(item) + "\n"
 
             self.battery.discharge(10)
 
             for i, sensor in enumerate(self.sensors):
                 if isinstance(sensor, OpticalSensor):
-                    self.sensors[i].update_data(objects_count=len(items))
+                    self.sensors[i].update_data(objects_count=random.randint(1, 15))
 
-            return "".join(res)
+            return res
         except (MechanismException, BatteryException) as e:
             raise RobotException("Ошибка робота: ", exception=e)
 
@@ -144,6 +142,7 @@ class Robot:
         try:
             data = {}
             for sensor in self.sensors:
+                sensor.damage(5)
                 data.update(sensor.read_data())
 
             return data
